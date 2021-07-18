@@ -1,13 +1,14 @@
 import React from 'react';
 import './App.scss';
-import AuthPage from './pages/AuthPage'
+import AuthPage from './pages/AuthPage';
+import TimeLinePage from './pages/TimeLinePage';
 
 const App = () => {
   // Import the page you are working on and comment the others to test
 
   return (
     <React.Fragment>
-      <AuthPage />
+      <TimeLinePage />
     </React.Fragment>
   );
 }
