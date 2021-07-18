@@ -1,4 +1,3 @@
-import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -44,7 +43,7 @@ const LeftSideBar = () => {
           )
         )}
       </List>
-      <Divider />
+        <div>Categories</div>
       <List>
         {categories.map((category, index) => (
           <ListItem button key={category.id}>
