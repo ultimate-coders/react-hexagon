@@ -1,23 +1,37 @@
 
 .small-img{
     // size: 50px;
-    width: 50px;
-  height: 50px;
+    width: 70px;
+  height: 70px;
   border-radius: 50%;
 }
 
 p{
     font-size: small;
+    // padding: 10px;
 }
 
 .btn-space{
     // padding: 100px;
     // margin-right: 1%;
-    margin-left: 60px;
+    margin-left: 68%;
 }
 
-li{
+ul{
+    display: inline-flex;
+    li{
     list-style: none;
-    display: inline-block;
-    margin-right: 10px;
+    line-height: 20px;
+    padding: 20px 20px 0px 0px;
+    // color: #529471;
+    // margin-right: 10px;
+    }
+}
+
+.post-img{
+    display: flex;
+    width: 60%;
+    height: 40%;
+    align-items: center;
+    justify-items: center;
 }

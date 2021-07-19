@@ -1,7 +1,16 @@
 import Image from "react-bootstrap/Image";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col ,Button} from "react-bootstrap";
+
 import "./info.scss";
 const ProfileInfo = () => {
+  let user={
+    follower:{
+      count:158
+    },
+    following:{
+      count:158
+    },
+  }
   return (
     <>
       <Container>
@@ -18,10 +27,14 @@ const ProfileInfo = () => {
           <Col md="auto">
             <br />
             <br />
-            <br />
-            <p>youjin phitsharbet</p>
-            <li>follower</li>
-            <li>following</li>
+            <p style={{padding: '10px'}}>youjin phitsharbet</p>
+            <p style={{padding: '10px'}}>category</p>
+            <p style={{padding: '10px'}}>description about user</p>
+
+            <ul>
+            <li> <Button style={{color: '#529471'}} variant="light">follower : {user.follower.count}</Button></li>
+            <li> <Button style={{color: '#529471'}} variant="light">following :{user.following.count} </Button></li>
+            </ul>
 
           </Col>
         </Row>

@@ -5,56 +5,83 @@ import "./info.scss";
 
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 function ProfilePosts(props) {
+  let arr=[
+    {
+      userPict:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHZMTLWh4KIE7ogS6hfTgeKuTVTPxlM1qe6Q&usqp=CAU',
+      userName:'youjin phitsharbet',
+      postCategory:'category',
+      text:'Some quick example text to build on the card title and make up the bulk of the card`s content.',
+      postImg:"https://s34506.pcdn.co/wp-content/uploads/2021/06/fathersdaypinecone.done1b.690.jpg"
+    },
+    {
+      userPict:'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHZMTLWh4KIE7ogS6hfTgeKuTVTPxlM1qe6Q&usqp=CAU',
+      userName:'youjin phitsharbet',
+      postCategory:'category',
+      text:'Some quick example text to build on the card title and make up the bulk of the card`s content.',
+      postImg:"https://t1.thpservices.com/previewimage/gallil/b772287f406aa8a7caf466a75c2d6436/esy-009014594.jpg"
+    },
+  ]
   return (
     <>
       <Container>
-        <Row className="justify-content-md-center">
+       {arr.map(arr =>{ 
+        return(
+          <div key={arr.postImg}>
+        
+        <Row >
           <br />
           <Col md="auto">
             <img
               className="small-img"
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHZMTLWh4KIE7ogS6hfTgeKuTVTPxlM1qe6Q&usqp=CAU"
+              src={arr.userPict}
               alt=""
-              roundedCircle
-              rounded
             />
           </Col>
           <Col md="auto">
-            <p>youjin phitsharbet</p>
-            <p>category</p>
+            <br/>
+            <p>{arr.userName}</p>
+            {/* <p>category</p> */}
           </Col>
         </Row>
-        <Row className="justify-content-md-center">
+        <Row >
           <Col md="auto">
-            <Card style={{ width: "50rem" }}>
+            <Card style={{ width: "51rem" }}>
               <Card.Body>
-                <Card.Title>category</Card.Title>
+                <Card.Title>{arr.postCategory}</Card.Title>
                 <Card.Text>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
+                  {arr.text}
                 </Card.Text>
+                <br/>
                 <Card.Img
-                  variant="top"
-                  src="https://hips.hearstapps.com/delish/assets/18/07/1518475314-vanilla-cupcake-horizontal-.jpg"
+                className='post-img'
+                  src={arr.postImg}
                 />
                 {/* <Card.Link href="#">Card Link</Card.Link>
                 <Card.Link href="#">Another Link</Card.Link> */}
               </Card.Body>
+              <Card.Footer>
+              <Button variant="success">Go somewhere</Button>
+            <Button className="btn-space" variant="success">
+              Go somewhere
+            </Button>
+              </Card.Footer>
             </Card>
           </Col>
         </Row>
-        <Row className="justify-content-md-center">
+        {/* <Row >
           <Col md="auto">
             <Button variant="success">Go somewhere</Button>
             <Button className="btn-space" variant="success">
               Go somewhere
             </Button>
           </Col>
-        </Row>
+        </Row> */}
 
         <br />
         <br />
-        <Row className="justify-content-md-center">
+        </div>
+        )})}
+        {/* <Row >
           <Col md="auto">
             <img
               className="small-img"
@@ -69,7 +96,7 @@ function ProfilePosts(props) {
             <p>category</p>
           </Col>
         </Row>
-        <Row className="justify-content-md-center">
+        <Row >
           <Col md="auto">
             <Card style={{ width: "50rem" }}>
               <Card.Body>
@@ -82,7 +109,8 @@ function ProfilePosts(props) {
               </Card.Body>
             </Card>
           </Col>
-        </Row>
+        </Row> */}
+        
       </Container>
     </>
   );
