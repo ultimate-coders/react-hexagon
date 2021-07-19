@@ -37,13 +37,14 @@ const NewPost = () => {
             onChange={(e) => console.log(e.target.files)}
           />
           <PhotoLibraryIcon
+            className='photo_library_icon'
             color='secondary'
             onClick={(e) => postImages.current.click()}
           />
           <Form.Text>Photos</Form.Text>
         </div>
         <div>
-            <Button type='submit' variant="success">Success</Button>
+            <Button type='submit' variant="success">Share</Button>
         </div>
       </Form.Group>
     </Form>

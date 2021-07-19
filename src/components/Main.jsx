@@ -1,14 +1,13 @@
 import NewPost from './NewPost';
 import PostsList from './PostsList';
-import Row from 'react-bootstrap/Row';
 
 const Main = () => {
 
     return (
-        <Row>
+        <div>
             <NewPost />
             <PostsList />
-        </Row>
+        </div>
     )
 }
 

@@ -1,8 +1,8 @@
 .new_post_container {
     padding: 10px;
     margin: 10px 0;
-    -webkit-box-shadow: -1px 1px 7px 1px rgba(0,0,0,0.66); 
-    box-shadow: -1px 1px 7px 1px rgba(0,0,0,0.66);
+    -webkit-box-shadow: -1px 1px 7px 1px rgba(167, 164, 164, 0.66); 
+    box-shadow: -1px 1px 7px 1px rgba(167, 164, 164, 0.66);
 
   .MuiAvatar-root.new_post_avatar {
     width: 50px;
@@ -11,7 +11,7 @@
 
   .new_post_first_row {
     display: flex;
-    border-bottom: 2px solid grey;
+    border-bottom: 1px solid grey;
 
     .new_post_text_area {
       border: none;
@@ -25,6 +25,11 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px;
+
+    .MuiSvgIcon-root.photo_library_icon {
+      cursor: pointer;
+      margin-right: 5px;
+    }
 
     .image_file_input {
 
