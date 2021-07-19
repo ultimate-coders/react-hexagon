@@ -1,7 +1,8 @@
 .post_container {
-    padding: 10px 10px 5px 10px;
-    -webkit-box-shadow: -1px 1px 7px 1px rgba(167, 164, 164, 0.66); 
-    box-shadow: -1px 1px 7px 1px rgba(167, 164, 164, 0.66);
+  background-color: #fff;
+  padding: 10px 10px 5px 10px;
+  -webkit-box-shadow: -1px 1px 7px 1px rgba(167, 164, 164, 0.66);
+  box-shadow: -1px 1px 7px 1px rgba(167, 164, 164, 0.66);
 
   .post_header {
     display: flex;
@@ -52,8 +53,8 @@
     align-items: center;
     margin: 15px 0;
     padding: 15px 0;
-    border-top: 1px solid rgba(167, 164, 164, 0.66); ;
-    border-bottom: 1px solid rgba(167, 164, 164, 0.66); ;
+    border-top: 1px solid rgba(167, 164, 164, 0.66);
+    border-bottom: 1px solid rgba(167, 164, 164, 0.66);
 
     .post_footer_likes_container {
       margin-right: 40px;

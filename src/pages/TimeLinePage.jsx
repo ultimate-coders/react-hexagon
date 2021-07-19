@@ -10,14 +10,14 @@ const TimeLinePage = () => {
 
     return (
         <Container fluid>
-            <Row>
-                <Col className='col-3'>
+            <Row style={{justifyContent: 'center', backgroundColor: '#eee'}}>
+                <Col className='col-2'>
                     <LeftSideBar />
                 </Col>
                 <Col className='col-6'>
                     <Main />
                 </Col>
-                <Col className='col-3'>
+                <Col className='col-2'>
                     <RightSideBar />
                 </Col>
             </Row>
