@@ -7,10 +7,20 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
+import SinglePostModal from './SinglePostModal';
 import './Post.scss';
 
 const Post = ({ post }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -22,6 +32,12 @@ const Post = ({ post }) => {
 
   return (
     <div className='post_container'>
+      <SinglePostModal
+        handleOpenModal={handleOpenModal}
+        handleCloseModal={handleCloseModal}
+        openModal={openModal}
+        postId={post.Id}
+      />
       <div className='post_header'>
         <Avatar
           className='post_header_avatar'
@@ -58,7 +74,7 @@ const Post = ({ post }) => {
       </div>
       <div className='post_text_content'>{post.text}</div>
       {post.images[0] && (
-        <div className='post_images_container'>
+        <div onClick={handleOpenModal} className='post_images_container'>
           <img className='post_image' src={post.images[0].link} alt='' />
         </div>
       )}
@@ -70,7 +86,7 @@ const Post = ({ post }) => {
           />
           <span>{post.likes}</span>
         </div>
-        <div className='post_footer_comment_container'>
+        <div onClick={handleOpenModal} className='post_footer_comment_container'>
           <ChatBubbleOutlineIcon className='chat_bubble_icon' />
           <span>comment</span>
         </div>

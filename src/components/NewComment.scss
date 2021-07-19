@@ -1,0 +1,22 @@
+.new_comment_container {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #fff;
+    // border-top: 0.5px solid rgb(197, 194, 194);
+    // position: absolute;
+    // bottom: 0;
+
+    .new_comment_text {
+        margin: 0 10px;
+        flex: 1;
+        border: 0.5px solid rgb(190, 189, 189);
+        border-radius: 5px;
+        height: 30px;
+    }
+
+    .new_comment_send_icon {
+        cursor: pointer;
+        color: grey;
+    }
+}
