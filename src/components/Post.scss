@@ -9,6 +9,7 @@
 
     .post_header_avatar {
       margin-right: 10px;
+      cursor: pointer;
     }
 
     .post_header_user_info {
@@ -17,6 +18,8 @@
 
       .post_header_username {
         font-weight: bold;
+        cursor: pointer;
+        color: #5181b8;
       }
 
       .post_header_created_at {

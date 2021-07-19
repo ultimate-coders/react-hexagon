@@ -31,5 +31,9 @@
         margin-left: auto;
         cursor: pointer;
         color: rgb(168, 164, 164);
+        
+        &:hover {
+            background-color: rgb(243, 239, 239);
+        }
     }
 }

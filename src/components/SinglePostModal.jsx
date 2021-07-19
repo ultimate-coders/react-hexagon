@@ -11,7 +11,7 @@ const singlePost = {
   id: '2b6b9b2e-7ae5-4f36-bdb4-01316e50fc64',
   text: 'The is the latest post that you will see',
   created_at: '2021-07-15T15:14:37.841Z',
-  am_like: false,
+  am_like: true,
   category: {
     id: 'sdfdsfsd2343232lkn',
     name: 'artist',
