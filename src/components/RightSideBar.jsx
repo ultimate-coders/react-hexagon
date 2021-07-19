@@ -9,7 +9,7 @@ const ads = [
     },
     {
         image: 'https://www.luminuseducation.com/wp-content/uploads/2018/04/Screen-Shot-2018-04-10-at-3.11.22-PM-3354x1677.png',
-        title: 'celebrating the achievements of Jordan’s innovators, entrepreneurs and creative youth.',
+        title: 'Celebrating the achievements of Jordan’s innovators, entrepreneurs and creative youth.',
         text: 'Innovative Jordan honored CEO and Founder Ibrahim Safadi, as part of its nationwide campaign celebrating the achievements of Jordan’s innovators, entrepreneurs and creative youth.',
         link: 'https://www.luminuseducation.com/index.php/2017/07/25/52381/',
     },
