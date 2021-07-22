@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const ForgotPassword = () => {
+const ChangePassword = () => {
     const classes = useStyles();
 
     return (
@@ -75,7 +75,7 @@ const ForgotPassword = () => {
                 {/* <Avatar className={classes.avatar}>
                 </Avatar> */}
                 <Typography component="h1" variant="h5">
-                    Reset Password
+                    Change Password
                 </Typography>
                 <form id="signupForm" className={classes.form} noValidate>
                     <Grid container spacing={2}>
@@ -85,9 +85,21 @@ const ForgotPassword = () => {
                                 required
                                 fullWidth
                                 id="email"
-                                label="New Password"
+                                label="Enter Old Password"
                                 name="email"
                                 autoComplete="email"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                name="password"
+                                label="Enter New Password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -116,13 +128,13 @@ const ForgotPassword = () => {
                         color="primary"
                         className={classes.submit}
                     >
-                        Reset Password
+                        Change Password
                     </HexagonButton>
                 </form>
                 <div id="SigninQuestion">
                     <span className="loginForgot"> Changed your mind? </span>
                     <a className="loginRegisterButton" type="submit">
-                    Sign in
+                    Back to profile
                     </a>
                 </div>
             </div>
@@ -133,4 +145,4 @@ const ForgotPassword = () => {
     );
 }
 
-export default ForgotPassword;
+export default ChangePassword;

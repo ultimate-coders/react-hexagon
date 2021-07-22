@@ -22,7 +22,7 @@ const HexagonButton = styled(Button)({
 
 const Welcome = () => {
     return (
-        <div class="container-fluid">
+        <div id="welcomeContainer" class="container-fluid">
             <div className="login">
                 <div className="loginWrapper">
                     <div className="loginLeft">
@@ -45,6 +45,12 @@ const Welcome = () => {
                             <div id="loginDiv">
                                 <HexagonButton className="loginButton">Log In</HexagonButton>
                             </div>
+                            <div id="forgotPasswordContainer"> 
+                                <span className="loginForgot">Forgot Your Password?</span>
+                                <a className="loginRegisterButton" type="submit">
+                                    Reset password
+                                </a>
+                                </div>
                             <div id="oauthSpan">
                                 <Button style={{ width: "300px" }}>
                                     <GoogleButton id="openAuth" style={{ width: "300px", backgroundColor: "#529471", textAlign: "center" }}

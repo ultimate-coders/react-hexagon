@@ -4,7 +4,8 @@ import AuthPage from './pages/AuthPage'
 import Welcome from './components/welcome'
 import SignUp from './components/signup'
 import Verify from './components/verify'
-import ResetPassword from './components/forgotPassword' 
+import ForgotPassword from './components/forgotPassword' 
+import ChangePassword from './components/changePassword' 
 import Header from './components/header'
 
 
@@ -13,11 +14,12 @@ const App = () => {
 
   return (
     <React.Fragment>
-      <ResetPassword/>
+      {/* <ForgotPassword/> */}
+      {/* <ChangePassword/> */}
       {/* <Verify/> */}
       {/* <SignUp/> */}
       {/* <Header/> */}
-      {/* <Welcome/> */}
+      <Welcome/>
       {/* <AuthPage /> */}
     </React.Fragment>
   );

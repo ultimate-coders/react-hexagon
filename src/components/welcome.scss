@@ -17,6 +17,12 @@
     text-shadow: 0.5px 0.5px black;
 }
 
+// #welcomeContainer {
+
+//     margin:auto;
+//     // width: 100em;
+// }
+
 // #openAuth {
 //     text-align: center;
 //     width: 1000px;
@@ -46,11 +52,12 @@
 
 .loginLeft {
     position: relative;
-    bottom:6.5em;
+    bottom:8.2em;
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    margin-right: 2em;
 }
 
 .loginLogo {
@@ -97,7 +104,7 @@
 }
 
 .loginBox {
-    height: 300px;
+    height: 19em;
     padding: 20px;
     // background-color: white;
     border-radius: 10px;
@@ -137,6 +144,7 @@
 .loginForgot {
     text-align: center;
     color: #1775ee;
+    margin-top: 1em;
 }
 
 .loginRegisterButton {
@@ -158,4 +166,17 @@
     color: #eee;
     background-color:#529471;
 
+}
+
+#forgotPasswordContainer{
+    // display:flex;
+    // flex-direction: row;
+    // justify-content:center;
+
+    text-align:center;
+}
+
+#forgotPasswordContainer span , #forgotPasswordContainer a {
+    font-size: .8em;
+    margin: .2em;
 }
