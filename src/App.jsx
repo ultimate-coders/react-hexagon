@@ -13,7 +13,7 @@ const App = () => {
 
   return (
     <React.Fragment>
-      {/* <ResetPassword/> */}
+      <ResetPassword/>
       {/* <Verify/> */}
       {/* <SignUp/> */}
       {/* <Header/> */}
