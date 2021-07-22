@@ -26,7 +26,11 @@
     background-color: #eee;
 }
 
-#signInQuestion{
-
+#SigninQuestion {
+    text-align: center;
+    display: flex;
+    flex-direction:column;
+    // justify-content: center;
+    align-items: center;
     margin-top:1em;
 }

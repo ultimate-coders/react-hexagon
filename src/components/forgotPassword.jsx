@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const SignUp = () => {
+const ResetPassword = () => {
     const classes = useStyles();
 
     return (
@@ -75,40 +75,17 @@ const SignUp = () => {
                 {/* <Avatar className={classes.avatar}>
                 </Avatar> */}
                 <Typography component="h1" variant="h5">
-                    Sign up
+                    Reset Password
                 </Typography>
                 <form id="signupForm" className={classes.form} noValidate>
                     <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <TextField
-                                autoComplete="fname"
-                                name="firstName"
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="firstName"
-                                label="User name"
-                                autoFocus
-                            />
-                        </Grid>
-                        {/* <Grid item xs={12} sm={6}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="lastName"
-                                label="Last Name"
-                                name="lastName"
-                                autoComplete="lname"
-                            />
-                        </Grid> */}
                         <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
                                 required
                                 fullWidth
                                 id="email"
-                                label="Email Address"
+                                label="New Password"
                                 name="email"
                                 autoComplete="email"
                             />
@@ -119,7 +96,7 @@ const SignUp = () => {
                                 required
                                 fullWidth
                                 name="password"
-                                label="Password"
+                                label="Confirm New Password"
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
@@ -139,13 +116,13 @@ const SignUp = () => {
                         color="primary"
                         className={classes.submit}
                     >
-                        Sign Up
+                        Reset Password
                     </HexagonButton>
                 </form>
                 <div id="SigninQuestion">
-                    <span className="loginForgot"> Already have an account? </span>
+                    <span className="loginForgot"> Changed your mind? </span>
                     <a className="loginRegisterButton" type="submit">
-                        Sign In
+                    Sign in
                     </a>
                 </div>
             </div>
@@ -156,4 +133,4 @@ const SignUp = () => {
     );
 }
 
-export default SignUp;
+export default ResetPassword;

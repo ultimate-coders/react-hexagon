@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const SignUp = () => {
+const Verify = () => {
     const classes = useStyles();
 
     return (
@@ -75,7 +75,7 @@ const SignUp = () => {
                 {/* <Avatar className={classes.avatar}>
                 </Avatar> */}
                 <Typography component="h1" variant="h5">
-                    Sign up
+                    Verify Your Account
                 </Typography>
                 <form id="signupForm" className={classes.form} noValidate>
                     <Grid container spacing={2}>
@@ -87,50 +87,10 @@ const SignUp = () => {
                                 required
                                 fullWidth
                                 id="firstName"
-                                label="User name"
+                                label="Verification Code"
                                 autoFocus
                             />
                         </Grid>
-                        {/* <Grid item xs={12} sm={6}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="lastName"
-                                label="Last Name"
-                                name="lastName"
-                                autoComplete="lname"
-                            />
-                        </Grid> */}
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="email"
-                                label="Email Address"
-                                name="email"
-                                autoComplete="email"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                name="password"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                            />
-                        </Grid>
-                        {/* <Grid item xs={12}>
-                            <FormControlLabel
-                                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                label="I want to receive inspiration, marketing promotions and updates via email."
-                            />
-                        </Grid> */}
                     </Grid>
                     <HexagonButton
                         type="submit"
@@ -139,7 +99,7 @@ const SignUp = () => {
                         color="primary"
                         className={classes.submit}
                     >
-                        Sign Up
+                        Enter Code
                     </HexagonButton>
                 </form>
                 <div id="SigninQuestion">
@@ -156,4 +116,4 @@ const SignUp = () => {
     );
 }
 
-export default SignUp;
+export default Verify;
