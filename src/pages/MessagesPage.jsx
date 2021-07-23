@@ -3,12 +3,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import "./MessagesPage.scss";
-import { ChatList } from "react-chat-elements";
-import superagent from 'superagent';
 import "react-chat-elements/dist/main.css";
 import { If, Then, Else } from "react-if";
 import Faker from "faker";
-// import { AppBar, Typography,Toolbar, Avatar  } from "@material-ui/core";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
   MainContainer,
