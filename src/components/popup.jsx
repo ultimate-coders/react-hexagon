@@ -10,7 +10,6 @@ import { If, Then } from "react-if";
 
 const Popup = (props) => {
   const [open, setOpen] = React.useState(true);
-  console.log("🚀 ~ file: popup.jsx ~ line 13 ~ Popup ~ open", open);
   let x = open && props.show;
   const handleClickOpen = () => {
     setOpen(true);
