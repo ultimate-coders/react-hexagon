@@ -1,11 +1,11 @@
 import "./404Error.scss";
-import Popup from "../components/popup";
+// import Popup from "../components/popup";
 
 const Error = () => {
   return (
     <div id="error">
       <div id="imgs">
-        <Popup message="hey" show={true} title="how are you" />
+        {/* <Popup message="hey" show={true} title="how are you" /> */}
         <img
           id="Error"
           src="https://media.tenor.com/images/9b6676bde88262d50a7b2b2620bf8768/tenor.gif"
