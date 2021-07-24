@@ -84,53 +84,65 @@ const ForgotPassword = () => {
                                 variant="outlined"
                                 required
                                 fullWidth
-                                id="email"
-                                label="New Password"
-                                name="email"
-                                autoComplete="email"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
                                 name="password"
-                                label="Confirm New Password"
+                                label="Verification Code"
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
                             />
-                        </Grid>
-                        {/* <Grid item xs={12}>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    id="email"
+                                    label="New Password"
+                                    name="email"
+                                    autoComplete="email"
+                                />
+                            </Grid>
+                            <Grid item xs={12}>
+                                <TextField
+                                    variant="outlined"
+                                    required
+                                    fullWidth
+                                    name="password"
+                                    label="Confirm New Password"
+                                    type="password"
+                                    id="password"
+                                    autoComplete="current-password"
+                                />
+                            </Grid>
+                            {/* <Grid item xs={12}>
                             <FormControlLabel
                                 control={<Checkbox value="allowExtraEmails" color="primary" />}
                                 label="I want to receive inspiration, marketing promotions and updates via email."
                             />
                         </Grid> */}
-                    </Grid>
-                    <HexagonButton
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
-                        Reset Password
-                    </HexagonButton>
+                        </Grid>
+                        <HexagonButton
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            className={classes.submit}
+                        >
+                            Reset Password
+                        </HexagonButton>
                 </form>
-                <div id="SigninQuestion">
-                    <span className="loginForgot"> Changed your mind? </span>
-                    <a className="loginRegisterButton" type="submit">
-                    Sign in
-                    </a>
-                </div>
+                    <div id="SigninQuestion">
+                        <span className="loginForgot"> Changed your mind? </span>
+                        <a className="loginRegisterButton" type="submit">
+                            Sign in
+                        </a>
+                    </div>
             </div>
-            {/* <Box mt={5}>
+                {/* <Box mt={5}>
                 <Copyright />
             </Box> */}
         </Container>
-    );
+            );
 }
 
-export default ForgotPassword;
+            export default ForgotPassword;
