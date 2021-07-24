@@ -1,12 +1,12 @@
 import React from 'react';
 import './App.scss';
 import AuthPage from './pages/AuthPage'
-import Welcome from './components/welcome'
-import SignUp from './components/signup'
-import Verify from './components/verify'
-import ForgotPassword from './components/forgotPassword' 
-import ChangePassword from './components/changePassword' 
-import Header from './components/header'
+import Welcome from './components/sign/welcome'
+import SignUp from './components/sign/signup'
+import Verify from './components/sign/verify'
+import ForgotPassword from './components/password/forgotPassword' 
+import ChangePassword from './components/password/changePassword' 
+import Header from './components/header/header'
 
 
 const App = () => {

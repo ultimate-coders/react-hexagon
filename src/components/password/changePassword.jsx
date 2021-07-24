@@ -12,20 +12,23 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { styled } from '@material-ui/core/styles';
-import './signup.scss'
+import '../sign/signup.scss'
 
 const HexagonButton = styled(Button)({
     // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+    // marginTop: '.5em',
     background: '#529471',
     border: 0,
     borderRadius: 3,
-    boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
+    // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
     color: 'white',
     height: 48,
     padding: '0 30px',
     "&:hover": {
-        backgroundColor: "#eee",
-        color: "#529471",
+        boxShadow: 'rgba(0, 0, 0, 0.25) 2px 4px 6px 3px',
+        backgroundColor: "#529471",
+        // backgroundColor: "#eee",
+        // color: "#529471",
     }
 });
 
@@ -62,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const SignUp = () => {
+const ChangePassword = () => {
     const classes = useStyles();
 
     return (
@@ -75,40 +78,17 @@ const SignUp = () => {
                 {/* <Avatar className={classes.avatar}>
                 </Avatar> */}
                 <Typography component="h1" variant="h5">
-                    Sign up
+                    Change Password
                 </Typography>
                 <form id="signupForm" className={classes.form} noValidate>
                     <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <TextField
-                                autoComplete="fname"
-                                name="firstName"
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="firstName"
-                                label="User name"
-                                autoFocus
-                            />
-                        </Grid>
-                        {/* <Grid item xs={12} sm={6}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="lastName"
-                                label="Last Name"
-                                name="lastName"
-                                autoComplete="lname"
-                            />
-                        </Grid> */}
                         <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
                                 required
                                 fullWidth
                                 id="email"
-                                label="Email Address"
+                                label="Enter Old Password"
                                 name="email"
                                 autoComplete="email"
                             />
@@ -119,7 +99,19 @@ const SignUp = () => {
                                 required
                                 fullWidth
                                 name="password"
-                                label="Password"
+                                label="Enter New Password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                name="password"
+                                label="Confirm New Password"
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
@@ -139,13 +131,13 @@ const SignUp = () => {
                         color="primary"
                         className={classes.submit}
                     >
-                        Sign Up
+                        Change Password
                     </HexagonButton>
                 </form>
                 <div id="SigninQuestion">
-                    <span className="loginForgot"> Already have an account? </span>
+                    <span className="loginForgot"> Changed your mind? </span>
                     <a className="loginRegisterButton" type="submit">
-                        Sign In
+                    Back to profile
                     </a>
                 </div>
             </div>
@@ -156,4 +148,4 @@ const SignUp = () => {
     );
 }
 
-export default SignUp;
+export default ChangePassword;
