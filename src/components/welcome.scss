@@ -1,0 +1,182 @@
+#welcomeLogo {
+    position: relative;
+    top: 0.6em;
+    width: 6em;
+    height: 3em;
+    margin-right: 2em;
+    border: solid 1px black;
+    border-radius: 20em;
+}
+
+#welcomeTitle {
+    position: relative;
+    left: 1em;
+    top: 0.6em;
+    color: white;
+    font-weight: bold;
+    text-shadow: 0.5px 0.5px black;
+}
+
+// #welcomeContainer {
+
+//     margin:auto;
+//     // width: 100em;
+// }
+
+// #openAuth {
+//     text-align: center;
+//     width: 1000px;
+// }
+// #openAuth img {
+//     width: 6em;
+//     height: 3em;
+// }
+
+#oauthSpan{
+    display:flex;
+    justify-content:center;
+}
+.loginRight {
+    margin-top: 5px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+#loginDiv{
+    display: flex;
+    justify-content: center;
+}
+
+.loginLeft {
+    position: relative;
+    bottom:8.2em;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 2em;
+}
+
+.loginLogo {
+    font-size: 50px;
+    font-weight: 800;
+    // color: #1775ee;
+    color: #529471;
+    font-weight: bold;
+    text-shadow: 0.1px 0.1px black;
+    margin-bottom: 10px;
+}
+
+.login {
+    width: 100vw;
+    height: 100vh;
+    background-color: #f0f2f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loginWrapper {
+    width: 70%;
+    height: 70%;
+    display: flex;
+}
+
+//   .loginLeft,
+//   .loginRight {
+//     flex: 1;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//   }
+
+.loginDesc {
+    font-size: 24px;
+    position: relative;
+    left:3em;
+}
+#leftFlex{
+    display: flex;
+    flex-direction:row;
+}
+
+.loginBox {
+    height: 19em;
+    padding: 20px;
+    // background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: solid 1px #529471;
+    border-width: 3px;
+    box-shadow: 0.5px 0.5px 0.5px;
+    background-color: #eee;
+}
+
+.loginInput {
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid gray;
+    font-size: 18px;
+    padding-left: 20px;
+}
+
+.loginInput:focus {
+    outline: none;
+}
+
+.loginButton {
+    width: 50%;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+    background-color: #1775ee;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.loginForgot {
+    text-align: center;
+    color: #1775ee;
+    margin-top: 1em;
+}
+
+.loginRegisterButton {
+    width: 100%;
+    text-align: center;
+    // height: 30%;
+    border-radius: 10px;
+    border: none;
+    // background-color: #42b72a;
+    color: #529471;
+    font-size: 20px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.loginRegisterButton:hover{
+
+    color: #eee;
+    background-color:#529471;
+
+}
+
+#forgotPasswordContainer{
+    // display:flex;
+    // flex-direction: row;
+    // justify-content:center;
+
+    text-align:center;
+}
+
+#forgotPasswordContainer span , #forgotPasswordContainer a {
+    font-size: .8em;
+    margin: .2em;
+}
