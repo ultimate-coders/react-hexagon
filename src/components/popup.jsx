@@ -11,9 +11,9 @@ import { If, Then } from "react-if";
 const Popup = (props) => {
   const [open, setOpen] = React.useState(true);
   let x = open && props.show;
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+//   const handleClickOpen = () => {
+//     setOpen(true);
+//   };
   const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
