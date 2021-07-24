@@ -5,7 +5,8 @@ const useAjax = (
   endPoint = null,
   methodType = 'get',
   body = {},
-  bearerToken = null
+  bearerToken = null,
+  extra=null
 ) => {
   const [url, setUrl] = useState(endPoint);
   const [method, setMethod] = useState(methodType.toUpperCase());
@@ -30,6 +31,13 @@ const useAjax = (
       };
     }
 
+    if(extra){
+      options.headers = {
+        ...options.headers,
+        ...extra
+      }
+    }
+
     (async () => {
       try {
         if (url) {
@@ -45,7 +53,7 @@ const useAjax = (
         setLoading(false);
       }
     })();
-  }, [data, method, token, url]);
+  }, [data, method, token, url, extra]);
 
   const reload = (url = endPoint, method = methodType, data = body, token = bearerToken) => {
     setUrl(url);
