@@ -3,8 +3,10 @@ import React from "react";
 // import Heder from "../header";
 import "./info.scss";
 // import Reaction from './reaction'
-import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
-import Like from "./reaction";
+// import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
+// import Like from "./reaction";
+import NewPost from "./NewPost";
+import PostsList from "./PostsList";
 
 function ProfilePosts(props) {
   let arr = [
@@ -29,7 +31,9 @@ function ProfilePosts(props) {
   ];
   return (
     <>
-      <Container>
+      <NewPost />
+      <PostsList />
+      {/* <Container>
         {arr.map((arr) => {
           return (
             <div key={arr.postImg}>
@@ -46,7 +50,7 @@ function ProfilePosts(props) {
                           />
                         </Col>
                         <Col md="5">
-                          {/* <br /> */}
+                          {/* <br /> 
                           <p style={{ paddingTop: "10px" }}>{arr.userName}</p>
                         </Col>
                       </Row>
@@ -60,7 +64,7 @@ function ProfilePosts(props) {
                       <Row>
                         <Col md="9">
                           <Like />
-                          {/* <Button variant="light">Like 1123 </Button> */}
+                          {/* <Button variant="light">Like 1123 </Button> 
                         </Col>
                         <Col>
                           <Button variant="light">comment 1111</Button>
@@ -81,7 +85,7 @@ function ProfilePosts(props) {
             </div>
           );
         })}
-      </Container>
+      </Container> */}
     </>
   );
 }
