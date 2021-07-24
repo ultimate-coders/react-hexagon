@@ -3,7 +3,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import "./MessagesPage.scss";
-import "react-chat-elements/dist/main.css";
 import { If, Then, Else } from "react-if";
 import Faker from "faker";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
@@ -183,7 +182,7 @@ const Messages = () => {
                           src={val.profile_picture.link}
                           name={val.first_name}
                           status="available"
-                          size="md"
+                          size="md"  
                         />
                       </Conversation>
                     ))} */}
@@ -230,8 +229,6 @@ const Messages = () => {
                         <Then>
                           <Message
                             model={{
-     
-                           
                               direction: "outgoing",
                               position: "normal",
                             }}
@@ -257,11 +254,22 @@ const Messages = () => {
                               sender: "Joe",
                             }}
                           >
-                            <Message.Footer sentTime={Faker.date.recent().toString().split(" ")[4].split(":").splice(0, 2).join(":")} />
+                            {/* <Message.Footer sentTime={Faker.date.recent().toString().split(" ")[4].split(":").splice(0, 2).join(":")} /> */}
+                            <Message.CustomContent>
+                              {val.message}
+                              <br />
+                              <span
+                                style={{
+                                  float: "right",
+                                }}
+                              >
+                                {Faker.date.recent().toString().split(" ")[4].split(":").splice(0, 2).join(":")}
+                              </span>
+                            </Message.CustomContent>
                           </Message>
                           {/* <Message
                             model={{
-                              message: "how are you   ",
+                              message: "how are you   ", 
                               sentTime: "just now",
                               sender: "Joe",
                             }}
