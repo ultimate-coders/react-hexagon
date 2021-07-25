@@ -3,7 +3,6 @@ import AuthPage from './pages/AuthPage';
 import TimeLinePage from './pages/TimeLinePage';
 import React from "react";
 import "./App.scss";
-import AuthPage from "./pages/AuthPage";
 import Welcome from "./components/sign/welcome";
 import SignUp from "./components/sign/signup";
 import Verify from "./components/sign/verify";
@@ -13,8 +12,8 @@ import Header from "./components/header/header";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
 
+import ProfilePage from './pages/ProfilePage'
 
-import Messages from './pages/MessagesPage'
 
 const App = () => {
   // Import the page you are working on and comment the others to test
@@ -49,6 +48,7 @@ const App = () => {
       </Router>
       {/* <Header/> */}
      
+      <ProfilePage />
     </React.Fragment>
   );
 };
