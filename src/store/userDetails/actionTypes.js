@@ -1,0 +1,2 @@
+export const USER_DETAIL_INFO = 'USER_DETAIL_INFO';
+export const LOGIN_STATE = 'LOGIN_STATE';
