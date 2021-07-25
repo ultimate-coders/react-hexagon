@@ -1,7 +1,8 @@
-import AuthPage from "./pages/AuthPage";
+import React from 'react';
+import './App.scss';
+import AuthPage from './pages/AuthPage'
+import Error from './pages/404Error'
 import TimeLinePage from "./pages/TimeLinePage";
-import React from "react";
-import "./App.scss";
 import Welcome from "./components/sign/welcome";
 import SignUp from "./components/sign/signup";
 import Verify from "./components/sign/verify";
@@ -20,6 +21,8 @@ const App = () => {
 
   return (
     <React.Fragment>
+      <Error/>
+      {/* <AuthPage /> */}
       <Router>
         <Switch>
           <Route exact path="/home">
