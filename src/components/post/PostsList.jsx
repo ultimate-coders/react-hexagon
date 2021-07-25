@@ -263,9 +263,9 @@ const posts = [
     },
   ];
   
-const PostsList = (props) => {
+const PostsList = ({postsList, onChangePostsList}) => {
 
-  if(!props.posts || props.posts.length === 0){
+  if(!postsList || postsList.length === 0){
     return (
       <div>No posts to display</div>
     )
@@ -274,7 +274,7 @@ const PostsList = (props) => {
     return (
         <div>
             {
-                props.posts.map(post => <Post key={post.id} post={post} />)
+                postsList.map(post => <Post onChangePostsList={onChangePostsList} key={post.id} post={post} />)
             }
         </div>
     )

@@ -10,19 +10,29 @@ import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import SinglePostModal from './SinglePostModal';
 import './Post.scss';
 import { useSelector } from 'react-redux';
+import DeleteModal from './DeleteModal';
 
 
-const Post = ({ post }) => {
+const Post = ({ post, onChangePostsList, single }) => {
   const { userDetails } = useSelector(mapStateToProps);
   const [anchorEl, setAnchorEl] = useState(null);
   const [openModal, setOpenModal] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   const handleOpenModal = () => {
-    setOpenModal(true);
+    if(!single) setOpenModal(true);
   };
 
   const handleCloseModal = () => {
     setOpenModal(false);
+  };
+
+  const handleOpenDeleteModal = () => {
+    setOpenDeleteModal(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setOpenDeleteModal(false);
   };
 
   const handleClick = (event) => {
@@ -39,7 +49,14 @@ const Post = ({ post }) => {
         handleOpenModal={handleOpenModal}
         handleCloseModal={handleCloseModal}
         openModal={openModal}
-        postId={post.Id}
+        postId={post.id}
+      />
+      <DeleteModal 
+        handleOpenModal={handleOpenDeleteModal}
+        handleCloseModal={handleCloseDeleteModal}
+        openModal={openDeleteModal}
+        afterDeletePost={onChangePostsList}
+        postId={post.id}
       />
       <div className='post_header'>
         <Avatar
@@ -72,7 +89,7 @@ const Post = ({ post }) => {
             onClose={handleClose}
           >
             {/* <MenuItem onClick={handleClose}>Update</MenuItem> */}
-            <MenuItem onClick={handleClose}>Delete</MenuItem>
+            <MenuItem onClick={handleOpenDeleteModal}>Delete</MenuItem>
           </Menu>
         </div>
         )}

@@ -6,15 +6,27 @@ import useAjax from '../../hooks/useAjax';
 import { getToken } from '../../helpers';
 
 const Main = (props) => {
-  const [results, reload, loading, error] = useAjax();
+  const [posts, setPosts] = useState(null);
+  const [results, reload] = useAjax();
+  const [checking, setChecking] = useState(true);
 
   const getAllPosts = (ulr) => {
     (async () => {
       const token = await getToken();
       reload(ulr, 'get', null, token);
+      setChecking(false);
     })();
   };
 
+  const onChangePostsList = (postId) => {
+    setPosts(prev => prev.filter(post => post.id !== postId));
+    // if (props.category) {
+    //   getAllPosts(`${CATEGORY_POSTS_URL}/${props.category.name}`);
+    // } else {
+    //   getAllPosts(TIMELINE_POSTS_URL);
+    // }
+  };
+  
   useEffect(() => {
     if (props.category) {
       getAllPosts(`${CATEGORY_POSTS_URL}/${props.category.name}`);
@@ -23,10 +35,22 @@ const Main = (props) => {
     }
   }, [props.category]);
 
+  useEffect(() => {
+    setPosts(results?.data.results);
+  }, [results])
+  
+  console.log('update post list on render', posts);
   return (
     <div>
       <NewPost />
-      {loading ? 'loading' : <PostsList posts={results?.data.results} />}
+      {checking ? (
+        'loading'
+      ) : (
+        <PostsList
+          onChangePostsList={onChangePostsList}
+          postsList={posts}
+        />
+      )}
     </div>
   );
 };

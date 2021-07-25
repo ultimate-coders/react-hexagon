@@ -136,7 +136,7 @@ const SinglePostModal = ({ handleCloseModal, openModal, postId }) => {
       >
         <Fade in={openModal}>
           <div className={classes.paper}>
-            <Post post={post} />
+            <Post post={post} single />
             <CommentsList comments={comments} />
             <NewComment post={post} />
           </div>
