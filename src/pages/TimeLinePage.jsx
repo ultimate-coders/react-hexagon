@@ -7,7 +7,20 @@ import Col from 'react-bootstrap/Col';
 
 
 const TimeLinePage = () => {
-  return <div>Time line page</div>;
-};
-
+    return (
+        <Container fluid>
+            <Row style={{justifyContent: 'center', backgroundColor: '#eee'}}>
+                <Col className='col-2'>
+                    <LeftSideBar />
+                </Col>
+                <Col className='col-6'>
+                    <Main />
+                </Col>
+                <Col className='col-2'>
+                    <RightSideBar />
+                </Col>
+            </Row>
+        </Container>
+    )
+}
 export default TimeLinePage;

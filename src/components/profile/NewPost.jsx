@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Avatar from '@material-ui/core/Avatar';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import Button from 'react-bootstrap/Button';
-// import '../post/NewPost.scss';
+import '../post/NewPost.scss';
 
 const profileImage = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHZMTLWh4KIE7ogS6hfTgeKuTVTPxlM1qe6Q&usqp=CAU';
 const userName = 'Wesam almasri';

@@ -44,7 +44,7 @@ const ProfileInfo = () => {
           </Col>
           <Col md="auto">
             <br />
-            <ul>
+            <ul id='info'>
               <li>
                 {" "}
                 <Button style={{ color: "#529471" }} variant="light">
@@ -60,7 +60,7 @@ const ProfileInfo = () => {
               </li>
             </ul>
             <br />
-            <ul>
+            <ul id='info'>
               <li>
                 {profile.name === user.name ? (
                   <Button style={{ color: "#529471" }} variant="light">

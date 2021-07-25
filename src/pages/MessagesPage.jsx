@@ -19,8 +19,6 @@ import {
   Conversation,
   TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
-let x = Faker.date.recent().toString();
-console.log("date", x.split(" ")[4].split(":").splice(0, 2).join(":"));
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,

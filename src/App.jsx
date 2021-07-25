@@ -12,7 +12,7 @@ import Header from "./components/header/header";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
 
-import ProfilePage from './pages/ProfilePage'
+import ProfilePage from "./pages/ProfilePage";
 
 import Messages from "./pages/MessagesPage";
 
@@ -49,11 +49,12 @@ const App = () => {
           <Route exact path="/messages">
             <Messages />
           </Route>
+          <Route exact path="/me">
+            <ProfilePage />
+          </Route>
         </Switch>
       </Router>
       {/* <Header/> */}
-     
-      <ProfilePage />
     </React.Fragment>
   );
 };
