@@ -43,8 +43,6 @@ const Welcome = (props) => {
       username: email,
       password: password,
     })
-    // window.location.href = '/home';
-    // history.push('/home')
   };
 
   useEffect(() => {
@@ -110,7 +108,7 @@ const Welcome = (props) => {
                             </Button> */}
                   <div id='loginDiv'>
                     <HexagonButton onClick={onSignin}  className='loginButton'>
-                      {loading ? 'Loading' : 'Log In'}
+                      {loading ? 'Loading' : 'Sign in'}
                     </HexagonButton>
                   </div>
 

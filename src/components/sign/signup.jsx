@@ -18,6 +18,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import useAjax from '../../hooks/useAjax';
 import { SIGNUP_URL } from '../../urls';
 import { useHistory } from 'react-router';
+import { tokenName } from '../../helpers';
+
 
 
 
@@ -73,25 +75,44 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-
 const SignUp = () => {
     const classes = useStyles();
     const [userName, setUserName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [checking, setChecking] = useState(localStorage.getItem(tokenName));
     const [results, reload, loading, error] = useAjax();
 
     const history = useHistory();
 
-    const onLogin = () => {
-        reload(SIGNUP_URL, 'post', null, null, {
-            username: userName,
-            email: email,
+    const onSignup = () => {
+        reload(SIGNUP_URL, 'post', {
+            user_name: userName,
             password: password,
-        })
-        // window.location.href = '/home';
-        // history.push('/home')
+            email: email,
+
+        }, null, null)
+
     };
+
+    function showPassword(e) {
+        let x = e.target;
+        console.log("🚀 ~ file: signup.jsx ~ line 100 ~ showPassword ~ x", x)
+        if (x.type === "password") {
+          x.type = "text";
+        } else {
+          x.type = "password";
+        }
+      }
+
+      useEffect(() => {
+        if (results) {
+          localStorage.setItem(tokenName, JSON.stringify(results.data));
+          setChecking(false);
+          history.push('/home');
+        }
+      }, [results]);
+    
 
     return (
         <Container component="main" maxWidth="xs">
@@ -144,14 +165,16 @@ const SignUp = () => {
                                 id="password"
                                 autoComplete="current-password"
                             />
+                            <input id="showPassword" type="checkbox" onclick={showPassword}/>Show Password
                         </Grid>
                     </Grid>
                     <HexagonButton
-                        type="submit"
+                        // type="submit"
+                        onClick={onSignup} 
                         fullWidth
                         variant="contained"
                         color="primary"
-                        className={classes.submit}
+                        // className={classes.submit}
                     >
                         Sign Up
                     </HexagonButton>
@@ -169,5 +192,8 @@ const SignUp = () => {
         </Container>
     );
 }
+const mapStateToProps = (state) => ({
+    userDetails: state.userDetails,
+  });
 
 export default SignUp;
