@@ -1,5 +1,5 @@
-import NewPost from './NewPost';
-import PostsList from './PostsList';
+import NewPost from '../post/NewPost';
+import PostsList from '../post/PostsList';
 
 const Main = () => {
 

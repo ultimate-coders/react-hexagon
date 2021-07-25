@@ -4,8 +4,8 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import Post from './Post';
-import CommentsList from './CommentsList';
-import NewComment from './NewComment';
+import CommentsList from '../comment/CommentsList';
+import NewComment from '../comment/NewComment';
 
 const singlePost = {
   id: '2b6b9b2e-7ae5-4f36-bdb4-01316e50fc64',
