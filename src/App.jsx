@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.scss';
-import AuthPage from './pages/AuthPage'
+// import AuthPage from './pages/AuthPage'
 import Messages from './pages/MessagesPage'
 
 const App = () => {
