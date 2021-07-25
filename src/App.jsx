@@ -1,5 +1,10 @@
 import React from 'react';
 import './App.scss';
+<<<<<<< HEAD
+import { Provider } from 'react-redux';
+import store from './store';
+import RouterComponent from './Router';
+=======
 import AuthPage from './pages/AuthPage'
 import Error from './pages/404Error'
 import TimeLinePage from "./pages/TimeLinePage";
@@ -15,11 +20,17 @@ import { Route, Switch } from "react-router-dom";
 import ProfilePage from "./pages/ProfilePage";
 
 import Messages from "./pages/MessagesPage";
+>>>>>>> e4f70983cae89a6f2dbc4a3948614eca6ec2c450
 
 const App = () => {
   // Import the page you are working on and comment the others to test
 
   return (
+<<<<<<< HEAD
+    <Provider store={store} >
+      <RouterComponent />
+    </Provider>
+=======
     <React.Fragment>
       <Error/>
       {/* <AuthPage /> */}
@@ -56,6 +67,7 @@ const App = () => {
       </Router>
       {/* <Header/> */}
     </React.Fragment>
+>>>>>>> e4f70983cae89a6f2dbc4a3948614eca6ec2c450
   );
 };
 

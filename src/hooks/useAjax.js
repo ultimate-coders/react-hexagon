@@ -6,22 +6,24 @@ const useAjax = (
   methodType = 'get',
   body = {},
   bearerToken = null,
-  extra=null
+  authParams=null
 ) => {
   const [url, setUrl] = useState(endPoint);
   const [method, setMethod] = useState(methodType.toUpperCase());
   const [data, setData] = useState(body);
+  const [auth, setAuth] = useState(authParams);
   const [token, setToken] = useState(bearerToken);
   const [results, setResults] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const options = {
+    let options = {
       method,
       url,
       data,
       headers: { 'Content-Type': 'application/json' },
+      auth
     };
 
     if (token) {
@@ -29,13 +31,6 @@ const useAjax = (
         ...options.headers,
         Authorization: `Bearer ${token}`,
       };
-    }
-
-    if(extra){
-      options.headers = {
-        ...options.headers,
-        ...extra
-      }
     }
 
     (async () => {
@@ -53,12 +48,13 @@ const useAjax = (
         setLoading(false);
       }
     })();
-  }, [data, method, token, url, extra]);
+  }, [data, method, token, url, auth]);
 
-  const reload = (url = endPoint, method = methodType, data = body, token = bearerToken) => {
+  const reload = (url = endPoint, method = methodType, data = body, token = bearerToken, auth=authParams) => {
     setUrl(url);
     setMethod(method);
     setData(data);
+    setAuth(auth);
     setToken(token);
     setLoading(true);
     setError(null);
