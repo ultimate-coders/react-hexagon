@@ -19,6 +19,8 @@ import {
   Conversation,
   TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
+import useAjax from "../hooks/useAjax";
+import { PROFILES_WITH_MESSAGES_URL, ME_URL,MESSAGES_URL } from "../urls";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -44,6 +46,13 @@ const useStyles2 = makeStyles((theme) => ({
 }));
 
 const Messages = () => {
+  const [results, reload, loading, error] = useAjax();
+  let token = JSON.parse(localStorage.getItem("tokenName")).access_token;
+  console.log(
+    "🚀 ~ file: MessagesPage.jsx ~ line 51 ~ Messages ~ token",
+    token
+  );
+
   let conversation = [
     {
       name: "Lilly",
@@ -96,8 +105,9 @@ const Messages = () => {
   ];
   const [index, setIndex] = useState(0);
   const [conversations, setConversations] = useState(conversation);
-  const [user, setUser] = useState({})
-  const [chat, setChat] = useState([])
+  const [user, setUser] = useState({});
+  const [chat, setChat] = useState(null);
+  const [messages, setMessages] = useState(null);
   const classes = useStyles();
   const classes2 = useStyles2();
   const sent = "🗸";
@@ -122,30 +132,102 @@ const Messages = () => {
     setConversations(list);
     setIndex(0);
   };
-  // let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjY5MWM5Yi04YWM3LTQ2YzEtOTQzNi04ZDdiMmQ5MThhNGIiLCJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiaWF0IjoxNjI3MDUyMzIzLCJleHAiOjE2MjcwNTgzMjN9.wJUFet9ug8ziakGQ7Uoestm5hWG5q0NzFWd8vVoofUY'
 
-//   useEffect(()=>{
-//    superagent.get('http://localhost:5000/api/v1/me-profile').set('Authorization', `Bearer ${token}`)
-//    .then(results=>{
-//   //  console.log("🚀 ~ file: MessagesPage.jsx ~ line 139 ~ useEffect ~ results", results)
-//      setUser({id: results.body.id, name: results.body.first_name, picture: results.body.profile_picture.link})
-//    })
-//    superagent.get('http://localhost:5000/api/v1/me-profile/with-messages').set('Authorization', `Bearer ${token}`)
-//    .then(results=>{
-//    console.log("🚀 ~ file: MessagesPage.jsx ~ line 139 ~ useEffect ~ results", results.body.results)
-//    setChat(results.body.results)
-//   //  console.log("🚀 ~ file: MessagesPage.jsx ~ line 150 ~ useEffect ~ results.body.results", results.body.results)
-//   //  console.log(chat[0].id)
-//   // superagent.get('http://localhost:5000/api/v1/messages').send({receiver_id: results.body.results[0].id}).set('Authorization', `Bearer yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiMDVkMjdhYi1hNWMzLTQ2NzMtOTJmZC03YTcyMDgwNGYwYmQiLCJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiaWF0IjoxNjI3MDUyNjQ3LCJleHAiOjE2MjcwNTg2NDd9.dZ_UFpicnv8b-YprSJV4NFu0oCHfjOVYCyT6EOC_Zus`)
-//   // .then(results=>{
-//   //  console.log("🚀 ~ file: MessagesPage.jsx ~ line 151 ~ useEffect ~ results", results.body)
-//   //  })
-  
-// })
-// // .then(()=>{
-// //   })
+  useEffect(() => {
+    reload(ME_URL, "get", null, token);
 
-//   },[])
+    // if (results){
+    //   if(results.data.profile_picture){
+    //     setUser({
+    //       id: results.data.id,
+    //       name: results.data.first_name,
+    //       picture: results.data.profile_picture.link,
+    //     });
+    //   }
+    // }
+    // if(user){
+    //   reload(PROFILES_WITH_MESSAGES_URL, 'get', {receiver_id: user.id}, token)
+    //   console.log(results)
+    // }
+  }, []);
+
+  useEffect(() => {
+    if (results) {
+      console.log("🚀 ~ file: MessagesPage.jsx ~ line 156 ~ useEffect ~ results", results)
+      if (results.data.profile_picture) {
+        setUser({
+          id: results.data.id,
+          name: results.data.first_name,
+          picture: results.data.profile_picture.link,
+        });
+      } 
+      
+      // console.log("🚀 ~ file: MessagesPage.jsx ~ line 164 ~ useEffect ~ !chat === null", chat )
+      if (chat === null) {
+        
+        reload(
+          PROFILES_WITH_MESSAGES_URL,
+          "get",
+          null,
+          token
+          );
+          // console.log("🚀 ~ file: MessagesPage.jsx ~ line 155 ~ useEffect ~ results", results.data)
+          if(results.data.results) setChat(results.data.results)
+      
+      } 
+
+        console.log("🚀 ~ file: MessagesPage.jsx ~ line 191 ~ useEffect ~ messages === null && chat", messages === null && chat !== null, messages, chat)
+        if (messages === null && chat ) {
+          console.log("🚀 ~ file: MessagesPage.jsx ~ line 201 ~ useEffect ~ chat[index].id", chat[index].id)
+          
+          reload(
+            `${MESSAGES_URL}/${chat[index].id}`,
+            "get",
+            null,
+            token
+            );
+            console.log("🚀 ~ file: MessagesPage.jsx ~ line 15 ~ useEffect ~ results", results.data)
+            
+            if(results.data.results !== chat) setMessages(results.data.results.reverse());
+            console.log("🚀 ~ file: MessagesPage.jsx ~ line 190 ~ useEffect ~ messages", messages)
+          }
+      
+      // if (chat === null) {
+        
+      //   reload(
+      //     PROFILES_WITH_MESSAGES_URL,
+      //     "get",
+      //     { receiver_id: user.id },
+      //     token
+      //     );
+      //     // console.log("🚀 ~ file: MessagesPage.jsx ~ line 155 ~ useEffect ~ results", results.data)
+      //     if(results.data.results) setChat(results.data.results)
+      
+      // }
+    }
+
+    // if(user){
+    //   reload(PROFILES_WITH_MESSAGES_URL, 'get', {receiver_id: user.id}, token)
+    //   console.log(results)
+    // } else {
+    //   setUser({
+    //     id: results.data.id,
+    //     name: results.data.first_name,
+    //     picture: results.data.profile_picture.link,
+    //   });
+    // }
+    // (async ()=>{
+    //   await reload(PROFILES_WITH_MESSAGES_URL, 'get', {receiver_id: user.id}, token)
+    //   console.log("🚀 ~ file: MessagesPage.jsx ~ line 51 ~ Messages ~ results", results)
+    // })()
+  }, [results,chat]);
+ 
+  // useEffect(()=>{
+  //   reload(PROFILES_WITH_MESSAGES_URL, 'get', {receiver_id: user.id}, token)
+
+  // }, [user])
+
+  // console.log(results.data)
 
   return (
     <>
@@ -154,12 +236,8 @@ const Messages = () => {
           <Grid item xs={3}>
             <Paper className={classes.paper}>
               <div id="people">
-                <Conversation name='Emran'>
-                  <Avatar
-                    src={Faker.image.avatar()}
-                    status="available"
-                    size="lg"
-                  />
+                <Conversation name={user.name}>
+                  <Avatar src={user.picture} status="available" size="lg" />
                 </Conversation>
                 <hr />
                 <div
@@ -169,7 +247,7 @@ const Messages = () => {
                   onClick={(e) => handleChange(e)}
                 >
                   <ConversationList>
-                     {/* {chat.map((val, idx) => (
+                    {chat? chat.map((val, idx) => (
                       <Conversation
                         className={idx + 1}
                         name={val.first_name}
@@ -183,8 +261,8 @@ const Messages = () => {
                           size="md"  
                         />
                       </Conversation>
-                    ))} */}
-                    {conversations.map((val, idx) => (
+                    )): null}
+                    {/* {conversations.map((val, idx) => (
                       <Conversation
                         className={idx + 1}
                         name={val.name}
@@ -198,7 +276,7 @@ const Messages = () => {
                           size="md"
                         />
                       </Conversation>
-                    ))}
+                    ))} */}
                   </ConversationList>
                 </div>
               </div>
@@ -208,13 +286,13 @@ const Messages = () => {
             <div className={classes2.root}>
               <ConversationHeader>
                 <Avatar
-                  src={conversations[index].src}
-                  name={conversations[index].name}
+                  src={chat? chat[index].profile_picture.link : null}
+                  name={conversations[index].first_name}
                   status="available"
                 />
 
                 <ConversationHeader.Content
-                  userName={conversations[index].name}
+                  userName={chat? chat[index].first_name: null}
                 ></ConversationHeader.Content>
               </ConversationHeader>
             </div>
@@ -222,8 +300,10 @@ const Messages = () => {
               <MainContainer>
                 <ChatContainer>
                   <MessageList>
-                    {conversations[index].info.map((val) => (
-                      <If condition={val.sender === "me"}>
+                    {messages? messages.map((val) => (
+                      
+                      <If condition={val.sender_id === user.id}>
+                       
                         <Then>
                           <Message
                             model={{
@@ -261,12 +341,19 @@ const Messages = () => {
                                   float: "right",
                                 }}
                               >
-                                {Faker.date.recent().toString().split(" ")[4].split(":").splice(0, 2).join(":")}
+                                {Faker.date
+                                  .recent()
+                                  .toString()
+                                  .split(" ")[4]
+                                  .split(":")
+                                  .splice(0, 2)
+                                  .join(":")}
                               </span>
                             </Message.CustomContent>
                           </Message>
                           {/* <Message
                             model={{
+          console.log("🚀 ~ file: MessagesPage.jsx ~ line 322 ~ useEffect ~ results", results)
                               message: "how are you   ", 
                               sentTime: "just now",
                               sender: "Joe",
@@ -276,7 +363,7 @@ const Messages = () => {
                           </Message> */}
                         </Else>
                       </If>
-                    ))}
+                    )): null}
 
                     {/* <TypingIndicator />\ */}
                   </MessageList>

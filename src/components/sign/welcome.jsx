@@ -52,7 +52,7 @@ const Welcome = (props) => {
       (async () => {
         await checkAuth(
           () => null,
-          () => history.push('/')
+          () => history.push('/home')
         );
       })();
     }

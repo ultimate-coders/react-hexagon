@@ -1,4 +1,4 @@
-const BASE_URL = 'https://hexagon-sm.herokuapp.com/';
+const BASE_URL = 'http://localhost:5000/';
 
 // Auth endpoints
 export const SIGN_IN_GOOGLE_URL = BASE_URL + 'auth/google';
@@ -39,7 +39,7 @@ export const COMMENT_URL = BASE_URL + 'api/v1/comment';
 export const NOTIFICATIONS_URL = BASE_URL + 'api/v1/Notifications';
 
 // Messages endpoints
-export const MESSAGES_URL = BASE_URL + 'api/v1/Messages';
+export const MESSAGES_URL = BASE_URL + 'api/v1/messages';
 
 // Interaction endpoints
 export const INTERACTION_URL = BASE_URL + 'api/v1/interaction';
