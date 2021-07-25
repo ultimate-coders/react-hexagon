@@ -1,0 +1,59 @@
+header {
+
+    height: 100px;
+
+}
+#logo {
+    width: 5em;
+    height: 2.5em;
+    position: relative;
+    left: 2em;
+    top: 1.7em;
+    border: solid 1px black;
+    border-radius: 20em;
+}
+
+header {
+    background-color: #529471;
+}
+
+#title {
+    position: relative;
+    left: 1em;
+    top: 0.5em;
+    color: white;
+    font-weight: bold;
+    text-shadow: 0.5px 0.5px black;
+}
+
+#search-bar {
+    width: 30em;
+    position: relative;
+    left: 30em;
+    bottom: 2em;
+}
+
+#search-bar button {
+    background-color: #eee;
+    color: #529471;
+    border-color: #529471;
+}
+
+#search-bar button:hover {
+    background-color: #eee;
+    color: #529471;
+}
+
+#iconsContainer {
+    position: relative;
+    bottom: 5em;
+    left: 70em;
+    // left: 50em;
+}
+
+svg {
+    width: 1.5em;
+    height: 1.5em;
+    // background-color: white;
+    // border-radius: 100px;
+}
