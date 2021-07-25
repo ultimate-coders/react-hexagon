@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 import "./App.scss";
 import AuthPage from "./pages/AuthPage";
@@ -9,12 +10,19 @@ import ChangePassword from "./components/password/changePassword";
 import Header from "./components/header/header";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
+=======
+import React from 'react';
+import './App.scss';
+// import AuthPage from './pages/AuthPage'
+import Messages from './pages/MessagesPage'
+>>>>>>> messages-component
 
 const App = () => {
   // Import the page you are working on and comment the others to test
 
   return (
     <React.Fragment>
+<<<<<<< HEAD
       <Router>
         <Switch>
           <Route exact path="/">
@@ -38,6 +46,10 @@ const App = () => {
         </Switch>
       </Router>
       {/* <Header/> */}
+=======
+      {/* <AuthPage /> */}
+      <Messages/>
+>>>>>>> messages-component
     </React.Fragment>
   );
 };
