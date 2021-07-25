@@ -19,9 +19,9 @@ import AuthController from './components/authController';
 const RouterComponent = () => {
   return (
     <Router>
-      <Header/>
       <Switch>
         <AuthController>
+        {/* <Header/> */}
           <Route exact path='/signin'>
             <Welcome />
           </Route>
