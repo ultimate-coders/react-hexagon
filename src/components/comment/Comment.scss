@@ -1,0 +1,39 @@
+.comment_container {
+    display: flex;
+    padding: 10px;
+    border-bottom: 0.5px solid rgb(209, 207, 207);
+
+    .post_header_avatar {
+        margin-right: 15px;
+        cursor: pointer;
+    }
+
+    .comment_right {
+
+        .comment_username {
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: #5181b8;
+            cursor: pointer;
+        }
+
+        .comment_text {
+            font-size: 0.8rem;
+        }
+        
+        .comment_created_at {
+            font-size: 0.7rem;
+            color: grey;
+        }
+    }
+
+    .comment_clear_icon {
+        margin-left: auto;
+        cursor: pointer;
+        color: rgb(168, 164, 164);
+        
+        &:hover {
+            background-color: rgb(243, 239, 239);
+        }
+    }
+}
