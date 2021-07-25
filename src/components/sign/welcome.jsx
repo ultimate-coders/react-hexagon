@@ -38,7 +38,7 @@ const Welcome = (props) => {
 
   const history = useHistory();
 
-  const onLogin = () => {
+  const onSignin = () => {
       reload(SIGN_IN_URL, 'post', null, null, {
       username: email,
       password: password,
@@ -109,7 +109,7 @@ const Welcome = (props) => {
                   {/* <Button id="openAuth"><img src={"https://www.hebergementwebs.com/image/b5/b5a4bf161a5c2a1316b72199a6887cc8.webp/the-secret-history-of-the-google-logothe-secret-history-of-the-google-logo-0.webp"} alt={"Hexagon"} ></img>
                             </Button> */}
                   <div id='loginDiv'>
-                    <HexagonButton onClick={onLogin}  className='loginButton'>
+                    <HexagonButton onClick={onSignin}  className='loginButton'>
                       {loading ? 'Loading' : 'Log In'}
                     </HexagonButton>
                   </div>
@@ -140,7 +140,7 @@ const Welcome = (props) => {
                 <div className='anchorContainer'>
                   <Link
                     to='/signup'
-                    className='loginRegisterButton new-account-wedth'
+                    className='loginRegisterButton new-account-width'
                   >
                     Your first time here? Create a New Account
                   </Link>
