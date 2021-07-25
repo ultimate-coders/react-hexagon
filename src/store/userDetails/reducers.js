@@ -2,7 +2,7 @@ import { USER_DETAIL_INFO, LOGIN_STATE } from './actionTypes';
 
 const initialState = {
   loggedIn: false,
-  userDetail: {},
+  userDetail: null,
 };
 
 const userDetailReducer = (state = initialState, action) => {

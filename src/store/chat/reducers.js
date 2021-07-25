@@ -1,8 +1,8 @@
 import { ACTIVE_CHAT, ACTIVE_CHAT_USER } from './actionTypes';
 
 const initialState = {
-  activeChat: {},
-  activeChatUser: {},
+  activeChat: null,
+  activeChatUser: null,
 };
 
 const chatReducer = (state = initialState, action) => {

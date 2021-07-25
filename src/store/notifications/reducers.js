@@ -1,7 +1,7 @@
 import { ACTIVE_NOTIFICATION } from './actionTypes';
 
 const initialState = {
-  activeNotification: {},
+  activeNotification: null,
 };
 
 const notificationReducer = (state = initialState, action) => {
