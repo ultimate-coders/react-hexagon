@@ -6,7 +6,7 @@ import GoogleButton from 'react-google-button';
 import './welcome.scss';
 
 import useAjax from '../../hooks/useAjax';
-import { SIGN_IN_URL } from '../../urls';
+import { SIGN_IN_URL,SIGN_IN_GOOGLE_URL} from '../../urls';
 import { tokenName } from '../../helpers';
 import { useHistory } from 'react-router';
 import { checkAuth } from '../authController';
@@ -39,11 +39,18 @@ const Welcome = (props) => {
   const history = useHistory();
 
   const onSignin = () => {
-      reload(SIGN_IN_URL, 'post', null, null, {
+    reload(SIGN_IN_URL, 'post', null, null, {
       username: email,
       password: password,
     })
-  };
+  }; 
+
+  // const googleOauth = () => {
+  //   reload(SIGN_IN_GOOGLE_URL, 'post', null, null, {
+  //     username: email,
+  //     password: password,
+  //   })
+  // };
 
   useEffect(() => {
     if (checking) {
@@ -107,7 +114,7 @@ const Welcome = (props) => {
                   {/* <Button id="openAuth"><img src={"https://www.hebergementwebs.com/image/b5/b5a4bf161a5c2a1316b72199a6887cc8.webp/the-secret-history-of-the-google-logothe-secret-history-of-the-google-logo-0.webp"} alt={"Hexagon"} ></img>
                             </Button> */}
                   <div id='loginDiv'>
-                    <HexagonButton onClick={onSignin}  className='loginButton'>
+                    <HexagonButton onClick={onSignin} className='loginButton'>
                       {loading ? 'Loading' : 'Sign in'}
                     </HexagonButton>
                   </div>
@@ -127,9 +134,7 @@ const Welcome = (props) => {
                           backgroundColor: '#529471',
                           textAlign: 'center',
                         }}
-                        onClick={() => {
-                          console.log('Google button clicked');
-                        }}
+                        // onClick={googleOauth}
                       />
                     </Button>
                   </div>

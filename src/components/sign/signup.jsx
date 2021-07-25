@@ -2,24 +2,23 @@ import { React, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './signup.scss'
 
-import Avatar from '@material-ui/core/Avatar';
+// import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { styled } from '@material-ui/core/styles';
-import Checkbox from '@material-ui/core/Checkbox';
+// import Checkbox from '@material-ui/core/Checkbox';
 
 import useAjax from '../../hooks/useAjax';
 import { SIGNUP_URL } from '../../urls';
 import { useHistory } from 'react-router';
 import { tokenName } from '../../helpers';
-
 
 
 
@@ -76,6 +75,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignUp = () => {
+    const[ToggleEye,setToggleEye] = useState('https://image.flaticon.com/icons/png/512/4743/4743038.png');
     const classes = useStyles();
     const [userName, setUserName] = useState('');
     const [email, setEmail] = useState('');
@@ -96,12 +96,19 @@ const SignUp = () => {
     };
 
     function showPassword(e) {
-        let x = e.target;
-        console.log("🚀 ~ file: signup.jsx ~ line 100 ~ showPassword ~ x", x)
-        if (x.type === "password") {
-          x.type = "text";
-        } else {
-          x.type = "password";
+
+        let passwordInput = document.getElementById('showPasswordInput');
+
+        let closedEye = 'https://image.flaticon.com/icons/png/512/4743/4743038.png';
+        let openedEye = 'https://image.flaticon.com/icons/png/512/709/709612.png';
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            setToggleEye(openedEye);
+        } 
+        else {
+            passwordInput.type = "password";
+            setToggleEye(closedEye);
         }
       }
 
@@ -164,8 +171,9 @@ const SignUp = () => {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                id="showPasswordInput"
                             />
-                            <input id="showPassword" type="checkbox" onclick={showPassword}/>Show Password
+                            <img id="passowrdImage" src={ToggleEye} alt={'alt'} type="checkbox" onClick={showPassword}/>
                         </Grid>
                     </Grid>
                     <HexagonButton
