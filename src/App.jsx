@@ -3,7 +3,6 @@ import AuthPage from './pages/AuthPage';
 import TimeLinePage from './pages/TimeLinePage';
 import React from "react";
 import "./App.scss";
-import AuthPage from "./pages/AuthPage";
 import Welcome from "./components/sign/welcome";
 import SignUp from "./components/sign/signup";
 import Verify from "./components/sign/verify";
@@ -21,9 +20,12 @@ const App = () => {
 
   return (
     <React.Fragment>
-      <TimeLinePage />
       <Router>
         <Switch>
+          <Route exact path='/dashboard'>
+      <TimeLinePage />
+
+          </Route>
           <Route exact path="/">
             <Welcome />
           </Route>
