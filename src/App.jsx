@@ -1,3 +1,6 @@
+
+import AuthPage from './pages/AuthPage';
+import TimeLinePage from './pages/TimeLinePage';
 import React from "react";
 import "./App.scss";
 import AuthPage from "./pages/AuthPage";
@@ -18,6 +21,7 @@ const App = () => {
 
   return (
     <React.Fragment>
+      <TimeLinePage />
       <Router>
         <Switch>
           <Route exact path="/">
