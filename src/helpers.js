@@ -17,7 +17,7 @@ export const logout = async() => {
         });
     }
     localStorage.removeItem(tokenName);
-    window.location.href = '/login'
+    window.location.href = '/login';
 }
 
 // Function to get the token from the localStorage and check it from the api

@@ -26,7 +26,7 @@ const RightSideBar = () => {
     return (
         <div className='Right_side_bar'>
             {
-                ads.map(ad => <Ad ad={ad} />)
+                ads.map((ad, index) => <Ad key={index} ad={ad} />)
             }
         </div>
     )

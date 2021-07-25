@@ -81,7 +81,7 @@ const Post = ({ post }) => {
       <div className='post_footer'>
         <div className='post_footer_likes_container'>
           <FavoriteBorderIcon
-            color={`${post.am_like && 'secondary'}`}
+            color={post.am_like ? 'secondary' : 'action' }
             className='favorite_icon'
           />
           <span>{post.likes}</span>
