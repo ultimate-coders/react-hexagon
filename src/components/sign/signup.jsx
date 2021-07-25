@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignUp = () => {
-    const[ToggleEye,setToggleEye] = useState('https://image.flaticon.com/icons/png/512/4743/4743038.png');
+    const [ToggleEye, setToggleEye] = useState('https://image.flaticon.com/icons/png/512/4743/4743038.png');
     const classes = useStyles();
     const [userName, setUserName] = useState('');
     const [email, setEmail] = useState('');
@@ -105,21 +105,21 @@ const SignUp = () => {
         if (passwordInput.type === "password") {
             passwordInput.type = "text";
             setToggleEye(openedEye);
-        } 
+        }
         else {
             passwordInput.type = "password";
             setToggleEye(closedEye);
         }
-      }
+    }
 
-      useEffect(() => {
+    useEffect(() => {
         if (results) {
-          localStorage.setItem(tokenName, JSON.stringify(results.data));
-          setChecking(false);
-          history.push('/home');
+            localStorage.setItem(tokenName, JSON.stringify(results.data));
+            setChecking(false);
+            history.push('/home');
         }
-      }, [results]);
-    
+    }, [results]);
+
 
     return (
         <Container component="main" maxWidth="xs">
@@ -173,16 +173,16 @@ const SignUp = () => {
                                 autoComplete="current-password"
                                 id="showPasswordInput"
                             />
-                            <img id="passowrdImage" src={ToggleEye} alt={'alt'} type="checkbox" onClick={showPassword}/>
+                            <img id="passowrdImage" src={ToggleEye} alt={'alt'} type="checkbox" onClick={showPassword} />
                         </Grid>
                     </Grid>
                     <HexagonButton
                         // type="submit"
-                        onClick={onSignup} 
+                        onClick={onSignup}
                         fullWidth
                         variant="contained"
                         color="primary"
-                        // className={classes.submit}
+                    // className={classes.submit}
                     >
                         Sign Up
                     </HexagonButton>
@@ -202,6 +202,6 @@ const SignUp = () => {
 }
 const mapStateToProps = (state) => ({
     userDetails: state.userDetails,
-  });
+});
 
 export default SignUp;

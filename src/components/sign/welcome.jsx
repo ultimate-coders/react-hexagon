@@ -6,7 +6,7 @@ import GoogleButton from 'react-google-button';
 import './welcome.scss';
 
 import useAjax from '../../hooks/useAjax';
-import { SIGN_IN_URL,SIGN_IN_GOOGLE_URL} from '../../urls';
+import { SIGN_IN_URL, SIGN_IN_GOOGLE_URL } from '../../urls';
 import { tokenName } from '../../helpers';
 import { useHistory } from 'react-router';
 import { checkAuth } from '../authController';
@@ -30,6 +30,8 @@ const HexagonButton = styled(Button)({
 });
 
 const Welcome = (props) => {
+
+  const [ToggleEye, setToggleEye] = useState('https://image.flaticon.com/icons/png/512/4743/4743038.png');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [checking, setChecking] = useState(localStorage.getItem(tokenName));
@@ -43,7 +45,7 @@ const Welcome = (props) => {
       username: email,
       password: password,
     })
-  }; 
+  };
 
   // const googleOauth = () => {
   //   reload(SIGN_IN_GOOGLE_URL, 'post', null, null, {
@@ -51,6 +53,23 @@ const Welcome = (props) => {
   //     password: password,
   //   })
   // };
+
+  function showPassword(e) {
+
+    let passwordInput = document.getElementById('loginInput');
+
+    let closedEye = 'https://image.flaticon.com/icons/png/512/4743/4743038.png';
+    let openedEye = 'https://image.flaticon.com/icons/png/512/709/709612.png';
+
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        setToggleEye(openedEye);
+    }
+    else {
+        passwordInput.type = "password";
+        setToggleEye(closedEye);
+    }
+}
 
   useEffect(() => {
     if (checking) {
@@ -111,6 +130,7 @@ const Welcome = (props) => {
                     id='loginInput'
                     className='loginInput'
                   />
+                  <img id="WelcomepassowrdImage" src={ToggleEye} alt={'alt'} type="checkbox" onClick={showPassword} />
                   {/* <Button id="openAuth"><img src={"https://www.hebergementwebs.com/image/b5/b5a4bf161a5c2a1316b72199a6887cc8.webp/the-secret-history-of-the-google-logothe-secret-history-of-the-google-logo-0.webp"} alt={"Hexagon"} ></img>
                             </Button> */}
                   <div id='loginDiv'>
@@ -134,7 +154,7 @@ const Welcome = (props) => {
                           backgroundColor: '#529471',
                           textAlign: 'center',
                         }}
-                        // onClick={googleOauth}
+                      // onClick={googleOauth}
                       />
                     </Button>
                   </div>

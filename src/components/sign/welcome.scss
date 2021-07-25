@@ -81,8 +81,8 @@
 }
 
 .loginWrapper {
-    width: 70%;
-    height: 70%;
+    width: 70em;
+    height: 300em;
     display: flex;
 }
 
@@ -209,4 +209,12 @@
 
 .new-account-width{
     width: 200px;
+}
+
+#WelcomepassowrdImage{
+    width:1.5em;
+    height:1em;
+    position:relative;
+    left: 30em;
+    bottom: 2.3em;
 }
