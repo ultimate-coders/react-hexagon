@@ -1,6 +1,5 @@
-
-import AuthPage from './pages/AuthPage';
-import TimeLinePage from './pages/TimeLinePage';
+import AuthPage from "./pages/AuthPage";
+import TimeLinePage from "./pages/TimeLinePage";
 import React from "react";
 import "./App.scss";
 import Welcome from "./components/sign/welcome";
@@ -14,35 +13,38 @@ import { Route, Switch } from "react-router-dom";
 
 import ProfilePage from './pages/ProfilePage'
 
+import Messages from "./pages/MessagesPage";
 
 const App = () => {
   // Import the page you are working on and comment the others to test
 
   return (
     <React.Fragment>
-      <TimeLinePage />
       <Router>
         <Switch>
+          <Route exact path="/home">
+            <TimeLinePage />
+          </Route>
           <Route exact path="/">
             <Welcome />
           </Route>
           <Route exact path="/signup">
             <SignUp />
           </Route>
-          <Route exact path='/forgotpassword'>
+          <Route exact path="/forgotpassword">
             <ForgotPassword />
           </Route>
-          <Route exact path='/changepassword'>
+          <Route exact path="/changepassword">
             <ChangePassword />
           </Route>
-          <Route exact path='/Verify'>
+          <Route exact path="/Verify">
             <Verify />
           </Route>
-          <Route exact path='/google-auth'>
+          <Route exact path="/google-auth">
             <AuthPage />
           </Route>
-          <Route exact path='/messages'>
-              <Messages/>
+          <Route exact path="/messages">
+            <Messages />
           </Route>
         </Switch>
       </Router>
