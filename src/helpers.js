@@ -10,7 +10,10 @@ export const logout = async() => {
         await axios({
             url: LOGOUT_URL,
             method: 'get',
-            token: await getToken()
+            headers: {
+                ContentType: 'application/json',
+                Authorization: `Bearer ${await getToken()}`
+            }
         });
     }
     localStorage.removeItem(tokenName);

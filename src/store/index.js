@@ -5,10 +5,12 @@ import thunk from 'redux-thunk';
 // Import Reducers
 import { userDetailReducer } from './userDetails';
 import { chatReducer } from './chat';
+import { notificationReducer } from './notifications';
 
 const reducers = combineReducers({
-  userDetail: userDetailReducer,
+  userDetails: userDetailReducer,
   chat: chatReducer,
+  notification: notificationReducer,
 });
 
 const store = () => {
