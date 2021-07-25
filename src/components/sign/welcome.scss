@@ -159,12 +159,12 @@
     // text-align: center;
     // height: 30%;
     // border-radius: 10px;
-    border: none;
+    // border: none;
     // background-color: #42b72a;
     // color: #529471;
     color:#1775ee;
-    font-size: 20px;
-    font-weight: 500;
+    font-size: 17px;
+    // font-weight: 500;
     cursor: pointer;
     text-decoration: none;
     padding: 0 .5em;
@@ -180,8 +180,9 @@
     // color: #eee;
     // background-color:#529471;
     // color:#529471;
-    background-color: #eee;
-    box-shadow:  3px 3px 3px 2px gray;
+    // background-color: #eee;
+    text-decoration:underline;
+    // box-shadow:  3px 3px  gray;
     // box-shadow:   rgba(0, 0, 0, 0.25) 0px 2px 4px 0px;
 }
 
@@ -196,11 +197,15 @@
     // display:flex;
     // flex-direction: row;
     // justify-content:center;
-
+    padding: 10px;
     text-align:center;
 }
 
 #forgotPasswordContainer span , #forgotPasswordContainer a {
     font-size: .8em;
     margin: .2em;
+}
+
+.new-account-wedth{
+    width: 200px;
 }

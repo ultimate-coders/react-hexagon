@@ -48,10 +48,11 @@ const Welcome = () => {
                             <div id="loginDiv">
                                 <HexagonButton className="loginButton">Log In</HexagonButton>
                             </div>
+                            
                             <div id="forgotPasswordContainer">
-                                <span className="loginForgot">Forgot Your Password?</span>
+                                {/* <span className="loginForgot">Forgot Your Password?</span> */}
                                 <a className="loginRegisterButton" type="submit">
-                                    Reset password
+                                Forgot Your Password? Reset password
                                 </a>
                             </div>
                             <div id="oauthSpan">
@@ -62,10 +63,10 @@ const Welcome = () => {
                                 </Button>
                             </div>
                         </div>
-                        <span className="loginForgot">Your first time here?</span>
+                        {/* <span className="loginForgot">Your first time here?</span> */}
                         <div className="anchorContainer">
-                            <a className="loginRegisterButton" type="submit">
-                                Create a New Account
+                            <a className="loginRegisterButton new-account-wedth" type="submit">
+                            Your first time here? Create a New Account
                             </a>
                         </div>
                     </div>
