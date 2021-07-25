@@ -39,10 +39,12 @@ const Welcome = (props) => {
   const history = useHistory();
 
   const onLogin = () => {
-    reload(SIGN_IN_URL, "post", null, null, {
+      reload(SIGN_IN_URL, 'post', null, null, {
       username: email,
       password: password,
-    });
+    })
+    // window.location.href = '/home';
+    // history.push('/home')
   };
 
   useEffect(() => {
@@ -60,7 +62,7 @@ const Welcome = (props) => {
     if (results) {
       localStorage.setItem(tokenName, JSON.stringify(results.data));
       setChecking(false);
-      history.push("/");
+      history.push('/home');
     }
   }, [results]);
 
@@ -106,9 +108,9 @@ const Welcome = (props) => {
                   />
                   {/* <Button id="openAuth"><img src={"https://www.hebergementwebs.com/image/b5/b5a4bf161a5c2a1316b72199a6887cc8.webp/the-secret-history-of-the-google-logothe-secret-history-of-the-google-logo-0.webp"} alt={"Hexagon"} ></img>
                             </Button> */}
-                  <div id="loginDiv">
-                    <HexagonButton onClick={onLogin} className="loginButton">
-                      {loading ? "Loading" : "Log In"}
+                  <div id='loginDiv'>
+                    <HexagonButton onClick={onLogin}  className='loginButton'>
+                      {loading ? 'Loading' : 'Log In'}
                     </HexagonButton>
                   </div>
 

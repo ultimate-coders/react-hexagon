@@ -17,7 +17,7 @@ const NewPost = () => {
   }
 
   return (
-    <Form onSubmit={onSubmit} className='new_post_container'>
+    <Form style={{width: '98.3%', margin:'10px auto'}} onSubmit={onSubmit} className='new_post_container profile'>
       <Form.Group className='new_post_first_row' controlId='formTextInput'>
         <Avatar className='new_post_avatar' alt={userName} src={profileImage} />
         <Form.Control

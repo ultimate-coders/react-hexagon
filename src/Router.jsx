@@ -20,17 +20,19 @@ const RouterComponent = () => {
   return (
     <Router>
       <Switch>
-        {/* <Header/> */}
         <Route exact path="/">
           <Welcome />
         </Route>
         <Route exact path="/signup">
           <SignUp />
         </Route>
+        <Route exact path="/forgotpassword">
+          <ForgotPassword />
+        </Route>
+        <Route exact path="/google-auth">
+          <AuthPage />
+        </Route>
         <AuthController>
-          <Route exact path="/forgotpassword">
-            <ForgotPassword />
-          </Route>
           <Route exact path="/home">
             <TimeLinePage />
           </Route>
@@ -39,9 +41,6 @@ const RouterComponent = () => {
           </Route>
           <Route exact path="/Verify">
             <Verify />
-          </Route>
-          <Route exact path="/google-auth">
-            <AuthPage />
           </Route>
           <Route exact path="/messages">
             <Messages />
