@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Post from './Post';
 
 const posts = [
@@ -262,12 +263,18 @@ const posts = [
     },
   ];
   
-const PostsList = () => {
+const PostsList = (props) => {
+
+  if(!props.posts || props.posts.length === 0){
+    return (
+      <div>No posts to display</div>
+    )
+  }
 
     return (
         <div>
             {
-                posts.map(post => <Post key={post.id} post={post} />)
+                props.posts.map(post => <Post key={post.id} post={post} />)
             }
         </div>
     )

@@ -25,8 +25,8 @@ export const checkAuth = async (setChecking, dispatch) => {
     }).catch(e => null);
 
     if(userProfile){
-        setChecking(false);
         dispatch(userDetailAction(userProfile.data));
+        setChecking(false);
     } else {
         const newAccessToken = await axios({
             url: REFRESH_URL,
@@ -55,7 +55,7 @@ const AuthController = (props) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        checkAuth(setChecking, dispatch);
+        (async () => await checkAuth(setChecking, dispatch))();
     }, []);
 
     return (

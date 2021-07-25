@@ -9,8 +9,11 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import SinglePostModal from './SinglePostModal';
 import './Post.scss';
+import { useSelector } from 'react-redux';
+
 
 const Post = ({ post }) => {
+  const { userDetails } = useSelector(mapStateToProps);
   const [anchorEl, setAnchorEl] = useState(null);
   const [openModal, setOpenModal] = useState(false);
 
@@ -52,7 +55,8 @@ const Post = ({ post }) => {
             {moment(post.created_at).fromNow()}
           </span>
         </div>
-        <div className='post_header_drop_down_list'>
+        {userDetails.id === post.profile.id && (
+          <div className='post_header_drop_down_list'>
           <Button
             aria-controls='simple-menu'
             aria-haspopup='true'
@@ -67,10 +71,11 @@ const Post = ({ post }) => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>Update</MenuItem>
+            {/* <MenuItem onClick={handleClose}>Update</MenuItem> */}
             <MenuItem onClick={handleClose}>Delete</MenuItem>
           </Menu>
         </div>
+        )}
       </div>
       <div className='post_text_content'>{post.text}</div>
       {post.images[0] && (
@@ -94,5 +99,10 @@ const Post = ({ post }) => {
     </div>
   );
 };
+
+const mapStateToProps = (state) => ({
+  userDetails: state.userDetails.user,
+});
+
 
 export default Post;
