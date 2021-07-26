@@ -116,7 +116,7 @@ const SignUp = () => {
         if (results) {
             localStorage.setItem(tokenName, JSON.stringify(results.data));
             setChecking(false);
-            history.push('/home');
+            history.push('/Verify');
         }
     }, [results]);
 
