@@ -21,6 +21,10 @@ const Main = (props) => {
   const onChangePostsList = (postId) => {
     setPosts(prev => prev.filter(post => post.id !== postId));
   };
+
+  const onAddNewPosts = (post) => {
+    setPosts(prev => [post, ...prev]);
+  };
   
   useEffect(() => {
     if (props.category) {
@@ -34,10 +38,10 @@ const Main = (props) => {
     setPosts(results?.data.results);
   }, [results])
   
-  console.log('update post list on render', posts);
+
   return (
     <div>
-      <NewPost />
+      <NewPost onAddNewPosts={onAddNewPosts} />
       {checking ? (
         'loading'
       ) : (
