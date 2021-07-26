@@ -49,7 +49,7 @@ const Post = ({ post, onChangePostsList, single }) => {
         handleOpenModal={handleOpenModal}
         handleCloseModal={handleCloseModal}
         openModal={openModal}
-        postId={post.id}
+        postDetails={post}
       />
       <DeleteModal 
         handleOpenModal={handleOpenDeleteModal}
@@ -95,7 +95,7 @@ const Post = ({ post, onChangePostsList, single }) => {
         )}
       </div>
       <div className='post_text_content'>{post.text}</div>
-      {post.images[0] && (
+      {post?.images[0]?.link && (
         <div onClick={handleOpenModal} className='post_images_container'>
           <img className='post_image' src={post.images[0].link} alt='' />
         </div>

@@ -20,11 +20,6 @@ const Main = (props) => {
 
   const onChangePostsList = (postId) => {
     setPosts(prev => prev.filter(post => post.id !== postId));
-    // if (props.category) {
-    //   getAllPosts(`${CATEGORY_POSTS_URL}/${props.category.name}`);
-    // } else {
-    //   getAllPosts(TIMELINE_POSTS_URL);
-    // }
   };
   
   useEffect(() => {
