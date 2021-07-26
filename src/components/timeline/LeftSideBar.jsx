@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -6,6 +7,9 @@ import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined'
 import ChatBubbleOutlineOutlinedIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import NotificationsNoneOutlinedIcon from '@material-ui/icons/NotificationsNoneOutlined';
 import CategoryOutlinedIcon from '@material-ui/icons/CategoryOutlined';
+import useAjax from '../../hooks/useAjax';
+import { CATEGORY_URL } from '../../urls';
+import { getToken } from '../../helpers';
 
 const categories = [
   {
@@ -26,7 +30,21 @@ const categories = [
   },
 ];
 
-const LeftSideBar = () => {
+const LeftSideBar = (props) => {
+  const [results, reload, loading, error] = useAjax();
+
+
+  const getAllCategories = () => {
+    (async () => {
+      const token = await getToken();
+      reload(CATEGORY_URL, 'get', null, token);
+    })();
+  };
+
+  useEffect(() => {
+    getAllCategories();
+  }, []);
+
   return (
     <div>
       <List>
@@ -45,14 +63,20 @@ const LeftSideBar = () => {
       </List>
         <div>Categories</div>
       <List>
-        {categories.map((category, index) => (
-          <ListItem button key={category.id}>
-            <ListItemIcon>
-                <CategoryOutlinedIcon />
-            </ListItemIcon>
-            <ListItemText primary={category.name} />
-          </ListItem>
-        ))}
+        {
+          loading ? (
+            <div>Loading</div>
+          ) : (
+            results?.data.map((category, index) => (
+              <ListItem onClick={() => props.setCategory(category)} button key={category.id}>
+                <ListItemIcon>
+                    <CategoryOutlinedIcon color={props.category === category ? 'secondary' : 'action'} />
+                </ListItemIcon>
+                <ListItemText primary={category.name} />
+              </ListItem>
+            ))
+          )
+        }
       </List>
     </div>
   );
