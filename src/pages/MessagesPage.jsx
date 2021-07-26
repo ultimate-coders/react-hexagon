@@ -6,8 +6,9 @@ import Grid from "@material-ui/core/Grid";
 import "./MessagesPage.scss";
 import { If, Then, Else } from "react-if";
 import Faker from "faker";
+import {Link} from 'react-router-dom'
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
-import {getToken} from '../helpers'
+import { getToken } from "../helpers";
 import {
   MainContainer,
   ChatContainer,
@@ -22,7 +23,8 @@ import {
   TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
 import useAjax from "../hooks/useAjax";
-import { PROFILES_WITH_MESSAGES_URL, ME_URL,MESSAGES_URL } from "../urls";
+import { PROFILES_WITH_MESSAGES_URL, ME_URL, MESSAGES_URL } from "../urls";
+import messageHook from "../hooks/messagesHook";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -48,10 +50,11 @@ const useStyles2 = makeStyles((theme) => ({
 }));
 
 const Messages = () => {
-  const state = useSelector(mapStateToProps)
+  const state = useSelector(mapStateToProps);
   const [results, reload, loading, error] = useAjax();
- getToken().then((results)=>setToken(results))
-  
+  let [resultsMsg, reloadMsg, loadingMsg, errorMsg] = messageHook();
+  getToken().then((results) => setToken(results));
+
   let conversation = [
     {
       name: "Lilly",
@@ -104,6 +107,7 @@ const Messages = () => {
   ];
   const [token, setToken] = useState(null);
   const [index, setIndex] = useState(0);
+  const [send, setSend] = useState(false);
   const [conversations, setConversations] = useState(conversation);
   const [user, setUser] = useState({});
   const [chat, setChat] = useState(null);
@@ -116,87 +120,70 @@ const Messages = () => {
   const handleChange = (event) => {
     console.log(event.target.className);
     let x = event.target.className.split(" ");
-    if((x[1] - 1 )!== index) {
-      console.log('hello')
-      setMessages(null)
-      
-      setIndex(x[1] - 1);
-      console.log(x[1] - 1, index)
-      console.log("🚀 ~ file: MessagesPage.jsx ~ line 129 ~ handleChange ~ chat[x[1] - 1].id", chat[x[1] - 1].id)
-      
-      
-    }
+
+    setIndex(x[1] - 1);
+    getMessages(x[1] - 1);
   };
 
   const newMessage = (event) => {
+    // setSend(true);
     console.log(event);
-    conversations[index].info.push({ sender: "me", message: event });
-    let list = conversations.filter((val, idx) => idx !== index);
-    console.log(
-      "🚀 ~ file: MessagesPage.jsx ~ line 120 ~ newMessage ~ list",
-      list
-    );
-    list.unshift(conversations[index]);
+    (async () => {
+      await reload(
+        MESSAGES_URL,
+        "post",
+        { receiver_id: chat[index].id, message: event },
+        token
+      );
+    })();
+    //   if(results) setChat(results.data.results.reverse())
+    messages.push({ sender_id: user.id, message: event });
+    let list = messages.filter((val, idx) => idx !== index);
+    list.unshift(messages[index]);
+    setMessages(list);
 
-    setConversations(list);
-    setIndex(0);
+   let newList = chat 
+   let x = newList.splice(index, 1)
+   x[0].last_message = { sender_id: user.id, message: event }
+   newList.unshift(x[0])
+   setChat(newList)
+   setIndex(0)
   };
 
   useEffect(() => {
- 
     setUser({
       id: state.user.userDetail.id,
       name: state.user.userDetail.first_name,
       picture: state.user.userDetail.profile_picture.link,
     });
-   
   }, []);
 
   useEffect(() => {
-    
-      if (chat === null) {
-        
-        reload(
-          PROFILES_WITH_MESSAGES_URL,
-          "get",
-          null,
-          token
-          );
-          if(results) setChat(results.data.results.reverse())
-      
-      } 
+      if(chat === null){
 
-        if (messages === null && chat ) {
-          
-          (async () => {await reload(
-            `${MESSAGES_URL}/${chat[index].id}`,
-            "get",
-            null,
-            token
-            );
-            
-            if(results.data.results !== chat ) setMessages(results.data.results.reverse());}
-            )()
-           
-            
-            console.log("🚀 ~ file: MessagesPage.jsx ~ line 213 ~ useEffect ~ messages", messages)
-            console.log("🚀 ~ file: MessagesPage.jsx ~ line 214 ~ useEffect ~ results", results.data.results)
-            // console.log("🚀 ~ file: MessagesPage.jsx ~ line 190 ~ useEffect ~ messages", messages)
-          }
-      
-      
-  }, [token, results,chat, messages]);
- 
-  // useEffect(()=>{
-  //   (async () => {await reload(
-  //     `${MESSAGES_URL}/${chat[index].id}`,
-  //     "get",
-  //     null,
-  //     token
-  //     )
-  //     if(results.data.results !== messages && results.data.results !== chat ) setMessages(results.data.results.reverse());}
-  //     )()
-  // },[messages])
+        reload(PROFILES_WITH_MESSAGES_URL, "get", null, token);
+        // console.log("🚀 ~ file: MessagesPage.jsx ~ line 171 ~ useEffect ~ results", results)
+        if (results) setChat(results.data.results.reverse());
+      }
+    
+    // console.log("hello");
+    
+  }, [token, results]);
+
+  let getMessages = (x) => {
+    (async () => {
+      await reloadMsg(`${MESSAGES_URL}/${chat[x].id}`, "get", null, token);
+    })();
+    
+  };
+
+  // useEffect(() => {
+  //   if (chat) getMessages(index);
+  //   setSend(false)
+  // }, [send]);
+  useEffect(() => {
+    setMessages(resultsMsg)
+  },[resultsMsg])
 
   return (
     <>
@@ -216,21 +203,23 @@ const Messages = () => {
                   onClick={(e) => handleChange(e)}
                 >
                   <ConversationList>
-                    {chat? chat.map((val, idx) => (
-                      <Conversation
-                        className={idx + 1}
-                        name={val.first_name}
-                        lastSenderName={val.first_name}
-                        info={val.last_message.message}
-                      >
-                        <Avatar
-                          src={val.profile_picture.link}
-                          name={val.first_name}
-                          status="available"
-                          size="md"  
-                        />
-                      </Conversation>
-                    )): null}
+                    {chat
+                      ? chat.map((val, idx) => (
+                          <Conversation
+                            className={idx + 1}
+                            name={val.first_name}
+                            lastSenderName={val.last_message.sender_id === user.id? 'me': val.first_name}
+                            info={val.last_message.message}
+                          >
+                            <Avatar
+                              src={val.profile_picture.link}
+                              name={val.first_name}
+                              status="available"
+                              size="md"
+                            />
+                          </Conversation>
+                        ))
+                      : null}
                     {/* {conversations.map((val, idx) => (
                       <Conversation
                         className={idx + 1}
@@ -253,75 +242,77 @@ const Messages = () => {
           </Grid>
           <Grid item xs={9}>
             <div className={classes2.root}>
+                <Link to={chat?`profile/${chat[index].first_name}`: null}>
               <ConversationHeader>
                 <Avatar
-                  src={chat? chat[index].profile_picture.link : null}
+                  src={chat ? chat[index].profile_picture.link : null}
                   name={conversations[index].first_name}
                   status="available"
                 />
 
                 <ConversationHeader.Content
-                  userName={chat? chat[index].first_name: null}
+                  userName={chat ? chat[index].first_name : null}
                 ></ConversationHeader.Content>
+                
               </ConversationHeader>
+                </Link>
             </div>
             <div style={{ position: "relative", height: "500px" }}>
               <MainContainer>
                 <ChatContainer>
                   <MessageList>
-                    
-                    {messages? messages.map((val) => (
-                      
-                      <If condition={val.sender_id === user.id}>
-                       
-                        <Then>
-                          <Message
-                            model={{
-                              direction: "outgoing",
-                              position: "normal",
-                            }}
-                          >
-                            <Message.CustomContent>
-                              {val.message}
-                              <br />
-                              <span
-                                style={{
-                                  float: "right",
+                    {/* {resultsMsg = resultsMsg.data? resultsMsg.data.results.reverse() : null } */}
+                    {messages
+                      ? messages.map((val) => (
+                          <If condition={val.sender_id === user.id}>
+                            <Then>
+                              <Message
+                                model={{
+                                  direction: "outgoing",
+                                  position: "normal",
                                 }}
                               >
-                                {sent}
-                              </span>
-                            </Message.CustomContent>
-                          </Message>
-                        </Then>
-                        <Else>
-                          <Message
-                            model={{
-                              message: val.message,
-                              sentTime: "just now",
-                              sender: "Joe",
-                            }}
-                          >
-                            {/* <Message.Footer sentTime={Faker.date.recent().toString().split(" ")[4].split(":").splice(0, 2).join(":")} /> */}
-                            <Message.CustomContent>
-                              {val.message}
-                              <br />
-                              <span
-                                style={{
-                                  float: "right",
+                                <Message.CustomContent>
+                                  {val.message}
+                                  <br />
+                                  <span
+                                    style={{
+                                      float: "right",
+                                    }}
+                                  >
+                                    {sent}
+                                  </span>
+                                </Message.CustomContent>
+                              </Message>
+                            </Then>
+                            <Else>
+                              <Message
+                                model={{
+                                  message: val.message,
+                                  sentTime: "just now",
+                                  sender: "Joe",
                                 }}
                               >
-                                {Faker.date
-                                  .recent()
-                                  .toString()
-                                  .split(" ")[4]
-                                  .split(":")
-                                  .splice(0, 2)
-                                  .join(":")}
-                              </span>
-                            </Message.CustomContent>
-                          </Message>
-                          {/* <Message
+                                {/* <Message.Footer sentTime={Faker.date.recent().toString().split(" ")[4].split(":").splice(0, 2).join(":")} /> */}
+                                <Message.CustomContent>
+                                  {val.message}
+                                  <br />
+                                  <span
+                                    style={{
+                                      float: "right",
+                                    }}
+                                  >
+                                    {Faker.date
+                                      .recent()
+                                      .toString()
+                                      .split(" ")[4]
+                                      .split(":")
+                                      .splice(0, 2)
+                                      .join(":")}
+                                  </span>
+                                </Message.CustomContent>
+                              </Message>
+                              {/* <Message
                             model={{
           console.log("🚀 ~ file: MessagesPage.jsx ~ line 322 ~ useEffect ~ results", results)
                               message: "how are you   ", 
@@ -331,9 +322,10 @@ const Messages = () => {
                           >
                             <Message.Footer sentTime="just now" />
                           </Message> */}
-                        </Else>
-                      </If>
-                    )): null}
+                            </Else>
+                          </If>
+                        ))
+                      : null}
 
                     {/* <TypingIndicator />\ */}
                   </MessageList>
@@ -351,7 +343,6 @@ const Messages = () => {
     </>
   );
 };
-
 
 export default Messages;
 const mapStateToProps = (state) => ({
