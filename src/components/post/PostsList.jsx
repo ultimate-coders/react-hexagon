@@ -267,6 +267,12 @@ const PostsList = ({postsList, onChangePostsList}) => {
 
   if(!postsList || postsList.length === 0){
     return (
+      <div>Loading</div>
+    )
+  }
+
+  if(postsList.length === 0){
+    return (
       <div>No posts to display</div>
     )
   }
