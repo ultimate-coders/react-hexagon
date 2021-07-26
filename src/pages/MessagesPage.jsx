@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -6,6 +7,7 @@ import "./MessagesPage.scss";
 import { If, Then, Else } from "react-if";
 import Faker from "faker";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
+import {getToken} from '../helpers'
 import {
   MainContainer,
   ChatContainer,
@@ -46,13 +48,10 @@ const useStyles2 = makeStyles((theme) => ({
 }));
 
 const Messages = () => {
+  const state = useSelector(mapStateToProps)
   const [results, reload, loading, error] = useAjax();
-  let token = JSON.parse(localStorage.getItem("tokenName")).access_token;
-  console.log(
-    "🚀 ~ file: MessagesPage.jsx ~ line 51 ~ Messages ~ token",
-    token
-  );
-
+ getToken().then((results)=>setToken(results))
+  
   let conversation = [
     {
       name: "Lilly",
@@ -103,6 +102,7 @@ const Messages = () => {
       src: Faker.image.avatar(),
     },
   ];
+  const [token, setToken] = useState(null);
   const [index, setIndex] = useState(0);
   const [conversations, setConversations] = useState(conversation);
   const [user, setUser] = useState({});
@@ -116,7 +116,16 @@ const Messages = () => {
   const handleChange = (event) => {
     console.log(event.target.className);
     let x = event.target.className.split(" ");
-    setIndex(x[1] - 1);
+    if((x[1] - 1 )!== index) {
+      console.log('hello')
+      setMessages(null)
+      
+      setIndex(x[1] - 1);
+      console.log(x[1] - 1, index)
+      console.log("🚀 ~ file: MessagesPage.jsx ~ line 129 ~ handleChange ~ chat[x[1] - 1].id", chat[x[1] - 1].id)
+      
+      
+    }
   };
 
   const newMessage = (event) => {
@@ -134,35 +143,17 @@ const Messages = () => {
   };
 
   useEffect(() => {
-    reload(ME_URL, "get", null, token);
-
-    // if (results){
-    //   if(results.data.profile_picture){
-    //     setUser({
-    //       id: results.data.id,
-    //       name: results.data.first_name,
-    //       picture: results.data.profile_picture.link,
-    //     });
-    //   }
-    // }
-    // if(user){
-    //   reload(PROFILES_WITH_MESSAGES_URL, 'get', {receiver_id: user.id}, token)
-    //   console.log(results)
-    // }
+ 
+    setUser({
+      id: state.user.userDetail.id,
+      name: state.user.userDetail.first_name,
+      picture: state.user.userDetail.profile_picture.link,
+    });
+   
   }, []);
 
   useEffect(() => {
-    if (results) {
-      console.log("🚀 ~ file: MessagesPage.jsx ~ line 156 ~ useEffect ~ results", results)
-      if (results.data.profile_picture) {
-        setUser({
-          id: results.data.id,
-          name: results.data.first_name,
-          picture: results.data.profile_picture.link,
-        });
-      } 
-      
-      // console.log("🚀 ~ file: MessagesPage.jsx ~ line 164 ~ useEffect ~ !chat === null", chat )
+    
       if (chat === null) {
         
         reload(
@@ -171,63 +162,41 @@ const Messages = () => {
           null,
           token
           );
-          // console.log("🚀 ~ file: MessagesPage.jsx ~ line 155 ~ useEffect ~ results", results.data)
-          if(results.data.results) setChat(results.data.results)
+          if(results) setChat(results.data.results.reverse())
       
       } 
 
-        console.log("🚀 ~ file: MessagesPage.jsx ~ line 191 ~ useEffect ~ messages === null && chat", messages === null && chat !== null, messages, chat)
         if (messages === null && chat ) {
-          console.log("🚀 ~ file: MessagesPage.jsx ~ line 201 ~ useEffect ~ chat[index].id", chat[index].id)
           
-          reload(
+          (async () => {await reload(
             `${MESSAGES_URL}/${chat[index].id}`,
             "get",
             null,
             token
             );
-            console.log("🚀 ~ file: MessagesPage.jsx ~ line 15 ~ useEffect ~ results", results.data)
             
-            if(results.data.results !== chat) setMessages(results.data.results.reverse());
-            console.log("🚀 ~ file: MessagesPage.jsx ~ line 190 ~ useEffect ~ messages", messages)
+            if(results.data.results !== chat ) setMessages(results.data.results.reverse());}
+            )()
+           
+            
+            console.log("🚀 ~ file: MessagesPage.jsx ~ line 213 ~ useEffect ~ messages", messages)
+            console.log("🚀 ~ file: MessagesPage.jsx ~ line 214 ~ useEffect ~ results", results.data.results)
+            // console.log("🚀 ~ file: MessagesPage.jsx ~ line 190 ~ useEffect ~ messages", messages)
           }
       
-      // if (chat === null) {
-        
-      //   reload(
-      //     PROFILES_WITH_MESSAGES_URL,
-      //     "get",
-      //     { receiver_id: user.id },
-      //     token
-      //     );
-      //     // console.log("🚀 ~ file: MessagesPage.jsx ~ line 155 ~ useEffect ~ results", results.data)
-      //     if(results.data.results) setChat(results.data.results)
       
-      // }
-    }
-
-    // if(user){
-    //   reload(PROFILES_WITH_MESSAGES_URL, 'get', {receiver_id: user.id}, token)
-    //   console.log(results)
-    // } else {
-    //   setUser({
-    //     id: results.data.id,
-    //     name: results.data.first_name,
-    //     picture: results.data.profile_picture.link,
-    //   });
-    // }
-    // (async ()=>{
-    //   await reload(PROFILES_WITH_MESSAGES_URL, 'get', {receiver_id: user.id}, token)
-    //   console.log("🚀 ~ file: MessagesPage.jsx ~ line 51 ~ Messages ~ results", results)
-    // })()
-  }, [results,chat]);
+  }, [token, results,chat, messages]);
  
   // useEffect(()=>{
-  //   reload(PROFILES_WITH_MESSAGES_URL, 'get', {receiver_id: user.id}, token)
-
-  // }, [user])
-
-  // console.log(results.data)
+  //   (async () => {await reload(
+  //     `${MESSAGES_URL}/${chat[index].id}`,
+  //     "get",
+  //     null,
+  //     token
+  //     )
+  //     if(results.data.results !== messages && results.data.results !== chat ) setMessages(results.data.results.reverse());}
+  //     )()
+  // },[messages])
 
   return (
     <>
@@ -300,6 +269,7 @@ const Messages = () => {
               <MainContainer>
                 <ChatContainer>
                   <MessageList>
+                    
                     {messages? messages.map((val) => (
                       
                       <If condition={val.sender_id === user.id}>
@@ -382,4 +352,10 @@ const Messages = () => {
   );
 };
 
+
 export default Messages;
+const mapStateToProps = (state) => ({
+  user: state.userDetails,
+});
+
+// export default connect(mapStateToProps)(Messages);

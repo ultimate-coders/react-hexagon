@@ -27,8 +27,8 @@ export const checkAuth = async (setChecking, dispatch) => {
     console.log("🚀 ~ file: authController.jsx ~ line 27 ~ checkAuth ~ userProfile", userProfile)
 
     if(userProfile){
-        setChecking(false);
         dispatch(userDetailAction(userProfile.data));
+        setChecking(false);
     } else {
         const newAccessToken = await axios({
             url: REFRESH_URL,

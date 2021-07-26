@@ -4,6 +4,8 @@ import Button from '@material-ui/core/Button';
 import { styled } from '@material-ui/core/styles';
 import GoogleButton from 'react-google-button';
 import './welcome.scss';
+import { connect } from "react-redux";
+
 
 import useAjax from '../../hooks/useAjax';
 import { SIGN_IN_URL } from '../../urls';
@@ -30,6 +32,7 @@ const HexagonButton = styled(Button)({
 });
 
 const Welcome = (props) => {
+console.log("🚀 ~ file: welcome.jsx ~ line 35 ~ Welcome ~ props", props)
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [checking, setChecking] = useState(localStorage.getItem(tokenName));
@@ -158,4 +161,4 @@ const mapStateToProps = (state) => ({
   userDetails: state.userDetails,
 });
 
-export default Welcome;
+export default connect(mapStateToProps)(Welcome);
