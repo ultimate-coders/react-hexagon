@@ -11,6 +11,7 @@ import SinglePostModal from './SinglePostModal';
 import './Post.scss';
 import { useSelector } from 'react-redux';
 import DeleteModal from './DeleteModal';
+import { useHistory } from 'react-router-dom';
 
 
 const Post = ({ post, onChangePostsList, single }) => {
@@ -18,6 +19,7 @@ const Post = ({ post, onChangePostsList, single }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const history = useHistory();
 
   const handleOpenModal = () => {
     if(!single) setOpenModal(true);
@@ -43,6 +45,10 @@ const Post = ({ post, onChangePostsList, single }) => {
     setAnchorEl(null);
   };
 
+  const onOpenProfile = () => {
+    history.push(`profile/${post.profile.user.username}`);
+  }
+
   return (
     <div className='post_container'>
       <SinglePostModal
@@ -63,9 +69,10 @@ const Post = ({ post, onChangePostsList, single }) => {
           className='post_header_avatar'
           alt={post.profile.user.username}
           src={post.profile.profile_picture.link}
+          onClick={onOpenProfile}
         />
         <div className='post_header_user_info'>
-          <span className='post_header_username'>
+          <span onClick={onOpenProfile} className='post_header_username'>
             {post.profile.user.username}
           </span>
           <span className='post_header_created_at'>
