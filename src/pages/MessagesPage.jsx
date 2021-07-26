@@ -9,6 +9,8 @@ import Faker from "faker";
 import {Link} from 'react-router-dom'
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import { getToken } from "../helpers";
+import { useDispatch } from 'react-redux';
+import {activeChatUserAction} from '../store/chat/actions'
 import {
   MainContainer,
   ChatContainer,
@@ -50,6 +52,7 @@ const useStyles2 = makeStyles((theme) => ({
 }));
 
 const Messages = () => {
+  const dispatch = useDispatch();
   const state = useSelector(mapStateToProps);
   const [results, reload, loading, error] = useAjax();
   let [resultsMsg, reloadMsg, loadingMsg, errorMsg] = messageHook();
@@ -116,15 +119,16 @@ const Messages = () => {
   const classes2 = useStyles2();
   const sent = "🗸";
   const seen = "🗸🗸";
-
+  
   const handleChange = (event) => {
+    console.log("🚀 ~ file: MessagesPage.jsx ~ line 162 ~ useEffect ~ chat", messages)
     console.log(event.target.className);
     let x = event.target.className.split(" ");
 
     setIndex(x[1] - 1);
     getMessages(x[1] - 1);
   };
-
+  
   const newMessage = (event) => {
     // setSend(true);
     console.log(event);
@@ -134,11 +138,10 @@ const Messages = () => {
         "post",
         { receiver_id: chat[index].id, message: event },
         token
-      );
-    })();
-    //   if(results) setChat(results.data.results.reverse())
-    messages.push({ sender_id: user.id, message: event });
-    let list = messages.filter((val, idx) => idx !== index);
+        );
+      })();
+      messages.push({ sender_id: user.id, message: event });
+      let list = messages.filter((val, idx) => idx !== index);
     list.unshift(messages[index]);
     setMessages(list);
 
@@ -160,17 +163,16 @@ const Messages = () => {
 
   useEffect(() => {
       if(chat === null){
-
+        
         reload(PROFILES_WITH_MESSAGES_URL, "get", null, token);
-        // console.log("🚀 ~ file: MessagesPage.jsx ~ line 171 ~ useEffect ~ results", results)
         if (results) setChat(results.data.results.reverse());
       }
     
-    // console.log("hello");
     
   }, [token, results]);
 
   let getMessages = (x) => {
+    dispatch(activeChatUserAction(chat[x].id))
     (async () => {
       await reloadMsg(`${MESSAGES_URL}/${chat[x].id}`, "get", null, token);
     })();
@@ -246,7 +248,7 @@ const Messages = () => {
               <ConversationHeader>
                 <Avatar
                   src={chat ? chat[index].profile_picture.link : null}
-                  name={conversations[index].first_name}
+                  name={null}
                   status="available"
                 />
 
@@ -302,13 +304,7 @@ const Messages = () => {
                                       float: "right",
                                     }}
                                   >
-                                    {Faker.date
-                                      .recent()
-                                      .toString()
-                                      .split(" ")[4]
-                                      .split(":")
-                                      .splice(0, 2)
-                                      .join(":")}
+                                    {val.created_at.split('T')[1].split(':').splice(0,2).join(':')}
                                   </span>
                                 </Message.CustomContent>
                               </Message>
