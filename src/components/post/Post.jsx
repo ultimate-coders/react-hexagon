@@ -11,6 +11,10 @@ import SinglePostModal from './SinglePostModal';
 import './Post.scss';
 import { useSelector } from 'react-redux';
 import DeleteModal from './DeleteModal';
+import { useHistory } from 'react-router-dom';
+import useAjax from '../../hooks/useAjax';
+import { INTERACTION_URL } from '../../urls';
+import { getToken } from '../../helpers';
 
 
 const Post = ({ post, onChangePostsList, single }) => {
@@ -18,6 +22,9 @@ const Post = ({ post, onChangePostsList, single }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openModal, setOpenModal] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [postInfo, setPostInfo] = useState(post);
+  const [results, reload, loading, error] = useAjax();
+  const history = useHistory();
 
   const handleOpenModal = () => {
     if(!single) setOpenModal(true);
@@ -43,36 +50,53 @@ const Post = ({ post, onChangePostsList, single }) => {
     setAnchorEl(null);
   };
 
+  const onOpenProfile = () => {
+    history.push(`profile/${postInfo.profile.user.username}`);
+  }
+
+  const onLikePress = () => {
+    (async() => {
+      const token = await getToken();
+      reload(INTERACTION_URL, 'post', {post_id: postInfo.id}, token);
+      setPostInfo(prev => ({
+        ...prev,
+        am_like: !prev.am_like,
+        likes: prev.am_like ? prev.likes -1 : prev.likes + 1
+      }));
+    })();
+  }
+
   return (
     <div className='post_container'>
       <SinglePostModal
         handleOpenModal={handleOpenModal}
         handleCloseModal={handleCloseModal}
         openModal={openModal}
-        postId={post.id}
+        postDetails={postInfo}
       />
       <DeleteModal 
         handleOpenModal={handleOpenDeleteModal}
         handleCloseModal={handleCloseDeleteModal}
         openModal={openDeleteModal}
         afterDeletePost={onChangePostsList}
-        postId={post.id}
+        postId={postInfo.id}
       />
       <div className='post_header'>
         <Avatar
           className='post_header_avatar'
-          alt={post.profile.user.username}
-          src={post.profile.profile_picture.link}
+          alt={postInfo.profile.user.username}
+          src={postInfo.profile.profile_picture.link}
+          onClick={onOpenProfile}
         />
         <div className='post_header_user_info'>
-          <span className='post_header_username'>
-            {post.profile.user.username}
+          <span onClick={onOpenProfile} className='post_header_username'>
+            {postInfo.profile.user.username}
           </span>
           <span className='post_header_created_at'>
-            {moment(post.created_at).fromNow()}
+            {moment(postInfo.created_at).fromNow()}
           </span>
         </div>
-        {userDetails.id === post.profile.id && (
+        {userDetails.id === postInfo.profile.id && (
           <div className='post_header_drop_down_list'>
           <Button
             aria-controls='simple-menu'
@@ -94,19 +118,19 @@ const Post = ({ post, onChangePostsList, single }) => {
         </div>
         )}
       </div>
-      <div className='post_text_content'>{post.text}</div>
-      {post.images[0] && (
+      <div className='post_text_content'>{postInfo.text}</div>
+      {postInfo?.images[0]?.link && (
         <div onClick={handleOpenModal} className='post_images_container'>
-          <img className='post_image' src={post.images[0].link} alt='' />
+          <img className='post_image' src={postInfo.images[0].link} alt='' />
         </div>
       )}
       <div className='post_footer'>
-        <div className='post_footer_likes_container'>
+        <div onClick={onLikePress} className='post_footer_likes_container'>
           <FavoriteBorderIcon
-            color={post.am_like ? 'secondary' : 'action' }
+            color={postInfo.am_like ? 'secondary' : 'action' }
             className='favorite_icon'
           />
-          <span>{post.likes}</span>
+          <span>{postInfo.likes}</span>
         </div>
         <div onClick={handleOpenModal} className='post_footer_comment_container'>
           <ChatBubbleOutlineIcon className='chat_bubble_icon' />

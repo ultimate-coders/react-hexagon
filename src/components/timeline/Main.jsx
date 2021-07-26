@@ -20,11 +20,10 @@ const Main = (props) => {
 
   const onChangePostsList = (postId) => {
     setPosts(prev => prev.filter(post => post.id !== postId));
-    // if (props.category) {
-    //   getAllPosts(`${CATEGORY_POSTS_URL}/${props.category.name}`);
-    // } else {
-    //   getAllPosts(TIMELINE_POSTS_URL);
-    // }
+  };
+
+  const onAddNewPosts = (post) => {
+    setPosts(prev => [post, ...prev]);
   };
   
   useEffect(() => {
@@ -39,10 +38,10 @@ const Main = (props) => {
     setPosts(results?.data.results);
   }, [results])
   
-  console.log('update post list on render', posts);
+
   return (
     <div>
-      <NewPost />
+      <NewPost onAddNewPosts={onAddNewPosts} />
       {checking ? (
         'loading'
       ) : (
