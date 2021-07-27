@@ -169,6 +169,7 @@ const Messages = () => {
       id: state.user.id,
       name: state.user.first_name,
       picture: state.user.profile_picture.link,
+      last_login: state.user.user.last_login
     });
   }, []);
 
@@ -241,7 +242,8 @@ const Messages = () => {
             <Paper className={classes.paper}>
               <div id='people'>
                 <Conversation name={user.name}>
-                  <Avatar src={user.picture} status='available' size='lg' />
+                  {console.log('user ', user)}
+                  <Avatar src={user.picture} status={(Date.now() - new Date(user.last_login).getTime()) / 1000 <= 120 ? 'available' : 'away'} size='lg' />
                 </Conversation>
                 {/* <hr />
                 <div className={classes3.root}>
@@ -304,7 +306,7 @@ const Messages = () => {
                             <Avatar
                               src={val.profile_picture.link}
                               name={val.first_name}
-                              status='available'
+                              status={(Date.now() - new Date(val.user.last_login).getTime()) / 1000 <= 120 ? 'available' : 'away'}
                               size='md'
                             />
                           </Conversation>
@@ -332,7 +334,7 @@ const Messages = () => {
                         : null
                     }
                     name={null}
-                    status='available'
+                    status={chat && chat.length && (Date.now() - new Date(chat[index].user.last_login).getTime()) / 1000 <= 120 ? 'available' : 'away'}
                   />
 
                   <ConversationHeader.Content
