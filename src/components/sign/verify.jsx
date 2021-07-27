@@ -19,6 +19,8 @@ import useAjax from '../../hooks/useAjax';
 import { REQUEST_USER_VERIFY_CODE_URL, VERIFY_USER_ACCOUNT_URL } from '../../urls';
 import { useHistory } from 'react-router';
 import { getToken } from '../../helpers';
+import { checkAuth } from '../authController';
+
 
 const HexagonButton = styled(Button)({
     // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
@@ -76,6 +78,8 @@ const Verify = () => {
     const classes = useStyles();
     const [code, setCode] = useState('');
     const [results, reload, loading, error] = useAjax();
+    const [verifyCodeResults, verifyCodeReload, verifyCodeLoading, everifyCodeError] = useAjax();
+
 
 
     const onVerifyREquest = () => {
@@ -86,24 +90,28 @@ const Verify = () => {
 
     };
     
-    const onVerifyCheck = () => {
+    const onVerifyCheck = (e) => {
+        e.preventDefault();
         (async() => {
             const token = await getToken();
-            reload(VERIFY_USER_ACCOUNT_URL, 'post',{
+            verifyCodeReload(VERIFY_USER_ACCOUNT_URL, 'post',{
                 code: code,    
-            }, token, null)
+            }, token, null);
+            e.target.reset();
+
         })();
     };
 
     useEffect(() => {
-    onVerifyREquest();
+        onVerifyREquest();
     }, []);
 
-    // useEffect(() => {
-    //     if (results) {
-    //       history.push('/home');
-    //     }
-    //   }, [results]);
+    useEffect(() => {
+        if (verifyCodeResults?.data.status === 200) {
+          history.push('/');
+        }
+      }, [verifyCodeResults]);
+
 
     return (
         <Container component="main" maxWidth="xs">
@@ -117,13 +125,13 @@ const Verify = () => {
                 <Typography component="h1" variant="h5">
                     Verify Your Account
                 </Typography>
-                <form id="signupForm" className={classes.form} noValidate>
+                <form onSubmit={onVerifyCheck} id="signupForm" className={classes.form} noValidate>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
                                 onChange={(e) => setCode(e.target.value)}
                                 autoComplete="fname"
-                                name="firstName"
+                                name="code"
                                 variant="outlined"
                                 required
                                 fullWidth
@@ -141,7 +149,7 @@ const Verify = () => {
                         color="primary"
                         className={classes.submit}
                     >
-                        Enter Code
+                        {verifyCodeLoading ? 'Sending' : 'Enter Code'}
                     </HexagonButton>
                 </form>
                 <div id="SigninQuestion">

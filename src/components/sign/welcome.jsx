@@ -5,7 +5,6 @@ import { styled } from '@material-ui/core/styles';
 import GoogleButton from 'react-google-button';
 import './welcome.scss';
 import Header from '../header/header'
-import { connect } from "react-redux";
 
 
 import useAjax from '../../hooks/useAjax';
@@ -35,7 +34,7 @@ const HexagonButton = styled(Button)({
 const Welcome = (props) => {
 
   const [ToggleEye, setToggleEye] = useState('https://image.flaticon.com/icons/png/512/4743/4743038.png');
-console.log("🚀 ~ file: welcome.jsx ~ line 35 ~ Welcome ~ props", props)
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [checking, setChecking] = useState(localStorage.getItem(tokenName));
@@ -90,7 +89,7 @@ console.log("🚀 ~ file: welcome.jsx ~ line 35 ~ Welcome ~ props", props)
     if (results) {
       localStorage.setItem(tokenName, JSON.stringify(results.data));
       setChecking(false);
-      history.push('/home');
+      history.push('/');
     }
   }, [results]);
 

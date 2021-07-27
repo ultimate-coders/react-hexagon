@@ -1,4 +1,5 @@
 header {
+
     height: 5em;
 }
 #logo {
@@ -6,6 +7,7 @@ header {
     height: 9em;
     position: relative;
     left: 2em;
+
     bottom: 1.8em;
     // border: solid 1px black;
     // border-radius: 20em;
@@ -28,6 +30,7 @@ header {
     width: 30em;
     position: relative;
     left: 25em;
+
     bottom: 8em;
 }
 
@@ -44,6 +47,7 @@ header {
 
 #iconsContainer {
     position: relative;
+
     bottom: 10.8em;
     left: 65em;
     // left: 50em;
@@ -55,6 +59,7 @@ svg {
     // background-color: white;
     // border-radius: 100px;
 }
+
 
 #userHeaderImage {
     width: 3.5em;
