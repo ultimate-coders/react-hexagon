@@ -293,13 +293,13 @@ const Messages = () => {
                             info={
                               val.last_message ? val.last_message.message : null
                             }
-                            unreadCnt={
-                              val.last_message &&
-                              val.last_message.seen === false &&
-                              val.last_message.sender_id !== user.id
-                                ? 1
-                                : 0
-                            }
+                            // unreadCnt={
+                            //   val.last_message &&
+                            //   val.last_message.seen === false &&
+                            //   val.last_message.sender_id !== user.id
+                            //     ? 1
+                            //     : 0
+                            // }
                           >
                             <Avatar
                               src={val.profile_picture.link}
