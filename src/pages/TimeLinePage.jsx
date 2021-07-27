@@ -5,12 +5,15 @@ import Main from '../components/timeline/Main';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import Header from '../components/header/header'
 
 
 const TimeLinePage = () => {
     const [category, setCategory] = useState(null);
 
     return (
+        <>
+        <Header/>
         <Container fluid>
             <Row style={{justifyContent: 'center', backgroundColor: '#eee'}}>
                 <Col className='col-2'>
@@ -24,6 +27,7 @@ const TimeLinePage = () => {
                 </Col>
             </Row>
         </Container>
+        </>
     )
 }
 export default TimeLinePage;

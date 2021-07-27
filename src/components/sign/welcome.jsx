@@ -6,6 +6,7 @@ import GoogleButton from 'react-google-button';
 import './welcome.scss';
 import Header from '../header/header'
 
+
 import useAjax from '../../hooks/useAjax';
 import { SIGN_IN_URL, SIGN_IN_GOOGLE_URL } from '../../urls';
 import { tokenName } from '../../helpers';
@@ -33,6 +34,7 @@ const HexagonButton = styled(Button)({
 const Welcome = (props) => {
 
   const [ToggleEye, setToggleEye] = useState('https://image.flaticon.com/icons/png/512/4743/4743038.png');
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [checking, setChecking] = useState(localStorage.getItem(tokenName));
@@ -77,7 +79,7 @@ const Welcome = (props) => {
       (async () => {
         await checkAuth(
           () => null,
-          () => history.push('/')
+          () => history.push('/home')
         );
       })();
     }

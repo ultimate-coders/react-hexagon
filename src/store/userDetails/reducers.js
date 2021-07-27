@@ -16,7 +16,7 @@ const userDetailReducer = (state = initialState, action) => {
     case LOGIN_STATE:
       return {
         ...state,
-        loggedIn: action.payload,
+        loggedIn: false,
       };
 
     default:

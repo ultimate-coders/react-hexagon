@@ -21,6 +21,7 @@ import { useHistory } from 'react-router';
 import { getToken } from '../../helpers';
 import { checkAuth } from '../authController';
 
+
 const HexagonButton = styled(Button)({
     // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
     // marginTop: '.5em',
@@ -80,6 +81,7 @@ const Verify = () => {
     const [verifyCodeResults, verifyCodeReload, verifyCodeLoading, everifyCodeError] = useAjax();
 
 
+
     const onVerifyREquest = () => {
         (async() => {
             const token = await getToken();
@@ -96,6 +98,7 @@ const Verify = () => {
                 code: code,    
             }, token, null);
             e.target.reset();
+
         })();
     };
 
@@ -108,6 +111,7 @@ const Verify = () => {
           history.push('/');
         }
       }, [verifyCodeResults]);
+
 
     return (
         <Container component="main" maxWidth="xs">
@@ -139,6 +143,7 @@ const Verify = () => {
                     </Grid>
                     <HexagonButton
                         type="submit"
+                        onClick={onVerifyCheck}
                         fullWidth
                         variant="contained"
                         color="primary"
