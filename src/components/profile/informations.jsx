@@ -1,7 +1,7 @@
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import useAjax from "../../hooks/useAjax";
-import { PROFILE_URL , FOLLOW_URL} from "../../urls";
+import { PROFILE_URL, FOLLOW_URL } from "../../urls";
 import { useHistory } from "react-router";
 
 import { getToken } from "../../helpers";
@@ -20,9 +20,9 @@ const ProfileInfo = () => {
 
   // console.log(token);
 
-  const getProfile=()=>{
+  const getProfile = () => {
     reload(url, "get", null, token);
-  }
+  };
   useEffect(() => {
     console.log(url, token);
     (async () => {
@@ -31,39 +31,40 @@ const ProfileInfo = () => {
     console.log(results);
   }, [token]);
 
-
   useEffect(() => {
-    if(results){
-    if (results.data.id) {
-      setProfile(results.data);
-    } 
-    console.log('results.data',results);
-    // setfollow(results.data.am_follow)
-  }
+    if (results) {
+      if (results.data.id) {
+        setProfile(results.data);
+      }
+      console.log("results.data", results);
+      // setfollow(results.data.am_follow)
+    }
   }, [results]);
 
-  const handelForm=(e)=>{
-    e.preventDefault()
-    let body={
-      first_name:e.target.first_name.value,
-      last_name:e.target.last_name.value,
-      caption:e.target.caption.value
-    }
+  const handelForm = (e) => {
+    e.preventDefault();
+    let body = {
+      first_name: e.target.first_name.value,
+      last_name: e.target.last_name.value,
+      caption: e.target.caption.value,
+    };
     console.log(body);
-  }
+  };
 
   useEffect(() => {
-    if(profile){
-      ( async ()=>{ await reload(FOLLOW_URL, "post", {following:profile.id}, token)})()
-    console.log('sssss',results);
+    if (profile) {
+      (async () => {
+        await reload(FOLLOW_URL, "post", { following: profile.id }, token);
+      })();
+      console.log("sssss", results);
     }
   }, [follow]);
 
-  const handelFollow =(e)=>{
-    console.log('dddddddddddddddddddddd',profile.am_follow);
-    let x= !follow
-      setfollow(x)
-  }
+  const handelFollow = (e) => {
+    console.log("dddddddddddddddddddddd", profile.am_follow);
+    let x = !follow;
+    setfollow(x);
+  };
   // console.log("47 user", state.user);
   if (!profile) {
     return <div>loading...</div>;
@@ -111,13 +112,22 @@ const ProfileInfo = () => {
               <br />
               <ul id="info">
                 <li>
-                  {profile.first_name === state.user ? (
+                  {console.log(state.user)}
+                  {profile.user.email === state.user ? (
                     <Button style={{ color: "#529471" }} variant="light">
                       Edit
                     </Button>
                   ) : (
-                    <Button onClick={handelFollow} style={{ color: "#529471" }} variant="light">
-                      {console.log( (follow !== undefined && follow) || profile.am_follow,profile.am_follow,follow)}
+                    <Button
+                      onClick={handelFollow}
+                      style={{ color: "#529471" }}
+                      variant="light"
+                    >
+                      {console.log(
+                        (follow !== undefined && follow) || profile.am_follow,
+                        profile.am_follow,
+                        follow
+                      )}
                       {(follow !== undefined && follow) || profile.am_follow ? (
                         <span>unfollow</span>
                       ) : (
@@ -157,6 +167,6 @@ const ProfileInfo = () => {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.userDetails.userDetail.first_name,
+  user: state.userDetails.userDetail.user.email,
 });
 export default ProfileInfo;
