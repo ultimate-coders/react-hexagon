@@ -152,7 +152,7 @@ const Messages = () => {
    setChat(newList)
    setIndex(0)
   };
-
+  
   useEffect(() => {
     setUser({
       id: state.user.userDetail.id,
@@ -160,32 +160,42 @@ const Messages = () => {
       picture: state.user.userDetail.profile_picture.link,
     });
   }, []);
-
+  
   useEffect(() => {
-      if(chat === null){
-        
-        reload(PROFILES_WITH_MESSAGES_URL, "get", null, token);
-        if (results) setChat(results.data.results.reverse());
-      }
+    if(chat === null){
+      
+      reload(PROFILES_WITH_MESSAGES_URL, "get", null, token);
+      if (results) setChat(results.data.results.reverse());
+    }
     
     
   }, [token, results]);
-
+  
   let getMessages = (x) => {
-    dispatch(activeChatUserAction(chat[x].id))
     (async () => {
       await reloadMsg(`${MESSAGES_URL}/${chat[x].id}`, "get", null, token);
     })();
     
+    dispatch(activeChatUserAction(chat[x].id))
   };
-
-  // useEffect(() => {
-  //   if (chat) getMessages(index);
-  //   setSend(false)
-  // }, [send]);
+  
+  useEffect(() => {
+    console.log("🚀 ~ file: MessagesPage.jsx ~ line 204 ~ useEffect ~ chat", chat)
+    
+  }, [chat]);
   useEffect(() => {
     setMessages(resultsMsg)
+
   },[resultsMsg])
+
+  let handleSeen = () => {
+    console.log('hello')
+    reload(`${MESSAGES_URL}/${chat[index].last_message.id}`, "put", null, token);
+    let list = chat;
+    list[index].last_message.seen = true;
+    console.log("🚀 ~ file: MessagesPage.jsx ~ line 196 ~ handleSeen ~ list", list)
+    setChat(list)
+  }
 
   return (
     <>
@@ -212,6 +222,7 @@ const Messages = () => {
                             name={val.first_name}
                             lastSenderName={val.last_message.sender_id === user.id? 'me': val.first_name}
                             info={val.last_message.message}
+                            unreadCnt={val.last_message.seen === false && val.last_message.sender_id !== user.id ? 1: 0}
                           >
                             <Avatar
                               src={val.profile_picture.link}
@@ -222,21 +233,7 @@ const Messages = () => {
                           </Conversation>
                         ))
                       : null}
-                    {/* {conversations.map((val, idx) => (
-                      <Conversation
-                        className={idx + 1}
-                        name={val.name}
-                        lastSenderName={val.info[val.info.length - 1].sender}
-                        info={val.info[val.info.length - 1].message}
-                      >
-                        <Avatar
-                          src={val.src}
-                          name={val.name}
-                          status="available"
-                          size="md"
-                        />
-                      </Conversation>
-                    ))} */}
+                   
                   </ConversationList>
                 </div>
               </div>
@@ -244,22 +241,22 @@ const Messages = () => {
           </Grid>
           <Grid item xs={9}>
             <div className={classes2.root}>
-                <Link to={chat?`profile/${chat[index].first_name}`: null}>
+                <Link to={chat && chat.length ?`profile/${chat[index].first_name}`: null}>
               <ConversationHeader>
                 <Avatar
-                  src={chat ? chat[index].profile_picture.link : null}
+                  src={chat && chat.length ? chat[index].profile_picture.link : null}
                   name={null}
                   status="available"
                 />
 
                 <ConversationHeader.Content
-                  userName={chat ? chat[index].first_name : null}
+                  userName={chat && chat.length ? chat[index].first_name : null}
                 ></ConversationHeader.Content>
                 
               </ConversationHeader>
                 </Link>
             </div>
-            <div style={{ position: "relative", height: "500px" }}>
+            <div style={{ position: "relative", height: "500px" }} onClick={()=>handleSeen()}>
               <MainContainer>
                 <ChatContainer>
                   <MessageList>
@@ -295,7 +292,6 @@ const Messages = () => {
                                   sender: "Joe",
                                 }}
                               >
-                                {/* <Message.Footer sentTime={Faker.date.recent().toString().split(" ")[4].split(":").splice(0, 2).join(":")} /> */}
                                 <Message.CustomContent>
                                   {val.message}
                                   <br />
@@ -304,7 +300,7 @@ const Messages = () => {
                                       float: "right",
                                     }}
                                   >
-                                    {val.created_at.split('T')[1].split(':').splice(0,2).join(':')}
+                                    {val.created_at? val.created_at.split('T')[1].split(':').splice(0,2).join(':'): null}
                                   </span>
                                 </Message.CustomContent>
                               </Message>
@@ -325,11 +321,13 @@ const Messages = () => {
 
                     {/* <TypingIndicator />\ */}
                   </MessageList>
+                 
                   <MessageInput
                     placeholder="Type message here"
                     attachButton={false}
                     onSend={(e) => newMessage(e)}
                   />
+
                 </ChatContainer>
               </MainContainer>
             </div>
