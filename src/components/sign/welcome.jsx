@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { styled } from '@material-ui/core/styles';
 import GoogleButton from 'react-google-button';
+import Loader from '../loader/loeader';
 import './welcome.scss';
 
 
@@ -66,14 +67,14 @@ const Welcome = (props) => {
     let openedEye = 'https://image.flaticon.com/icons/png/512/709/709612.png';
 
     if (passwordInput.type === "password") {
-        passwordInput.type = "text";
-        setToggleEye(openedEye);
+      passwordInput.type = "text";
+      setToggleEye(openedEye);
     }
     else {
-        passwordInput.type = "password";
-        setToggleEye(closedEye);
+      passwordInput.type = "password";
+      setToggleEye(closedEye);
     }
-}
+  }
 
   useEffect(() => {
     if (checking) {
@@ -98,7 +99,7 @@ const Welcome = (props) => {
   return (
     <>
       {checking ? (
-        <div>Loading ...</div>
+        <div><Loader /></div>
       ) : (
         <div id="welcomeContainer" className="container-fluid">
           <div className="login">
@@ -136,18 +137,18 @@ const Welcome = (props) => {
                     className="loginInput"
                   />
                   <img id="WelcomepassowrdImage" src={ToggleEye} alt={'alt'} type="checkbox" onClick={showPassword} />
-                  {/* <Button id="openAuth"><img src={"https://www.hebergementwebs.com/image/b5/b5a4bf161a5c2a1316b72199a6887cc8.webp/the-secret-history-of-the-google-logothe-secret-history-of-the-google-logo-0.webp"} alt={"Hexagon"} ></img>
-                            </Button> */}
                   <div id='loginDiv'>
                     <HexagonButton onClick={onSignin} className='loginButton'>
-                      {loading ? 'Loading' : 'Sign in'}
+                      {loading ? <Loader /> : 'Sign in'}
                     </HexagonButton>
                   </div>
 
                   <div id="forgotPasswordContainer">
-                    {/* <span className="loginForgot">Forgot Your Password?</span> */}
+                    <span id="forgotPasswordSpan" className="loginForgot">Forgot Your Password?</span>
                     <Link to="/forgotpassword" className="loginRegisterButton">
-                      Forgot Your Password? Reset password
+                      <HexagonButton id="forgotPasswordButton">
+                        Reset password
+                      </HexagonButton>
                     </Link>
                   </div>
                   <div id="oauthSpan">
@@ -165,14 +166,14 @@ const Welcome = (props) => {
                     </Button>
                   </div>
                 </div>
-                {/* <span className="loginForgot">Your first time here?</span> */}
                 <div className="anchorContainer">
-                  <Link
-
-                    to='/signup'
+                  <span className="loginForgot"> Your first time here?  </span>
+                  <Link to='/signup'
                     className='loginRegisterButton new-account-width'
                   >
-                    Your first time here? Create a New Account
+                    <HexagonButton>
+                      Create a New Account
+                    </HexagonButton>
                   </Link>
                 </div>
               </div>

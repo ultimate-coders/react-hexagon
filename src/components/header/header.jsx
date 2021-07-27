@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import './header.scss';
 import Badge from '@material-ui/core/Badge';
 import { withStyles } from '@material-ui/core/styles';
@@ -10,7 +11,7 @@ import {logout} from '../../helpers'
 
 
 const Header = () => {
-
+    const { userDetails } = useSelector(mapStateToProps)
     const [notifications, setNotifications] = useState(false);
 
     const [userOptions, setUserOptions] = useState(false);
@@ -59,6 +60,11 @@ const Header = () => {
         }
     }
 
+    useEffect(() => {
+        console.log('user: ', userDetails)
+    }, []);
+
+
     return (
         <>
 
@@ -75,7 +81,7 @@ const Header = () => {
                 <div id="iconsContainer">
                     <IconButton id="notifications" aria-label="cart">
                     <Link id="messagesLink" to='/messages'>
-                        <StyledBadge badgeContent={messagesCount} color="secondary">
+                        <StyledBadge color="secondary">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-envelope" viewBox="0 0 16 16">
                                 <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2zm13 2.383-4.758 2.855L15 11.114v-5.73zm-.034 6.878L9.271 8.82 8 9.583 6.728 8.82l-5.694 3.44A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.739zM1 11.114l4.758-2.876L1 5.383v5.73z" />
                             </svg>
@@ -92,7 +98,7 @@ const Header = () => {
                     </IconButton>
 
                     <Button id="userHeaderContainer" onClick={toggleUserOptions}>
-                        <img id="userHeaderImage" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHZMTLWh4KIE7ogS6hfTgeKuTVTPxlM1qe6Q&amp;usqp=CAU" className="MuiAvatar-img" alt="User-Header"></img>
+                        <img id="userHeaderImage" src={`${userDetails.profile_picture.link}`} className="MuiAvatar-img" alt="User-Header"></img>
                     </Button>
                 </div>
                 <div id="NotificationsList">
@@ -123,7 +129,7 @@ const Header = () => {
                 </div>
                 <div id="userOptionsToggle">
                     <Button>
-                        <p>Change Password</p>
+                        <Link to='/changepassword'>Change Password</Link>
                     </Button>
                     <Button onClick={logout}>
                         <p> Sign out</p>
@@ -142,5 +148,9 @@ const StyledBadge = withStyles((theme) => ({
         padding: '0 4px',
     },
 }))(Badge);
+
+const mapStateToProps = (state) => ({
+    userDetails: state.userDetails.user,
+});
 
 export default Header;
