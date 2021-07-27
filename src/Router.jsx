@@ -40,8 +40,10 @@ const RouterComponent = () => {
           </Route>
 
         <AuthController>
+
         {/* <Header/> */}
           <Route exact path='/'>
+
             <TimeLinePage />
           </Route>
           <Route exact path='/changepassword'>
@@ -61,13 +63,11 @@ const RouterComponent = () => {
           <Route exact path="/aboutus">
             <AboutUs />
           </Route>
-          {/* <Route exact path="*">
+          <Route  path="*">
             <Error />
-          </Route> */}
+          </Route>
+          </Switch>
         </AuthController>
-        {/* <Route path='*'>
-          <Error />
-        </Route> */}
       </Switch>
     </Router>
     // <Router>

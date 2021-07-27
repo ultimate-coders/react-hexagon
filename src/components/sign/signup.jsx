@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Loader from '../loader/loeader';
 import './signup.scss'
 
 // import Avatar from '@material-ui/core/Avatar';
@@ -184,13 +185,15 @@ const SignUp = () => {
                         color="primary"
                     // className={classes.submit}
                     >
-                        Sign Up
+                        {loading ? <Loader /> : 'Sign Up'}
                     </HexagonButton>
                 </form>
                 <div id="SigninQuestion">
                     <span className="loginForgot"> Already have an account? </span>
                     <Link className="loginRegisterButton" type="submit" to='/'>
-                        Sign In
+                        <HexagonButton className='loginRedirectButton'>
+                            Sign In
+                        </HexagonButton>
                     </Link>
                 </div>
             </div>

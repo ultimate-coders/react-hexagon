@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Loader from '../loader/loeader';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -18,7 +19,7 @@ import './signup.scss'
 import useAjax from '../../hooks/useAjax';
 import { REQUEST_USER_VERIFY_CODE_URL, VERIFY_USER_ACCOUNT_URL } from '../../urls';
 import { useHistory } from 'react-router';
-import { getToken } from '../../helpers';
+import { getToken, logout } from '../../helpers';
 import { checkAuth } from '../authController';
 
 
@@ -83,22 +84,21 @@ const Verify = () => {
 
 
     const onVerifyREquest = () => {
-        (async() => {
+        (async () => {
             const token = await getToken();
-            reload(REQUEST_USER_VERIFY_CODE_URL, 'post',null, token, null)
+            reload(REQUEST_USER_VERIFY_CODE_URL, 'post', null, token, null)
         })();
 
     };
-    
+
     const onVerifyCheck = (e) => {
         e.preventDefault();
-        (async() => {
+        (async () => {
             const token = await getToken();
-            verifyCodeReload(VERIFY_USER_ACCOUNT_URL, 'post',{
-                code: code,    
+            verifyCodeReload(VERIFY_USER_ACCOUNT_URL, 'post', {
+                code: code,
             }, token, null);
-            e.target.reset();
-
+            setCode('');
         })();
     };
 
@@ -108,9 +108,9 @@ const Verify = () => {
 
     useEffect(() => {
         if (verifyCodeResults?.data.status === 200) {
-          history.push('/');
+            history.push('/');
         }
-      }, [verifyCodeResults]);
+    }, [verifyCodeResults]);
 
 
     return (
@@ -149,20 +149,20 @@ const Verify = () => {
                         color="primary"
                         className={classes.submit}
                     >
-                        {verifyCodeLoading ? 'Sending' : 'Enter Code'}
+                        {verifyCodeLoading ? <Loader /> : 'Enter Code'}
                     </HexagonButton>
                 </form>
                 <div id="SigninQuestion">
-                    <span className="loginForgot"> Already have an account? </span>
-                    <Link className="loginRegisterButton" type="submit" to='/'>
-                        Sign In
-                    </Link>
+                    <span className="loginForgot"> Changed your mind? </span>
+                    <HexagonButton className='verifySignoutButton' onClick={logout}>
+                        Sign out
+                    </HexagonButton>
                 </div>
                 <div id="SigninQuestion">
                     <span className="loginForgot"> Didnt recieve your code? </span>
-                    <HexagonButton className="loginRegisterButton" type="submit" 
+                    <HexagonButton className="loginRegisterButton" type="submit"
                     >
-                       <a id='ResendVerification' onClick={onVerifyREquest}>Resend Code</a> 
+                        <a id='ResendVerification' onClick={onVerifyREquest}>{loading ? <Loader /> : 'Resend Code'}</a>
                     </HexagonButton>
                 </div>
             </div>
