@@ -4,7 +4,6 @@ import useAjax from "../../hooks/useAjax";
 import { PROFILE_URL , FOLLOW_URL} from "../../urls";
 import { useHistory } from "react-router";
 
-import { connect } from "react-redux";
 import { getToken } from "../../helpers";
 import "./info.scss";
 import { useSelector } from "react-redux";
@@ -12,8 +11,8 @@ import { useSelector } from "react-redux";
 const ProfileInfo = () => {
   const state = useSelector(mapStateToProps);
   const [results, reload, loading, error] = useAjax();
-  const [token, setToken] = useState(null);
-  const [follow, setfollow] = useState(false);
+  const [token, setToken] = useState();
+  const [follow, setfollow] = useState();
   const [profile, setProfile] = useState();
   const profile_name = window.location.pathname.split("/")[2];
   const url = `${PROFILE_URL}/${profile_name}`;
@@ -21,21 +20,26 @@ const ProfileInfo = () => {
 
   // console.log(token);
 
+  const getProfile=()=>{
+    reload(url, "get", null, token);
+  }
   useEffect(() => {
     console.log(url, token);
     (async () => {
-      await reload(url, "get", null, token);
+      await getProfile();
     })();
-    // console.log("🚀 ~ file: MessagesPage.jsx ~ line 171 ~ useEffect ~ results", results)
+    console.log(results);
   }, [token]);
 
-  // console.log("ddddddddddddd", results);
 
   useEffect(() => {
-    if (results && results.data.id) {
-      console.log('results.data',results.data);
+    if(results){
+    if (results.data.id) {
       setProfile(results.data);
-    }else setfollow(false)
+    } 
+    console.log('results.data',results);
+    // setfollow(results.data.am_follow)
+  }
   }, [results]);
 
   const handelForm=(e)=>{
@@ -50,11 +54,15 @@ const ProfileInfo = () => {
 
   useEffect(() => {
     if(profile){
-    reload(FOLLOW_URL, "post", {following:profile.id}, token)}
+      ( async ()=>{ await reload(FOLLOW_URL, "post", {following:profile.id}, token)})()
+    console.log('sssss',results);
+    }
   }, [follow]);
 
   const handelFollow =(e)=>{
-      setfollow(true)
+    console.log('dddddddddddddddddddddd',profile.am_follow);
+    let x= !follow
+      setfollow(x)
   }
   // console.log("47 user", state.user);
   if (!profile) {
@@ -103,18 +111,14 @@ const ProfileInfo = () => {
               <br />
               <ul id="info">
                 <li>
-                  {console.log(
-                    profile.first_name === state.user,
-                    profile.user.username,
-                    state
-                  )}
                   {profile.first_name === state.user ? (
                     <Button style={{ color: "#529471" }} variant="light">
                       Edit
                     </Button>
                   ) : (
                     <Button onClick={handelFollow} style={{ color: "#529471" }} variant="light">
-                      {profile.am_follow ? (
+                      {console.log( (follow !== undefined && follow) || profile.am_follow,profile.am_follow,follow)}
+                      {(follow !== undefined && follow) || profile.am_follow ? (
                         <span>unfollow</span>
                       ) : (
                         <span>follow</span>
@@ -152,10 +156,7 @@ const ProfileInfo = () => {
     );
 };
 
-// const mapStateToProps = (state) => ({
-//   user: state.userDetails.user,
-// });
-export default ProfileInfo;
 const mapStateToProps = (state) => ({
   user: state.userDetails.userDetail.first_name,
 });
+export default ProfileInfo;
