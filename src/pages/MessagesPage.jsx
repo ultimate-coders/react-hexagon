@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import "./MessagesPage.scss";
 import { If, Then, Else } from "react-if";
 import Faker from "faker";
+import {Link} from 'react-router-dom'
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
+import { getToken } from "../helpers";
+import { useDispatch } from 'react-redux';
+import {activeChatUserAction} from '../store/chat/actions'
 import {
   MainContainer,
   ChatContainer,
@@ -19,6 +24,9 @@ import {
   Conversation,
   TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
+import useAjax from "../hooks/useAjax";
+import { PROFILES_WITH_MESSAGES_URL, ME_URL, MESSAGES_URL } from "../urls";
+import messageHook from "../hooks/messagesHook";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -44,6 +52,12 @@ const useStyles2 = makeStyles((theme) => ({
 }));
 
 const Messages = () => {
+  const dispatch = useDispatch();
+  const state = useSelector(mapStateToProps);
+  const [results, reload, loading, error] = useAjax();
+  let [resultsMsg, reloadMsg, loadingMsg, errorMsg] = messageHook();
+  getToken().then((results) => setToken(results));
+
   let conversation = [
     {
       name: "Lilly",
@@ -94,58 +108,84 @@ const Messages = () => {
       src: Faker.image.avatar(),
     },
   ];
+  const [token, setToken] = useState(null);
   const [index, setIndex] = useState(0);
+  const [send, setSend] = useState(false);
   const [conversations, setConversations] = useState(conversation);
-  const [user, setUser] = useState({})
-  const [chat, setChat] = useState([])
+  const [user, setUser] = useState({});
+  const [chat, setChat] = useState(null);
+  const [messages, setMessages] = useState(null);
   const classes = useStyles();
   const classes2 = useStyles2();
   const sent = "🗸";
   const seen = "🗸🗸";
-
+  
   const handleChange = (event) => {
+    console.log("🚀 ~ file: MessagesPage.jsx ~ line 162 ~ useEffect ~ chat", messages)
     console.log(event.target.className);
     let x = event.target.className.split(" ");
+
     setIndex(x[1] - 1);
+    getMessages(x[1] - 1);
   };
-
-  const newMessage = (event) => {
-    console.log(event);
-    conversations[index].info.push({ sender: "me", message: event });
-    let list = conversations.filter((val, idx) => idx !== index);
-    console.log(
-      "🚀 ~ file: MessagesPage.jsx ~ line 120 ~ newMessage ~ list",
-      list
-    );
-    list.unshift(conversations[index]);
-
-    setConversations(list);
-    setIndex(0);
-  };
-  // let token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIxMjY5MWM5Yi04YWM3LTQ2YzEtOTQzNi04ZDdiMmQ5MThhNGIiLCJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiaWF0IjoxNjI3MDUyMzIzLCJleHAiOjE2MjcwNTgzMjN9.wJUFet9ug8ziakGQ7Uoestm5hWG5q0NzFWd8vVoofUY'
-
-//   useEffect(()=>{
-//    superagent.get('http://localhost:5000/api/v1/me-profile').set('Authorization', `Bearer ${token}`)
-//    .then(results=>{
-//   //  console.log("🚀 ~ file: MessagesPage.jsx ~ line 139 ~ useEffect ~ results", results)
-//      setUser({id: results.body.id, name: results.body.first_name, picture: results.body.profile_picture.link})
-//    })
-//    superagent.get('http://localhost:5000/api/v1/me-profile/with-messages').set('Authorization', `Bearer ${token}`)
-//    .then(results=>{
-//    console.log("🚀 ~ file: MessagesPage.jsx ~ line 139 ~ useEffect ~ results", results.body.results)
-//    setChat(results.body.results)
-//   //  console.log("🚀 ~ file: MessagesPage.jsx ~ line 150 ~ useEffect ~ results.body.results", results.body.results)
-//   //  console.log(chat[0].id)
-//   // superagent.get('http://localhost:5000/api/v1/messages').send({receiver_id: results.body.results[0].id}).set('Authorization', `Bearer yJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJiMDVkMjdhYi1hNWMzLTQ2NzMtOTJmZC03YTcyMDgwNGYwYmQiLCJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiaWF0IjoxNjI3MDUyNjQ3LCJleHAiOjE2MjcwNTg2NDd9.dZ_UFpicnv8b-YprSJV4NFu0oCHfjOVYCyT6EOC_Zus`)
-//   // .then(results=>{
-//   //  console.log("🚀 ~ file: MessagesPage.jsx ~ line 151 ~ useEffect ~ results", results.body)
-//   //  })
   
-// })
-// // .then(()=>{
-// //   })
+  const newMessage = (event) => {
+    // setSend(true);
+    console.log(event);
+    (async () => {
+      await reload(
+        MESSAGES_URL,
+        "post",
+        { receiver_id: chat[index].id, message: event },
+        token
+        );
+      })();
+      messages.push({ sender_id: user.id, message: event });
+      let list = messages.filter((val, idx) => idx !== index);
+    list.unshift(messages[index]);
+    setMessages(list);
 
-//   },[])
+   let newList = chat 
+   let x = newList.splice(index, 1)
+   x[0].last_message = { sender_id: user.id, message: event }
+   newList.unshift(x[0])
+   setChat(newList)
+   setIndex(0)
+  };
+
+  useEffect(() => {
+    setUser({
+      id: state.user.userDetail.id,
+      name: state.user.userDetail.first_name,
+      picture: state.user.userDetail.profile_picture.link,
+    });
+  }, []);
+
+  useEffect(() => {
+      if(chat === null){
+        
+        reload(PROFILES_WITH_MESSAGES_URL, "get", null, token);
+        if (results) setChat(results.data.results.reverse());
+      }
+    
+    
+  }, [token, results]);
+
+  let getMessages = (x) => {
+    dispatch(activeChatUserAction(chat[x].id))
+    (async () => {
+      await reloadMsg(`${MESSAGES_URL}/${chat[x].id}`, "get", null, token);
+    })();
+    
+  };
+
+  // useEffect(() => {
+  //   if (chat) getMessages(index);
+  //   setSend(false)
+  // }, [send]);
+  useEffect(() => {
+    setMessages(resultsMsg)
+  },[resultsMsg])
 
   return (
     <>
@@ -154,12 +194,8 @@ const Messages = () => {
           <Grid item xs={3}>
             <Paper className={classes.paper}>
               <div id="people">
-                <Conversation name='Emran'>
-                  <Avatar
-                    src={Faker.image.avatar()}
-                    status="available"
-                    size="lg"
-                  />
+                <Conversation name={user.name}>
+                  <Avatar src={user.picture} status="available" size="lg" />
                 </Conversation>
                 <hr />
                 <div
@@ -169,22 +205,24 @@ const Messages = () => {
                   onClick={(e) => handleChange(e)}
                 >
                   <ConversationList>
-                     {/* {chat.map((val, idx) => (
-                      <Conversation
-                        className={idx + 1}
-                        name={val.first_name}
-                        lastSenderName={val.first_name}
-                        info={val.last_message.message}
-                      >
-                        <Avatar
-                          src={val.profile_picture.link}
-                          name={val.first_name}
-                          status="available"
-                          size="md"  
-                        />
-                      </Conversation>
-                    ))} */}
-                    {conversations.map((val, idx) => (
+                    {chat
+                      ? chat.map((val, idx) => (
+                          <Conversation
+                            className={idx + 1}
+                            name={val.first_name}
+                            lastSenderName={val.last_message.sender_id === user.id? 'me': val.first_name}
+                            info={val.last_message.message}
+                          >
+                            <Avatar
+                              src={val.profile_picture.link}
+                              name={val.first_name}
+                              status="available"
+                              size="md"
+                            />
+                          </Conversation>
+                        ))
+                      : null}
+                    {/* {conversations.map((val, idx) => (
                       <Conversation
                         className={idx + 1}
                         name={val.name}
@@ -198,7 +236,7 @@ const Messages = () => {
                           size="md"
                         />
                       </Conversation>
-                    ))}
+                    ))} */}
                   </ConversationList>
                 </div>
               </div>
@@ -206,67 +244,73 @@ const Messages = () => {
           </Grid>
           <Grid item xs={9}>
             <div className={classes2.root}>
+                <Link to={chat?`profile/${chat[index].first_name}`: null}>
               <ConversationHeader>
                 <Avatar
-                  src={conversations[index].src}
-                  name={conversations[index].name}
+                  src={chat ? chat[index].profile_picture.link : null}
+                  name={null}
                   status="available"
                 />
 
                 <ConversationHeader.Content
-                  userName={conversations[index].name}
+                  userName={chat ? chat[index].first_name : null}
                 ></ConversationHeader.Content>
+                
               </ConversationHeader>
+                </Link>
             </div>
             <div style={{ position: "relative", height: "500px" }}>
               <MainContainer>
                 <ChatContainer>
                   <MessageList>
-                    {conversations[index].info.map((val) => (
-                      <If condition={val.sender === "me"}>
-                        <Then>
-                          <Message
-                            model={{
-                              direction: "outgoing",
-                              position: "normal",
-                            }}
-                          >
-                            <Message.CustomContent>
-                              {val.message}
-                              <br />
-                              <span
-                                style={{
-                                  float: "right",
+                    {/* {resultsMsg = resultsMsg.data? resultsMsg.data.results.reverse() : null } */}
+                    {messages
+                      ? messages.map((val) => (
+                          <If condition={val.sender_id === user.id}>
+                            <Then>
+                              <Message
+                                model={{
+                                  direction: "outgoing",
+                                  position: "normal",
                                 }}
                               >
-                                {sent}
-                              </span>
-                            </Message.CustomContent>
-                          </Message>
-                        </Then>
-                        <Else>
-                          <Message
-                            model={{
-                              message: val.message,
-                              sentTime: "just now",
-                              sender: "Joe",
-                            }}
-                          >
-                            {/* <Message.Footer sentTime={Faker.date.recent().toString().split(" ")[4].split(":").splice(0, 2).join(":")} /> */}
-                            <Message.CustomContent>
-                              {val.message}
-                              <br />
-                              <span
-                                style={{
-                                  float: "right",
+                                <Message.CustomContent>
+                                  {val.message}
+                                  <br />
+                                  <span
+                                    style={{
+                                      float: "right",
+                                    }}
+                                  >
+                                    {sent}
+                                  </span>
+                                </Message.CustomContent>
+                              </Message>
+                            </Then>
+                            <Else>
+                              <Message
+                                model={{
+                                  message: val.message,
+                                  sentTime: "just now",
+                                  sender: "Joe",
                                 }}
                               >
-                                {Faker.date.recent().toString().split(" ")[4].split(":").splice(0, 2).join(":")}
-                              </span>
-                            </Message.CustomContent>
-                          </Message>
-                          {/* <Message
+                                {/* <Message.Footer sentTime={Faker.date.recent().toString().split(" ")[4].split(":").splice(0, 2).join(":")} /> */}
+                                <Message.CustomContent>
+                                  {val.message}
+                                  <br />
+                                  <span
+                                    style={{
+                                      float: "right",
+                                    }}
+                                  >
+                                    {val.created_at.split('T')[1].split(':').splice(0,2).join(':')}
+                                  </span>
+                                </Message.CustomContent>
+                              </Message>
+                              {/* <Message
                             model={{
+          console.log("🚀 ~ file: MessagesPage.jsx ~ line 322 ~ useEffect ~ results", results)
                               message: "how are you   ", 
                               sentTime: "just now",
                               sender: "Joe",
@@ -274,9 +318,10 @@ const Messages = () => {
                           >
                             <Message.Footer sentTime="just now" />
                           </Message> */}
-                        </Else>
-                      </If>
-                    ))}
+                            </Else>
+                          </If>
+                        ))
+                      : null}
 
                     {/* <TypingIndicator />\ */}
                   </MessageList>
@@ -296,3 +341,8 @@ const Messages = () => {
 };
 
 export default Messages;
+const mapStateToProps = (state) => ({
+  user: state.userDetails,
+});
+
+// export default connect(mapStateToProps)(Messages);

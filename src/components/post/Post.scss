@@ -1,6 +1,6 @@
 .post_container {
   background-color: #fff;
-  padding: 10px 10px 5px 10px;
+  padding: 15px 0 10px 15px;
   margin-bottom: 10px;
   -webkit-box-shadow: -1px 1px 7px 1px rgba(167, 164, 164, 0.66);
   box-shadow: -1px 1px 7px 1px rgba(167, 164, 164, 0.66);
@@ -22,6 +22,7 @@
         font-weight: bold;
         cursor: pointer;
         color: #5181b8;
+        margin-bottom: 5px;
       }
 
       .post_header_created_at {
@@ -37,7 +38,8 @@
 
   .post_text_content {
     font-size: 0.9rem;
-    margin: 5px 0;
+    margin: 15px 0;
+    line-height: 1.5;
   }
 
   .post_images_container {

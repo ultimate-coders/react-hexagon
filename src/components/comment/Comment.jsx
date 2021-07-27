@@ -2,8 +2,23 @@ import Avatar from '@material-ui/core/Avatar';
 import moment from 'moment';
 import ClearIcon from '@material-ui/icons/Clear';
 import './Comment.scss';
+import { COMMENT_URL } from '../../urls';
+import { getToken } from '../../helpers';
+import useAjax from '../../hooks/useAjax';
+import { useSelector } from 'react-redux';
 
-const Comment = ({ comment }) => {
+const Comment = ({ comment, onChangeComments }) => {
+  const [results, reload, loading, error] = useAjax();
+  const { userDetails } = useSelector(mapStateToProps);
+
+  const onDeleteComment = () => {
+    (async() => {
+      const token = await getToken();
+      reload(`${COMMENT_URL}/${comment.id}`, 'delete', null, token);
+      onChangeComments('delete', comment.id);
+    })();
+  }
+
   return (
     <div className='comment_container'>
       <Avatar
@@ -18,9 +33,13 @@ const Comment = ({ comment }) => {
           {moment(comment.created_at).fromNow()}
         </div>
       </div>
-      <ClearIcon className='comment_clear_icon' />
+      {(userDetails.id === comment.profile.id || userDetails.id === comment.post_owner) && <ClearIcon onClick={onDeleteComment} className='comment_clear_icon' />}
     </div>
   );
 };
+
+const mapStateToProps = (state) => ({
+  userDetails: state.userDetails.user,
+});
 
 export default Comment;

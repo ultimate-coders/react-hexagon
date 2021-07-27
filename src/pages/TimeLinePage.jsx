@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import LeftSideBar from '../components/timeline/LeftSideBar';
 import RightSideBar from '../components/timeline/RightSideBar';
 import Main from '../components/timeline/Main';
@@ -8,16 +9,18 @@ import Header from '../components/header/header'
 
 
 const TimeLinePage = () => {
+    const [category, setCategory] = useState(null);
+
     return (
         <>
         <Header/>
         <Container fluid>
             <Row style={{justifyContent: 'center', backgroundColor: '#eee'}}>
                 <Col className='col-2'>
-                    <LeftSideBar />
+                    <LeftSideBar category={category} setCategory={setCategory} />
                 </Col>
                 <Col className='col-6'>
-                    <Main />
+                    <Main category={category} />
                 </Col>
                 <Col className='col-2'>
                     <RightSideBar />
