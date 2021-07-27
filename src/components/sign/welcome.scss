@@ -1,11 +1,12 @@
 #welcomeLogo {
     position: relative;
-    top: 0.6em;
-    width: 6em;
-    height: 3em;
+    // top: 3em;
+    left:5em;
+    width: 25em;
+    height: 20em;
     margin-right: 2em;
-    border: solid 1px black;
-    border-radius: 20em;
+    // border: solid 1px black;
+    // border-radius: 20em;
 }
 
 #welcomeTitle {
@@ -35,6 +36,7 @@
 #oauthSpan{
     display:flex;
     justify-content:center;
+    // margin-bottom: .5em;
 }
 .loginRight {
     margin-top: 5px;
@@ -52,7 +54,7 @@
 
 .loginLeft {
     position: relative;
-    bottom:4em;
+    bottom:2em;
     right:4em;
     flex: 1;
     display: flex;
@@ -95,9 +97,10 @@
 //   }
 
 .loginDesc {
-    font-size: 24px;
+    font-size: 30px;
     position: relative;
-    left:3em;
+    left:2em;
+    bottom: 3em;
 }
 #leftFlex{
     display: flex;
@@ -154,6 +157,10 @@
     margin-top: 1em;
 }
 
+#forgotPasswordSpan{
+    position: relative;
+    top: .5em;
+}
 .loginRegisterButton {
     // width: 100%;
     // text-align: center;
@@ -162,7 +169,7 @@
     // border: none;
     // background-color: #42b72a;
     // color: #529471;
-    color:#1775ee;
+    color:white;
     font-size: 17px;
     // font-weight: 500;
     cursor: pointer;
@@ -170,10 +177,16 @@
     padding: 0 .5em;
     margin-top: .5em;
 }
+.loginRegisterButton  span{
+    width: 15em;
+}
 
 .anchorContainer{
     text-align:center;
     margin-top: 1em;
+    display:flex;
+    flex-direction:column;
+    justify-items:center;
 }
 
 .loginRegisterButton:hover{
@@ -187,17 +200,17 @@
     // box-shadow:   rgba(0, 0, 0, 0.25) 0px 2px 4px 0px;
 }
 
-.loginRegisterButton:active{
+// .loginRegisterButton:active{
 
-    color: #529471;
-    box-shadow:  3px 3px 3px 2px black;
+//     color: #529471;
+//     box-shadow:  3px 3px 3px 2px black;
 
-}
+// }
 
 #forgotPasswordContainer{
-    // display:flex;
-    // flex-direction: row;
-    // justify-content:center;
+    display:flex;
+    flex-direction: row;
+    justify-content:center;
     padding: 10px;
     text-align:center;
 }
@@ -206,10 +219,17 @@
     font-size: .8em;
     margin: .2em;
 }
-
-.new-account-width{
-    width: 200px;
+#forgotPasswordButton {
+    height: 2em;
+    width: 12.9em;
+    font-size: 1em;
+    font-weight: bold;
+   
 }
+
+// .new-account-width{
+//     width: 200px;
+// }
 
 #WelcomepassowrdImage{
     width:1.5em;
