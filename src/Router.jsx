@@ -29,7 +29,7 @@ const RouterComponent = () => {
           <Route exact path='/forgotpassword'>
             <ForgotPassword />
           </Route>
-          <Route exact path='/Verify'>
+          <Route exact path='/verify'>
             <Verify />
           </Route>
         <AuthController>

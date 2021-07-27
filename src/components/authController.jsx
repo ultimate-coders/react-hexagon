@@ -22,7 +22,12 @@ export const checkAuth = async (setChecking, dispatch) => {
             ContentType: 'application/json',
             Authorization: `Bearer ${token.access_token}`
         }
-    }).catch(e => null);
+    }).catch(e => {
+        if(e.response.data.status === 403 && e.response.data.message === 'Account not verified!'){
+            window.location.href = '/verify';
+            return;
+        }
+    });
     
     if(userProfile){
         dispatch(userDetailAction(userProfile.data));
