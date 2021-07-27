@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import { styled } from '@material-ui/core/styles';
 import GoogleButton from 'react-google-button';
 import './welcome.scss';
+import Header from '../header/header'
 
 import useAjax from '../../hooks/useAjax';
 import { SIGN_IN_URL, SIGN_IN_GOOGLE_URL } from '../../urls';
@@ -92,6 +93,7 @@ const Welcome = (props) => {
 
   return (
     <>
+    <Header/>
       {checking ? (
         <div>Loading ...</div>
       ) : (
