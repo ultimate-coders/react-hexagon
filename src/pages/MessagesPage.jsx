@@ -1,16 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { makeStyles } from "@material-ui/core/styles";
+import { alpha, makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import "./MessagesPage.scss";
 import { If, Then, Else } from "react-if";
-import Faker from "faker";
 import { Link } from "react-router-dom";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import { getToken } from "../helpers";
 import { useDispatch } from "react-redux";
 import { activeChatUserAction } from "../store/chat/actions";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+
+import Typography from "@material-ui/core/Typography";
+import InputBase from "@material-ui/core/InputBase";
+import SearchIcon from "@material-ui/icons/Search";
 import {
   MainContainer,
   ChatContainer,
@@ -25,7 +30,7 @@ import {
   TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
 import useAjax from "../hooks/useAjax";
-import { PROFILES_WITH_MESSAGES_URL, ME_URL, MESSAGES_URL } from "../urls";
+import { PROFILES_WITH_MESSAGES_URL, ME_URL, MESSAGES_URL,PROFILE_URL } from "../urls";
 import messageHook from "../hooks/messagesHook";
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -51,6 +56,52 @@ const useStyles2 = makeStyles((theme) => ({
   },
 }));
 
+const useStyles3 = makeStyles((theme) => ({
+  root: {
+    flexGrow: 1,
+  },
+
+  search: {
+    position: "relative",
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    "&:hover": {
+      backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginLeft: 0,
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing(1),
+      width: "auto",
+    },
+  },
+  searchIcon: {
+    padding: theme.spacing(0, 2),
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  inputRoot: {
+    color: "inherit",
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
+      },
+    },
+  },
+}));
+
 const Messages = () => {
   const dispatch = useDispatch();
   const state = useSelector(mapStateToProps);
@@ -58,74 +109,21 @@ const Messages = () => {
   let [resultsMsg, reloadMsg, loadingMsg, errorMsg] = messageHook();
   getToken().then((results) => setToken(results));
 
-  let conversation = [
-    {
-      name: "Lilly",
-      lastSenderName: "Lilly",
-      info: [{ message: Faker.lorem.sentence(), sender: "Lilly" }],
-      src: Faker.image.avatar(),
-    },
-    {
-      name: "Joe",
-      lastSenderName: "Joe",
-      info: [{ message: Faker.lorem.sentence(), sender: "Joe" }],
-      src: Faker.image.avatar(),
-    },
-    {
-      name: "Emily",
-      lastSenderName: "Emily",
-      info: [{ message: Faker.lorem.sentence(), sender: "Emily" }],
-      src: Faker.image.avatar(),
-    },
-    {
-      name: "Kai",
-      lastSenderName: "Kai",
-      info: [{ message: Faker.lorem.sentence(), sender: "Kai" }],
-      src: Faker.image.avatar(),
-    },
-    {
-      name: "Akane",
-      lastSenderName: "Akane",
-      info: [{ message: Faker.lorem.sentence(), sender: "Akane" }],
-      src: Faker.image.avatar(),
-    },
-    {
-      name: "Eliot",
-      lastSenderName: "Eliot",
-      info: [{ message: Faker.lorem.sentence(), sendnpmer: "Eliot" }],
-      src: Faker.image.avatar(),
-    },
-    {
-      name: "Zoe",
-      lastSenderName: "Zoe",
-      info: [{ message: Faker.lorem.sentence(), sender: "Zoe" }],
-      src: Faker.image.avatar(),
-    },
-    {
-      name: "Patrik",
-      lastSenderName: "Patrik",
-      info: [{ message: Faker.lorem.sentence(), sender: "Patrik" }],
-      src: Faker.image.avatar(),
-    },
-  ];
   const [token, setToken] = useState(null);
   const [index, setIndex] = useState(0);
   const [send, setSend] = useState(false);
-  const [conversations, setConversations] = useState(conversation);
+  // const [conversations, setConversations] = useState();
   const [user, setUser] = useState({});
   const [chat, setChat] = useState(null);
   const [messages, setMessages] = useState(null);
   const classes = useStyles();
   const classes2 = useStyles2();
+  const classes3 = useStyles3();
+
   const sent = "🗸";
   const seen = "🗸🗸";
 
   const handleChange = (event) => {
-    console.log(
-      "🚀 ~ file: MessagesPage.jsx ~ line 162 ~ useEffect ~ chat",
-      messages
-    );
-    console.log(event.target.className);
     let x = event.target.className.split(" ");
 
     setIndex(x[1] - 1);
@@ -155,7 +153,7 @@ const Messages = () => {
     setChat(newList);
     setIndex(0);
   };
-  
+
   useEffect(() => {
     console.log(state);
     setUser({
@@ -164,47 +162,62 @@ const Messages = () => {
       picture: state.user.profile_picture.link,
     });
   }, []);
-  
-  useEffect(() => {
 
-    if(chat === null){
-      
+  useEffect(() => {
+    if (chat === null) {
       reload(PROFILES_WITH_MESSAGES_URL, "get", null, token);
       if (results) setChat(results.data.results.reverse());
     }
-    
-    
+    console.log("🚀 ~ file: MessagesPage.jsx ~ line 172 ~ useEffect ~ results", results)
+    if(chat && results.data.id !== user.id){
+     let list = chat;
+      list.unshift(results.data)
+      setChat(list)
 
+    }
   }, [token, results]);
-  
-  let getMessages = (x) => {
 
+  let getMessages = (x) => {
     (async () => {
       await reloadMsg(`${MESSAGES_URL}/${chat[x].id}`, "get", null, token);
     })();
-    
-    dispatch(activeChatUserAction(chat[x].id))
 
+    dispatch(activeChatUserAction(chat[x].id));
   };
-  
+
   useEffect(() => {
-    console.log("🚀 ~ file: MessagesPage.jsx ~ line 204 ~ useEffect ~ chat", chat)
-    
+    if (chat) getMessages(index);
   }, [chat]);
   useEffect(() => {
-
-    setMessages(resultsMsg)
-
-  },[resultsMsg])
-
+    setMessages(resultsMsg);
+  }, [resultsMsg]);
 
   let handleSeen = () => {
-    console.log('hello')
-    reload(`${MESSAGES_URL}/${chat[index].last_message.id}`, "put", null, token);
+    
+    reload(
+      `${MESSAGES_URL}/${chat[index].last_message.id}`,
+      "put",
+      null,
+      token
+    );
     let list = chat;
     list[index].last_message.seen = true;
-    console.log("🚀 ~ file: MessagesPage.jsx ~ line 196 ~ handleSeen ~ list", list)
-    setChat(list)
+    console.log(
+      "🚀 ~ file: MessagesPage.jsx ~ line 196 ~ handleSeen ~ list",
+      list
+    );
+    setChat(list);
+  };
+
+  let searchHandler = e => {
+    console.log(e.target.value)
+    reload(
+      `${PROFILE_URL}/${e.target.value}`,
+      "get",
+      null,
+      token
+    );
+
   }
 
   return (
@@ -217,6 +230,33 @@ const Messages = () => {
                 <Conversation name={user.name}>
                   <Avatar src={user.picture} status="available" size="lg" />
                 </Conversation>
+                <hr />
+                <div className={classes3.root}>
+                  <AppBar style={{backgroundColor: '#529471'}} position="static">
+                    <Toolbar>
+                      <Typography
+                        className={classes3.title}
+                        variant="h6"
+                        noWrap
+                      >
+                       Add new conversation
+                      </Typography>
+                      <div className={classes3.search}>
+                          
+                        <InputBase
+                          placeholder="Search…"
+                          classes3={{
+                            root: classes3.inputRoot,
+                            input: classes3.inputInput,
+                          }}
+                          inputProps={{ "aria-label": "search" }}
+                          onChange={searchHandler}
+                        />
+                       
+                      </div>
+                    </Toolbar>
+                  </AppBar>
+                </div>
                 <hr />
                 <div
                   style={{
@@ -231,12 +271,17 @@ const Messages = () => {
                             className={idx + 1}
                             name={val.first_name}
                             lastSenderName={
-                              val.last_message.sender_id === user.id
+                             val.last_message && val.last_message.sender_id === user.id
                                 ? "me"
                                 : val.first_name
                             }
-                            info={val.last_message.message}
-                            unreadCnt={val.last_message.seen === false && val.last_message.sender_id !== user.id ? 1: 0}
+                            info={val.last_message? val.last_message.message: null}
+                            unreadCnt={
+                              val.last_message&& val.last_message.seen === false &&
+                              val.last_message.sender_id !== user.id
+                                ? 1
+                                : 0
+                            }
                           >
                             <Avatar
                               src={val.profile_picture.link}
@@ -247,7 +292,6 @@ const Messages = () => {
                           </Conversation>
                         ))
                       : null}
-                   
                   </ConversationList>
                 </div>
               </div>
@@ -255,24 +299,36 @@ const Messages = () => {
           </Grid>
           <Grid item xs={9}>
             <div className={classes2.root}>
+              <Link
+                to={
+                  chat && chat.length
+                    ? `profile/${chat[index].first_name}`
+                    : null
+                }
+              >
+                <ConversationHeader>
+                  <Avatar
+                    src={
+                      chat && chat.length
+                        ? chat[index].profile_picture.link
+                        : null
+                    }
+                    name={null}
+                    status="available"
+                  />
 
-                <Link to={chat && chat.length ?`profile/${chat[index].first_name}`: null}>
-              <ConversationHeader>
-                <Avatar
-                  src={chat && chat.length ? chat[index].profile_picture.link : null}
-                  name={null}
-                  status="available"
-                />
-
-                <ConversationHeader.Content
-                  userName={chat && chat.length ? chat[index].first_name : null}
-                ></ConversationHeader.Content>
-                
-              </ConversationHeader>
-                </Link>
-
+                  <ConversationHeader.Content
+                    userName={
+                      chat && chat.length ? chat[index].first_name : null
+                    }
+                  ></ConversationHeader.Content>
+                </ConversationHeader>
+              </Link>
             </div>
-            <div style={{ position: "relative", height: "500px" }} onClick={()=>handleSeen()}>
+            <div
+              style={{ position: "relative", height: "500px" }}
+              onClick={() => handleSeen()}
+            >
               <MainContainer>
                 <ChatContainer>
                   <MessageList>
@@ -316,9 +372,13 @@ const Messages = () => {
                                       float: "right",
                                     }}
                                   >
-
-                                    {val.created_at? val.created_at.split('T')[1].split(':').splice(0,2).join(':'): null}
-
+                                    {val.created_at
+                                      ? val.created_at
+                                          .split("T")[1]
+                                          .split(":")
+                                          .splice(0, 2)
+                                          .join(":")
+                                      : null}
                                   </span>
                                 </Message.CustomContent>
                               </Message>
@@ -339,13 +399,12 @@ const Messages = () => {
 
                     {/* <TypingIndicator />\ */}
                   </MessageList>
-                 
+
                   <MessageInput
                     placeholder="Type message here"
                     attachButton={false}
                     onSend={(e) => newMessage(e)}
                   />
-
                 </ChatContainer>
               </MainContainer>
             </div>
