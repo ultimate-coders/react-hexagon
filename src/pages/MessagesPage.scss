@@ -1,0 +1,31 @@
+body{
+    background-color: #eee;
+}
+#Conversation{
+    text-align: center;
+    height: 10%;
+    line-height:50px;
+    border: 1px solid #eee;
+    border-bottom: 0;
+}
+
+#messages{
+    border: 1px solid black;
+    height: 500px; 
+}
+
+#people{
+ height: 550px;
+}
+#seen{
+    width: 15px;
+    height: 15px;
+    background: transparent;
+}
+
+.cs-avatar,.cs-status, .cs-conversation__name, .cs-conversation__info, .cs-conversation__content{
+    pointer-events: none;
+}
+// .cs-conversation{
+//     pointer-events:visible ;
+// }
