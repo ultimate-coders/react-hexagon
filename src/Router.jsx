@@ -9,7 +9,8 @@ import ChangePassword from "./components/password/changePassword";
 import Header from "./components/header/header";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
-import Error from './pages/404Error'
+import Error from "./pages/404Error";
+import AboutUs from "./pages/aboutus";
 
 import ProfilePage from "./pages/ProfilePage";
 
@@ -61,12 +62,12 @@ const RouterComponent = () => {
         <Route exact path="/signup">
           <SignUp />
         </Route>
-          <Route exact path="/forgotpassword">
-            <ForgotPassword />
-          </Route>
-          <Route exact path="/google-auth">
-            <AuthPage />
-          </Route>
+        <Route exact path="/forgotpassword">
+          <ForgotPassword />
+        </Route>
+        <Route exact path="/google-auth">
+          <AuthPage />
+        </Route>
         <AuthController>
           <Route exact path="/home">
             <TimeLinePage />
@@ -83,13 +84,16 @@ const RouterComponent = () => {
           <Route exact path="/me">
             <ProfilePage />
           </Route>
-        {/* <Route>
+          <Route exact path="/aboutus">
+            <AboutUs />
+          </Route>
+          {/* <Route exact path="*">
+            <Error />
+          </Route> */}
+        </AuthController>
+        {/* <Route path='*'>
           <Error />
         </Route> */}
-        </AuthController>
-        <Route path='*'>
-          <Error />
-        </Route>
       </Switch>
     </Router>
   );
