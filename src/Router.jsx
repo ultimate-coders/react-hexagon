@@ -65,7 +65,7 @@ const RouterComponent = () => {
           {/* <Route exact path="*">
             <Error />
           </Route> */}
-<Switch/>
+        </Switch>
         </AuthController>
         {/* <Route path='*'>
           <Error />
