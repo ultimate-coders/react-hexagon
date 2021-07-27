@@ -18,73 +18,73 @@ import AuthController from "./components/authController";
 
 const RouterComponent = () => {
   return (
-    // <Router>
-    //   <Switch>
-    //     <AuthController>
-    //     {/* <Header/> */}
-    //       <Route exact path='/signin'>
-    //         <Welcome />
-    //       </Route>
-    //       <Route exact path='/signup'>
-    //         <SignUp />
-    //       </Route>
-    //       <Route exact path='/forgotpassword'>
-    //         <ForgotPassword />
-    //       </Route>
-    //       <Route exact path='/'>
-    //         <TimeLinePage />
-    //       </Route>
-    //       <Route exact path='/changepassword'>
-    //         <ChangePassword />
-    //       </Route>
-    //       <Route exact path='/Verify'>
-    //         <Verify />
-    //       </Route>
-    //       <Route exact path='/google-auth'>
-    //         <AuthPage />
-    //       </Route>
-    //       <Route exact path='/messages'>
-    //         <Messages />
-    //       </Route>
-    //       <Route exact path='/me'>
-    //         <ProfilePage />
-    //       </Route>
-    //     </AuthController>
-    //   </Switch>
-    // </Router>
     <Router>
       <Switch>
-        <Route exact path="/">
-          <Welcome />
-        </Route>
-        <Route exact path="/signup">
-          <SignUp />
-        </Route>
-          <Route exact path="/forgotpassword">
+          <Route exact path='/signin'>
+            <Welcome />
+          </Route>
+          <Route exact path='/signup'>
+            <SignUp />
+          </Route>
+          <Route exact path='/forgotpassword'>
             <ForgotPassword />
           </Route>
-          <Route exact path="/google-auth">
-            <AuthPage />
-          </Route>
-          <Route exact path="/Verify">
+          <Route exact path='/Verify'>
             <Verify />
           </Route>
         <AuthController>
-          <Route exact path="/home">
+        {/* <Header/> */}
+          <Route exact path='/'>
             <TimeLinePage />
           </Route>
-          <Route exact path="/changepassword">
+          <Route exact path='/changepassword'>
             <ChangePassword />
           </Route>
-          <Route exact path="/messages">
+          <Route exact path='/google-auth'>
+            <AuthPage />
+          </Route>
+          <Route exact path='/messages'>
             <Messages />
           </Route>
-          <Route exact path="/me">
+          <Route exact path='/me'>
             <ProfilePage />
           </Route>
         </AuthController>
       </Switch>
     </Router>
+    // <Router>
+    //   <Switch>
+    //     <Route exact path="/">
+    //       <Welcome />
+    //     </Route>
+    //     <Route exact path="/signup">
+    //       <SignUp />
+    //     </Route>
+    //       <Route exact path="/forgotpassword">
+    //         <ForgotPassword />
+    //       </Route>
+    //       <Route exact path="/google-auth">
+    //         <AuthPage />
+    //       </Route>
+    //       <Route exact path="/Verify">
+    //         <Verify />
+    //       </Route>
+    //     <AuthController>
+    //       <Route exact path="/home">
+    //         <TimeLinePage />
+    //       </Route>
+    //       <Route exact path="/changepassword">
+    //         <ChangePassword />
+    //       </Route>
+    //       <Route exact path="/messages">
+    //         <Messages />
+    //       </Route>
+    //       <Route exact path="/me">
+    //         <ProfilePage />
+    //       </Route>
+    //     </AuthController>
+    //   </Switch>
+    // </Router>
   );
 };
 

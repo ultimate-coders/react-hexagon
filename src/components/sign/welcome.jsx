@@ -87,7 +87,7 @@ const Welcome = (props) => {
     if (results) {
       localStorage.setItem(tokenName, JSON.stringify(results.data));
       setChecking(false);
-      history.push('/home');
+      history.push('/');
     }
   }, [results]);
 
