@@ -16,7 +16,8 @@ const userDetailReducer = (state = initialState, action) => {
     case LOGIN_STATE:
       return {
         ...state,
-        loggedIn: true,
+
+        loggedIn: false,
       };
 
     default:

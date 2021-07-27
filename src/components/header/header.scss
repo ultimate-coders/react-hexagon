@@ -1,16 +1,16 @@
 header {
 
-    height: 100px;
-
+    height: 5em;
 }
 #logo {
-    width: 5em;
-    height: 2.5em;
+    width: 15em;
+    height: 9em;
     position: relative;
     left: 2em;
-    top: 1.7em;
-    border: solid 1px black;
-    border-radius: 20em;
+
+    bottom: 1.8em;
+    // border: solid 1px black;
+    // border-radius: 20em;
 }
 
 header {
@@ -29,8 +29,9 @@ header {
 #search-bar {
     width: 30em;
     position: relative;
-    left: 30em;
-    bottom: 2em;
+    left: 25em;
+
+    bottom: 8em;
 }
 
 #search-bar button {
@@ -46,8 +47,9 @@ header {
 
 #iconsContainer {
     position: relative;
-    bottom: 5em;
-    left: 70em;
+
+    bottom: 10.8em;
+    left: 65em;
     // left: 50em;
 }
 
@@ -56,4 +58,84 @@ svg {
     height: 1.5em;
     // background-color: white;
     // border-radius: 100px;
+}
+
+
+#userHeaderImage {
+    width: 3.5em;
+    height: 2.5em;
+    border-radius: 50%;
+}
+
+#userHeaderContainer {
+    position: relative;
+    left: 3em;
+    // top:.2em;
+}
+
+#NotificationsList {
+    position: relative;
+    left: 60em;
+    bottom: 10.1em;
+    // overflow: scroll;
+    // width:20em;
+    // height: 10em;
+    overflow-y: scroll;
+    scrollbar-color: #dfe079 #69a84edb;
+    word-wrap: break-word;
+    width: 20em;
+    // max-width: 20em;
+    max-height: 20em;
+    border: solid 2px #529471;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px 2px #2e353c;
+    z-index: 1;
+
+    background-color: black;
+    color: white;
+    display: none;
+
+    flex-direction:column;
+    justify-content: center;
+}
+
+#NotificationsList div {
+    padding: 0.5em;
+}
+
+#NotificationsList span {
+    padding: 0.5em;
+    color: white;
+    font-size:.9em;
+}
+
+#userOptionsToggle {
+    display: none;
+    z-index: 1;
+
+    position: relative;
+    left: 68em;
+    bottom: 10.1em;
+    overflow-y: scroll;
+    scrollbar-color: #dfe079 #69a84edb;
+    word-wrap: break-word;
+    width: 12em;
+    max-height: 20em;
+    border: solid 2px #529471;
+    border-radius: 5px;
+    box-shadow: 2px 2px 2px 2px #2e353c;
+    z-index: 1;
+
+    background-color: black;
+    color: white;
+    display: none;
+
+    flex-direction:column;
+    justify-content: center;
+}
+
+#userOptionsToggle span {
+    padding: 0.5em;
+    color: white;
+    font-size:.9em;
 }

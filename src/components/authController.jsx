@@ -14,7 +14,6 @@ export const checkAuth = async (setChecking, dispatch) => {
     }
 
     token = JSON.parse(token);
-    console.log("🚀 ~ file: authController.jsx ~ line 17 ~ checkAuth ~ token", token)
     
     const userProfile = await axios({
         url: ME_URL,
@@ -23,8 +22,13 @@ export const checkAuth = async (setChecking, dispatch) => {
             ContentType: 'application/json',
             Authorization: `Bearer ${token.access_token}`
         }
-    }).catch(e => null);
-    console.log("🚀 ~ file: authController.jsx ~ line 27 ~ checkAuth ~ userProfile", userProfile)
+    }).catch(e => {
+        if(e.response.data.status === 403 && e.response.data.message === 'Account not verified!'){
+            window.location.href = '/verify';
+            return;
+        }
+    });
+    
 
     if(userProfile){
         dispatch(userDetailAction(userProfile.data));
@@ -59,10 +63,10 @@ const AuthController = (props) => {
     useEffect(() => {
         (async () => await checkAuth(setChecking, dispatch))();
     }, []);
-
+    
     return (
         <div className='authController'>
-            {console.log("🚀 ~ file: authController.jsx ~ line 66 ~ AuthController ~ checking", checking)}
+            {console.log('checking ', checking)}
             {
                 
                 checking ? <div className="loader">Loading</div> : props.children

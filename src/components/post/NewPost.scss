@@ -27,6 +27,10 @@
     align-items: center;
     padding: 10px;
 
+    .select_input{
+      max-width: 50%;
+    }
+
     .MuiSvgIcon-root.photo_library_icon {
       cursor: pointer;
       margin-right: 5px;

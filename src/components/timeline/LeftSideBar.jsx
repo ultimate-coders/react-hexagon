@@ -10,29 +10,14 @@ import CategoryOutlinedIcon from '@material-ui/icons/CategoryOutlined';
 import useAjax from '../../hooks/useAjax';
 import { CATEGORY_URL } from '../../urls';
 import { getToken } from '../../helpers';
+import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-const categories = [
-  {
-    id: 'sdfjh32kj4h3k2jh4kj32hjk32n',
-    name: 'artist',
-  },
-  {
-    id: '432432432j32432kh4j3hjhjh',
-    name: 'Electronics',
-  },
-  {
-    id: '324k3jh342h5jhjh64h6j4l',
-    name: 'Programming',
-  },
-  {
-    id: '2343l2432jh4j32hj4h32kj',
-    name: 'Adventure',
-  },
-];
 
 const LeftSideBar = (props) => {
   const [results, reload, loading, error] = useAjax();
-
+  const { userDetails } = useSelector(mapStateToProps)
+  const history = useHistory();
 
   const getAllCategories = () => {
     (async () => {
@@ -40,6 +25,14 @@ const LeftSideBar = (props) => {
       reload(CATEGORY_URL, 'get', null, token);
     })();
   };
+
+  const onNavigate = (index) => {
+    if(index === 0){
+      history.push(`profile/${userDetails.user.username}`);
+    } else if (index === 1) {
+      history.push('messages');
+    }
+  }
 
   useEffect(() => {
     getAllCategories();
@@ -50,7 +43,7 @@ const LeftSideBar = (props) => {
       <List>
         {['My profile', 'Messenger', 'Notifications'].map(
           (text, index) => (
-            <ListItem button key={text}>
+            <ListItem onClick={() => onNavigate(index)} button key={text}>
               <ListItemIcon>
                   {index === 0 && <AccountCircleOutlinedIcon />}
                   {index === 1 && <ChatBubbleOutlineOutlinedIcon />}
@@ -81,5 +74,10 @@ const LeftSideBar = (props) => {
     </div>
   );
 };
+
+const mapStateToProps = (state) => ({
+  userDetails: state.userDetails.user,
+});
+
 
 export default LeftSideBar;

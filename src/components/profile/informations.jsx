@@ -4,6 +4,7 @@ import useAjax from "../../hooks/useAjax";
 import { PROFILE_URL, FOLLOW_URL } from "../../urls";
 import { useHistory } from "react-router";
 
+
 import { getToken } from "../../helpers";
 import "./info.scss";
 import { useSelector } from "react-redux";
@@ -22,6 +23,7 @@ const ProfileInfo = () => {
 
   const getProfile = () => {
     reload(url, "get", null, token);
+
   };
   useEffect(() => {
     console.log(url, token);
@@ -170,3 +172,4 @@ const mapStateToProps = (state) => ({
   user: state.userDetails.userDetail.user.email,
 });
 export default ProfileInfo;
+
