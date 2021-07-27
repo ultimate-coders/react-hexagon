@@ -69,6 +69,8 @@ const RouterComponent = () => {
           <AuthPage />
         </Route>
         <AuthController>
+          <Switch>
+
           <Route exact path="/home">
             <TimeLinePage />
           </Route>
@@ -87,13 +89,11 @@ const RouterComponent = () => {
           <Route exact path="/aboutus">
             <AboutUs />
           </Route>
-          {/* <Route exact path="*">
+          <Route  path="*">
             <Error />
-          </Route> */}
+          </Route>
+          </Switch>
         </AuthController>
-        {/* <Route path='*'>
-          <Error />
-        </Route> */}
       </Switch>
     </Router>
   );
