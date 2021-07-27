@@ -98,7 +98,7 @@ const Welcome = (props) => {
 
   return (
     <>
-    <Header/>
+    
       {checking ? (
         <div>Loading ...</div>
       ) : (

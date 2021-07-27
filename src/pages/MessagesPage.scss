@@ -23,9 +23,14 @@ body{
     background: transparent;
 }
 
-.cs-avatar,.cs-status, .cs-conversation__name, .cs-conversation__info, .cs-conversation__content{
+.cs-avatar,.cs-status, .cs-conversation__name, .cs-conversation__info, .cs-conversation__content, #search{
     pointer-events: none;
 }
 // .cs-conversation{
 //     pointer-events:visible ;
+// }
+
+// .MuiAppBar-colorPrimary{
+//     color: #fff;
+//     background-color: #966f42;
 // }
