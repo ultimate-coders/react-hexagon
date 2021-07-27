@@ -25,14 +25,14 @@ const useAjax = (
       headers: { 'Content-Type': 'application/json' },
       auth
     };
-
+    
     if (token) {
       options.headers = {
         ...options.headers,
         Authorization: `Bearer ${token}`,
       };
     }
-
+    
     (async () => {
       try {
         if (url) {

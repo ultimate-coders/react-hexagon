@@ -9,6 +9,7 @@ import ChangePassword from "./components/password/changePassword";
 import Header from "./components/header/header";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
+import Error from './pages/404Error'
 
 import ProfilePage from "./pages/ProfilePage";
 
@@ -82,7 +83,13 @@ const RouterComponent = () => {
           <Route exact path="/me">
             <ProfilePage />
           </Route>
+        {/* <Route>
+          <Error />
+        </Route> */}
         </AuthController>
+        <Route path='*'>
+          <Error />
+        </Route>
       </Switch>
     </Router>
   );

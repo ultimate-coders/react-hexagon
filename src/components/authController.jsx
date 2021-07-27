@@ -14,7 +14,6 @@ export const checkAuth = async (setChecking, dispatch) => {
     }
 
     token = JSON.parse(token);
-    console.log("🚀 ~ file: authController.jsx ~ line 17 ~ checkAuth ~ token", token)
     
     const userProfile = await axios({
         url: ME_URL,
@@ -24,7 +23,6 @@ export const checkAuth = async (setChecking, dispatch) => {
             Authorization: `Bearer ${token.access_token}`
         }
     }).catch(e => null);
-    console.log("🚀 ~ file: authController.jsx ~ line 27 ~ checkAuth ~ userProfile", userProfile)
 
     if(userProfile){
         dispatch(userDetailAction(userProfile.data));

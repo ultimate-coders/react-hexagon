@@ -1,7 +1,9 @@
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { connect } from "react-redux";
 
 import "./info.scss";
-const ProfileInfo = () => {
+const ProfileInfo = (props) => {
+console.log("🚀 ~ file: informations.jsx ~ line 6 ~ ProfileInfo ~ props", props)
   let user = {
     follower: {
       count: 158,
@@ -91,4 +93,9 @@ const ProfileInfo = () => {
   );
 };
 
-export default ProfileInfo;
+// export default ProfileInfo;
+const mapStateToProps = (state) => ({
+  userDetails: state,
+});
+
+export default connect(mapStateToProps)(ProfileInfo);
