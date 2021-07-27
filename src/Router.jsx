@@ -45,7 +45,7 @@ const RouterComponent = () => {
           <Route exact path="/messages">
             <Messages />
           </Route>
-          <Route exact path="/me">
+          <Route exact path="/profile/:username">
             <ProfilePage />
           </Route>
         </AuthController>

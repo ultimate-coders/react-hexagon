@@ -9,30 +9,17 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import SinglePostModal from './SinglePostModal';
 import './Post.scss';
-import { useSelector } from 'react-redux';
-import DeleteModal from './DeleteModal';
 
-
-const Post = ({ post, onChangePostsList, single }) => {
-  const { userDetails } = useSelector(mapStateToProps);
+const Post = ({ post }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const [openModal, setOpenModal] = useState(false);
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
   const handleOpenModal = () => {
-    if(!single) setOpenModal(true);
+    setOpenModal(true);
   };
 
   const handleCloseModal = () => {
     setOpenModal(false);
-  };
-
-  const handleOpenDeleteModal = () => {
-    setOpenDeleteModal(true);
-  };
-
-  const handleCloseDeleteModal = () => {
-    setOpenDeleteModal(false);
   };
 
   const handleClick = (event) => {
@@ -49,14 +36,7 @@ const Post = ({ post, onChangePostsList, single }) => {
         handleOpenModal={handleOpenModal}
         handleCloseModal={handleCloseModal}
         openModal={openModal}
-        postId={post.id}
-      />
-      <DeleteModal 
-        handleOpenModal={handleOpenDeleteModal}
-        handleCloseModal={handleCloseDeleteModal}
-        openModal={openDeleteModal}
-        afterDeletePost={onChangePostsList}
-        postId={post.id}
+        postId={post.Id}
       />
       <div className='post_header'>
         <Avatar
@@ -72,8 +52,7 @@ const Post = ({ post, onChangePostsList, single }) => {
             {moment(post.created_at).fromNow()}
           </span>
         </div>
-        {userDetails.id === post.profile.id && (
-          <div className='post_header_drop_down_list'>
+        <div className='post_header_drop_down_list'>
           <Button
             aria-controls='simple-menu'
             aria-haspopup='true'
@@ -88,11 +67,10 @@ const Post = ({ post, onChangePostsList, single }) => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            {/* <MenuItem onClick={handleClose}>Update</MenuItem> */}
-            <MenuItem onClick={handleOpenDeleteModal}>Delete</MenuItem>
+            <MenuItem onClick={handleClose}>Update</MenuItem>
+            <MenuItem onClick={handleClose}>Delete</MenuItem>
           </Menu>
         </div>
-        )}
       </div>
       <div className='post_text_content'>{post.text}</div>
       {post.images[0] && (
@@ -116,10 +94,5 @@ const Post = ({ post, onChangePostsList, single }) => {
     </div>
   );
 };
-
-const mapStateToProps = (state) => ({
-  userDetails: state.userDetails.user,
-});
-
 
 export default Post;
