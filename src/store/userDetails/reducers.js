@@ -10,12 +10,13 @@ const userDetailReducer = (state = initialState, action) => {
     case USER_DETAIL_INFO:
       return {
         ...state,
-        user: action.payload,
+        userDetail: action.payload,
       };
 
     case LOGIN_STATE:
       return {
         ...state,
+
         loggedIn: false,
       };
 

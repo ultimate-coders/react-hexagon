@@ -22,6 +22,7 @@ const RouterComponent = () => {
   return (
     <Router>
       <Switch>
+
           <Route exact path='/signin'>
             <Welcome />
           </Route>
@@ -53,7 +54,8 @@ const RouterComponent = () => {
 
             <Messages />
           </Route>
-          <Route exact path='/me'>
+          <Route exact path="/profile/:username">
+
             <ProfilePage />
           </Route>
           <Route exact path="/aboutus">
