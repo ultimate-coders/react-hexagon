@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
 import { getToken } from '../helpers';
 import { useDispatch } from 'react-redux';
-import { activeChatUserAction } from '../store/chat/actions';
+import { activeChatAction, activeChatUserAction } from '../store/chat/actions';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 
@@ -37,6 +37,9 @@ import {
   PROFILE_URL,
 } from '../urls';
 import messageHook from '../hooks/messagesHook';
+import moment from 'moment';
+
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -138,6 +141,7 @@ const Messages = () => {
   const newMessage = (event) => {
     // setSend(true);
     console.log(event);
+
     (async () => {
       await reload(
         MESSAGES_URL,
@@ -187,10 +191,10 @@ const Messages = () => {
   let getMessages = (x) => {
     (async () => {
       await reloadMsg(`${MESSAGES_URL}/${chat[x].id}`, 'get', null, token);
-      dispatch(activeChatUserAction(chat[x].id));
+      dispatch(activeChatUserAction(chat[x]));
     })();
   };
-
+  
   useEffect(() => {
     if (chat && chat.length > 0) getMessages(index);
   }, [chat]);
@@ -222,6 +226,13 @@ const Messages = () => {
     }
   };
 
+  useEffect(() => {
+    if(chat && state.activeChat && state.activeChat.sender_id === chat[index].id){
+      setMessages(prev => [...prev, {...state.activeChat, created_at: new Date()}]);
+      dispatch(activeChatAction(null));
+    }
+  }, [state.activeChat]);
+
   return (
     <>
       <div className={classes.root}>
@@ -232,7 +243,7 @@ const Messages = () => {
                 <Conversation name={user.name}>
                   <Avatar src={user.picture} status='available' size='lg' />
                 </Conversation>
-                <hr />
+                {/* <hr />
                 <div className={classes3.root}>
                   <AppBar
                     style={{ backgroundColor: '#529471' }}
@@ -259,7 +270,7 @@ const Messages = () => {
                       </div>
                     </Toolbar>
                   </AppBar>
-                </div>
+                </div> */}
                 <hr />
                 <div
                   style={{
@@ -379,13 +390,7 @@ const Messages = () => {
                                       float: 'right',
                                     }}
                                   >
-                                    {val.created_at
-                                      ? val.created_at
-                                          .split('T')[1]
-                                          .split(':')
-                                          .splice(0, 2)
-                                          .join(':')
-                                      : null}
+                                    {moment(val.created_at).format('hh:mm')}
                                   </span>
                                 </Message.CustomContent>
                               </Message>
@@ -410,7 +415,7 @@ const Messages = () => {
                   <MessageInput
                     placeholder='Type message here'
                     attachButton={false}
-                    onSend={(e) => newMessage(e)}
+                    onSend={(e) => newMessage(e.replace('<br>', ''))}
                   />
                 </ChatContainer>
               </MainContainer>
@@ -425,6 +430,7 @@ const Messages = () => {
 export default Messages;
 const mapStateToProps = (state) => ({
   user: state.userDetails.user,
+  activeChat: state.chat.activeChat
 });
 
 // export default connect(mapStateToProps)(Messages);
