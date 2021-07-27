@@ -120,4 +120,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default NewPost;
-// {"mode":"full","isActive":false}

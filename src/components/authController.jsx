@@ -32,6 +32,7 @@ export const checkAuth = async (setChecking, dispatch) => {
 
     if(userProfile){
         dispatch(userDetailAction(userProfile.data));
+        console.log(userProfile.data);
         setChecking(false);
     } else {
         const newAccessToken = await axios({
