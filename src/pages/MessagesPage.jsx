@@ -6,11 +6,11 @@ import Grid from "@material-ui/core/Grid";
 import "./MessagesPage.scss";
 import { If, Then, Else } from "react-if";
 import Faker from "faker";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import { getToken } from "../helpers";
-import { useDispatch } from 'react-redux';
-import {activeChatUserAction} from '../store/chat/actions'
+import { useDispatch } from "react-redux";
+import { activeChatUserAction } from "../store/chat/actions";
 import {
   MainContainer,
   ChatContainer,
@@ -119,16 +119,19 @@ const Messages = () => {
   const classes2 = useStyles2();
   const sent = "🗸";
   const seen = "🗸🗸";
-  
+
   const handleChange = (event) => {
-    console.log("🚀 ~ file: MessagesPage.jsx ~ line 162 ~ useEffect ~ chat", messages)
+    console.log(
+      "🚀 ~ file: MessagesPage.jsx ~ line 162 ~ useEffect ~ chat",
+      messages
+    );
     console.log(event.target.className);
     let x = event.target.className.split(" ");
 
     setIndex(x[1] - 1);
     getMessages(x[1] - 1);
   };
-  
+
   const newMessage = (event) => {
     // setSend(true);
     console.log(event);
@@ -138,30 +141,32 @@ const Messages = () => {
         "post",
         { receiver_id: chat[index].id, message: event },
         token
-        );
-      })();
-      messages.push({ sender_id: user.id, message: event });
-      let list = messages.filter((val, idx) => idx !== index);
+      );
+    })();
+    messages.push({ sender_id: user.id, message: event });
+    let list = messages.filter((val, idx) => idx !== index);
     list.unshift(messages[index]);
     setMessages(list);
 
-   let newList = chat 
-   let x = newList.splice(index, 1)
-   x[0].last_message = { sender_id: user.id, message: event }
-   newList.unshift(x[0])
-   setChat(newList)
-   setIndex(0)
+    let newList = chat;
+    let x = newList.splice(index, 1);
+    x[0].last_message = { sender_id: user.id, message: event };
+    newList.unshift(x[0]);
+    setChat(newList);
+    setIndex(0);
   };
   
   useEffect(() => {
+    console.log(state);
     setUser({
-      id: state.user.userDetail.id,
-      name: state.user.userDetail.first_name,
-      picture: state.user.userDetail.profile_picture.link,
+      id: state.user.id,
+      name: state.user.first_name,
+      picture: state.user.profile_picture.link,
     });
   }, []);
   
   useEffect(() => {
+
     if(chat === null){
       
       reload(PROFILES_WITH_MESSAGES_URL, "get", null, token);
@@ -169,14 +174,17 @@ const Messages = () => {
     }
     
     
+
   }, [token, results]);
   
   let getMessages = (x) => {
+
     (async () => {
       await reloadMsg(`${MESSAGES_URL}/${chat[x].id}`, "get", null, token);
     })();
     
     dispatch(activeChatUserAction(chat[x].id))
+
   };
   
   useEffect(() => {
@@ -184,9 +192,11 @@ const Messages = () => {
     
   }, [chat]);
   useEffect(() => {
+
     setMessages(resultsMsg)
 
   },[resultsMsg])
+
 
   let handleSeen = () => {
     console.log('hello')
@@ -220,7 +230,11 @@ const Messages = () => {
                           <Conversation
                             className={idx + 1}
                             name={val.first_name}
-                            lastSenderName={val.last_message.sender_id === user.id? 'me': val.first_name}
+                            lastSenderName={
+                              val.last_message.sender_id === user.id
+                                ? "me"
+                                : val.first_name
+                            }
                             info={val.last_message.message}
                             unreadCnt={val.last_message.seen === false && val.last_message.sender_id !== user.id ? 1: 0}
                           >
@@ -241,6 +255,7 @@ const Messages = () => {
           </Grid>
           <Grid item xs={9}>
             <div className={classes2.root}>
+
                 <Link to={chat && chat.length ?`profile/${chat[index].first_name}`: null}>
               <ConversationHeader>
                 <Avatar
@@ -255,6 +270,7 @@ const Messages = () => {
                 
               </ConversationHeader>
                 </Link>
+
             </div>
             <div style={{ position: "relative", height: "500px" }} onClick={()=>handleSeen()}>
               <MainContainer>
@@ -300,13 +316,15 @@ const Messages = () => {
                                       float: "right",
                                     }}
                                   >
+
                                     {val.created_at? val.created_at.split('T')[1].split(':').splice(0,2).join(':'): null}
+
                                   </span>
                                 </Message.CustomContent>
                               </Message>
                               {/* <Message
                             model={{
-          console.log("🚀 ~ file: MessagesPage.jsx ~ line 322 ~ useEffect ~ results", results)
+          
                               message: "how are you   ", 
                               sentTime: "just now",
                               sender: "Joe",
@@ -340,7 +358,7 @@ const Messages = () => {
 
 export default Messages;
 const mapStateToProps = (state) => ({
-  user: state.userDetails,
+  user: state.userDetails.user,
 });
 
 // export default connect(mapStateToProps)(Messages);

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
@@ -6,6 +6,9 @@ import Fade from '@material-ui/core/Fade';
 import Post from './Post';
 import CommentsList from '../comment/CommentsList';
 import NewComment from '../comment/NewComment';
+import useAjax from '../../hooks/useAjax';
+import { getToken } from '../../helpers';
+import { COMMENT_URL } from '../../urls';
 
 const singlePost = {
   id: '2b6b9b2e-7ae5-4f36-bdb4-01316e50fc64',
@@ -111,17 +114,43 @@ const useStyles = makeStyles((theme) => ({
     border: '2px solid #000',
     boxShadow: theme.shadows[5],
     overflow: 'scroll',
-    maxHeight: '100vh'
+    maxHeight: '100vh',
   },
 }));
 
-const SinglePostModal = ({ handleCloseModal, openModal, postId }) => {
-  const [post, setPost] = useState(singlePost);
-  const [comments, setComments] = useState(postComments);
+const SinglePostModal = ({ handleCloseModal, openModal, postDetails }) => {
+  const [post, setPost] = useState(postDetails);
+  const [comments, setComments] = useState(null);
+  const [results, reload] = useAjax();
   const classes = useStyles();
 
+  const getAllComments = () => {
+    (async () => {
+      const token = await getToken();
+      reload(`${COMMENT_URL}/${postDetails.id}`, 'get', null, token);
+    })();
+  };
+
+  const onChangeComments = (action='new', payload) => {
+    setComments(prev => {
+      if(action === 'new'){
+        return [...prev, payload]
+      } else if (action === 'delete'){
+        return prev.filter(comment => comment.id !== payload);
+      }
+    })
+  }
+
+  useEffect(() => {
+    getAllComments();
+  }, []);
+
+  useEffect(() => {
+    setComments(results?.data.results);
+  }, [results])
+
   return (
-    <div>
+    <div style={{minWidth: '600px'}}>
       <Modal
         aria-labelledby='transition-modal-title'
         aria-describedby='transition-modal-description'
@@ -136,9 +165,9 @@ const SinglePostModal = ({ handleCloseModal, openModal, postId }) => {
       >
         <Fade in={openModal}>
           <div className={classes.paper}>
-            <Post post={post} />
-            <CommentsList comments={comments} />
-            <NewComment post={post} />
+            <Post post={post} single />
+            { comments && <CommentsList onChangeComments={onChangeComments} comments={comments} />}
+            <NewComment onChangeComments={onChangeComments} post={post} />
           </div>
         </Fade>
       </Modal>

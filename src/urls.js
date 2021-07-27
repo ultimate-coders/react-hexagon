@@ -1,5 +1,6 @@
 const BASE_URL = 'https://hexagon-sm.herokuapp.com/';
 
+
 // Auth endpoints
 export const SIGN_IN_GOOGLE_URL = BASE_URL + 'auth/google';
 export const SIGN_IN_URL = BASE_URL + 'auth/signin';
@@ -29,7 +30,7 @@ export const CATEGORY_URL = BASE_URL + 'api/v1/category';
 // Post endpoints
 export const TIMELINE_POSTS_URL = BASE_URL + 'api/v1/posts/timeline';
 export const PROFILE_POSTS_URL = BASE_URL + 'api/v1/posts/profile';
-export const CATEGORY_POSTS_URL = BASE_URL + 'api/v1/posts/category';
+export const CATEGORY_POSTS_URL = BASE_URL + 'api/v1/posts';
 export const POST_URL = BASE_URL + 'api/v1/posts/post';
 
 // Comments endpoints

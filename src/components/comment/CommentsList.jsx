@@ -1,11 +1,11 @@
 import Comment from './Comment';
 
-const CommentsList = ({ comments }) => {
+const CommentsList = ({ comments, onChangeComments }) => {
 
     return (
         <div className='comment_list_container'>
             {
-                comments.map(comment => <Comment comment={comment} />)
+                comments.reverse().map(comment => <Comment onChangeComments={onChangeComments} comment={comment} />)
             }
         </div>
     )

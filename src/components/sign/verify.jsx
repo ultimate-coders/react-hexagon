@@ -1,11 +1,12 @@
-import React from 'react';
+import { React, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
+// import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -13,6 +14,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { styled } from '@material-ui/core/styles';
 import './signup.scss'
+
+import useAjax from '../../hooks/useAjax';
+import { REQUEST_USER_VERIFY_CODE_URL, VERIFY_USER_ACCOUNT_URL } from '../../urls';
+import { useHistory } from 'react-router';
+import { getToken } from '../../helpers';
+import { checkAuth } from '../authController';
+
 
 const HexagonButton = styled(Button)({
     // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
@@ -66,7 +74,44 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Verify = () => {
+    const history = useHistory();
     const classes = useStyles();
+    const [code, setCode] = useState('');
+    const [results, reload, loading, error] = useAjax();
+    const [verifyCodeResults, verifyCodeReload, verifyCodeLoading, everifyCodeError] = useAjax();
+
+
+
+    const onVerifyREquest = () => {
+        (async() => {
+            const token = await getToken();
+            reload(REQUEST_USER_VERIFY_CODE_URL, 'post',null, token, null)
+        })();
+
+    };
+    
+    const onVerifyCheck = (e) => {
+        e.preventDefault();
+        (async() => {
+            const token = await getToken();
+            verifyCodeReload(VERIFY_USER_ACCOUNT_URL, 'post',{
+                code: code,    
+            }, token, null);
+            e.target.reset();
+
+        })();
+    };
+
+    useEffect(() => {
+        onVerifyREquest();
+    }, []);
+
+    useEffect(() => {
+        if (verifyCodeResults?.data.status === 200) {
+          history.push('/');
+        }
+      }, [verifyCodeResults]);
+
 
     return (
         <Container component="main" maxWidth="xs">
@@ -80,12 +125,13 @@ const Verify = () => {
                 <Typography component="h1" variant="h5">
                     Verify Your Account
                 </Typography>
-                <form id="signupForm" className={classes.form} noValidate>
+                <form onSubmit={onVerifyCheck} id="signupForm" className={classes.form} noValidate>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
+                                onChange={(e) => setCode(e.target.value)}
                                 autoComplete="fname"
-                                name="firstName"
+                                name="code"
                                 variant="outlined"
                                 required
                                 fullWidth
@@ -97,19 +143,27 @@ const Verify = () => {
                     </Grid>
                     <HexagonButton
                         type="submit"
+                        onClick={onVerifyCheck}
                         fullWidth
                         variant="contained"
                         color="primary"
                         className={classes.submit}
                     >
-                        Enter Code
+                        {verifyCodeLoading ? 'Sending' : 'Enter Code'}
                     </HexagonButton>
                 </form>
                 <div id="SigninQuestion">
                     <span className="loginForgot"> Already have an account? </span>
-                    <a className="loginRegisterButton" type="submit">
+                    <Link className="loginRegisterButton" type="submit" to='/'>
                         Sign In
-                    </a>
+                    </Link>
+                </div>
+                <div id="SigninQuestion">
+                    <span className="loginForgot"> Didnt recieve your code? </span>
+                    <HexagonButton className="loginRegisterButton" type="submit" 
+                    >
+                       <a id='ResendVerification' onClick={onVerifyREquest}>Resend Code</a> 
+                    </HexagonButton>
                 </div>
             </div>
             {/* <Box mt={5}>
