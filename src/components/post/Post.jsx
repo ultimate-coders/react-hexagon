@@ -9,7 +9,6 @@ import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import ChatBubbleOutlineIcon from '@material-ui/icons/ChatBubbleOutline';
 import SinglePostModal from './SinglePostModal';
 import './Post.scss';
-
 import { useSelector } from 'react-redux';
 import DeleteModal from './DeleteModal';
 import { useHistory } from 'react-router-dom';
@@ -17,21 +16,30 @@ import useAjax from '../../hooks/useAjax';
 import { INTERACTION_URL } from '../../urls';
 import { getToken } from '../../helpers';
 
-const Post = ({ post }) => {
+
+const Post = ({ post, onChangePostsList, single }) => {
+  const { userDetails } = useSelector(mapStateToProps);
   const [anchorEl, setAnchorEl] = useState(null);
   const [openModal, setOpenModal] = useState(false);
-
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [postInfo, setPostInfo] = useState(post);
   const [results, reload, loading, error] = useAjax();
   const history = useHistory();
 
   const handleOpenModal = () => {
-    setOpenModal(true);
+    if(!single) setOpenModal(true);
   };
 
   const handleCloseModal = () => {
     setOpenModal(false);
+  };
+
+  const handleOpenDeleteModal = () => {
+    setOpenDeleteModal(true);
+  };
+
+  const handleCloseDeleteModal = () => {
+    setOpenDeleteModal(false);
   };
 
   const handleClick = (event) => {
@@ -64,7 +72,6 @@ const Post = ({ post }) => {
         handleOpenModal={handleOpenModal}
         handleCloseModal={handleCloseModal}
         openModal={openModal}
-
         postDetails={postInfo}
       />
       <DeleteModal 
@@ -89,7 +96,6 @@ const Post = ({ post }) => {
             {moment(postInfo.created_at).fromNow()}
           </span>
         </div>
-
         {userDetails.id === postInfo.profile.id && (
           <div className='post_header_drop_down_list'>
           <Button
@@ -106,10 +112,11 @@ const Post = ({ post }) => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>Update</MenuItem>
-            <MenuItem onClick={handleClose}>Delete</MenuItem>
+            {/* <MenuItem onClick={handleClose}>Update</MenuItem> */}
+            <MenuItem onClick={handleOpenDeleteModal}>Delete</MenuItem>
           </Menu>
         </div>
+        )}
       </div>
       <div className='post_text_content'>{postInfo.text}</div>
       {postInfo?.images[0]?.link && (
@@ -133,5 +140,10 @@ const Post = ({ post }) => {
     </div>
   );
 };
+
+const mapStateToProps = (state) => ({
+  userDetails: state.userDetails.user,
+});
+
 
 export default Post;

@@ -4,7 +4,6 @@ import Avatar from '@material-ui/core/Avatar';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import Button from 'react-bootstrap/Button';
 // import '../post/NewPost.scss';
-
 import { useSelector } from 'react-redux';
 import useAjax from '../../hooks/useAjax';
 import { getToken } from '../../helpers';
@@ -13,7 +12,6 @@ import axios from 'axios';
 
 const NewPost = ({ onAddNewPosts }) => {
   const postImages = useRef(null);
-
   const { userDetails } = useSelector(mapStateToProps);
   const [images, setImages] = useState(null);
   const [text, setText] = useState('');
@@ -64,7 +62,11 @@ const NewPost = ({ onAddNewPosts }) => {
   return (
     <Form onSubmit={onSubmit} className='new_post_container'>
       <Form.Group className='new_post_first_row' controlId='formTextInput'>
-        <Avatar className='new_post_avatar' alt={userName} src={profileImage} />
+        <Avatar
+          className='new_post_avatar'
+          alt={userDetails.user.username}
+          src={userDetails.profile_picture.link}
+        />
         <Form.Control
           className='new_post_text_area'
           required
@@ -104,7 +106,6 @@ const NewPost = ({ onAddNewPosts }) => {
           ))}
         </select>
         <div>
-
           <Button type='submit' variant='success'>
             {submitting ? 'Sending' : 'Share'}
           </Button>
@@ -114,4 +115,9 @@ const NewPost = ({ onAddNewPosts }) => {
   );
 };
 
+const mapStateToProps = (state) => ({
+  userDetails: state.userDetails.user,
+});
+
 export default NewPost;
+// {"mode":"full","isActive":false}
