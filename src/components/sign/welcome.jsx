@@ -4,11 +4,12 @@ import Button from '@material-ui/core/Button';
 import { styled } from '@material-ui/core/styles';
 import GoogleButton from 'react-google-button';
 import './welcome.scss';
+import Header from '../header/header'
 import { connect } from "react-redux";
 
 
 import useAjax from '../../hooks/useAjax';
-import { SIGN_IN_URL } from '../../urls';
+import { SIGN_IN_URL, SIGN_IN_GOOGLE_URL } from '../../urls';
 import { tokenName } from '../../helpers';
 import { useHistory } from 'react-router';
 import { checkAuth } from '../authController';
@@ -32,6 +33,8 @@ const HexagonButton = styled(Button)({
 });
 
 const Welcome = (props) => {
+
+  const [ToggleEye, setToggleEye] = useState('https://image.flaticon.com/icons/png/512/4743/4743038.png');
 console.log("🚀 ~ file: welcome.jsx ~ line 35 ~ Welcome ~ props", props)
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -41,14 +44,36 @@ console.log("🚀 ~ file: welcome.jsx ~ line 35 ~ Welcome ~ props", props)
 
   const history = useHistory();
 
-  const onLogin = () => {
-      reload(SIGN_IN_URL, 'post', null, null, {
+  const onSignin = () => {
+    reload(SIGN_IN_URL, 'post', null, null, {
       username: email,
       password: password,
     })
-    // window.location.href = '/home';
-    // history.push('/home')
   };
+
+  // const googleOauth = () => {
+  //   reload(SIGN_IN_GOOGLE_URL, 'post', null, null, {
+  //     username: email,
+  //     password: password,
+  //   })
+  // };
+
+  function showPassword(e) {
+
+    let passwordInput = document.getElementById('loginInput');
+
+    let closedEye = 'https://image.flaticon.com/icons/png/512/4743/4743038.png';
+    let openedEye = 'https://image.flaticon.com/icons/png/512/709/709612.png';
+
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        setToggleEye(openedEye);
+    }
+    else {
+        passwordInput.type = "password";
+        setToggleEye(closedEye);
+    }
+}
 
   useEffect(() => {
     if (checking) {
@@ -71,6 +96,7 @@ console.log("🚀 ~ file: welcome.jsx ~ line 35 ~ Welcome ~ props", props)
 
   return (
     <>
+    <Header/>
       {checking ? (
         <div>Loading ...</div>
       ) : (
@@ -109,11 +135,12 @@ console.log("🚀 ~ file: welcome.jsx ~ line 35 ~ Welcome ~ props", props)
                     id='loginInput'
                     className='loginInput'
                   />
+                  <img id="WelcomepassowrdImage" src={ToggleEye} alt={'alt'} type="checkbox" onClick={showPassword} />
                   {/* <Button id="openAuth"><img src={"https://www.hebergementwebs.com/image/b5/b5a4bf161a5c2a1316b72199a6887cc8.webp/the-secret-history-of-the-google-logothe-secret-history-of-the-google-logo-0.webp"} alt={"Hexagon"} ></img>
                             </Button> */}
                   <div id='loginDiv'>
-                    <HexagonButton onClick={onLogin}  className='loginButton'>
-                      {loading ? 'Loading' : 'Log In'}
+                    <HexagonButton onClick={onSignin} className='loginButton'>
+                      {loading ? 'Loading' : 'Sign in'}
                     </HexagonButton>
                   </div>
 
@@ -132,9 +159,7 @@ console.log("🚀 ~ file: welcome.jsx ~ line 35 ~ Welcome ~ props", props)
                           backgroundColor: '#529471',
                           textAlign: 'center',
                         }}
-                        onClick={() => {
-                          console.log('Google button clicked');
-                        }}
+                      // onClick={googleOauth}
                       />
                     </Button>
                   </div>
@@ -143,7 +168,7 @@ console.log("🚀 ~ file: welcome.jsx ~ line 35 ~ Welcome ~ props", props)
                 <div className='anchorContainer'>
                   <Link
                     to='/signup'
-                    className='loginRegisterButton new-account-wedth'
+                    className='loginRegisterButton new-account-width'
                   >
                     Your first time here? Create a New Account
                   </Link>
@@ -161,4 +186,4 @@ const mapStateToProps = (state) => ({
   userDetails: state.userDetails,
 });
 
-export default connect(mapStateToProps)(Welcome);
+export default Welcome;

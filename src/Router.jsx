@@ -62,21 +62,22 @@ const RouterComponent = () => {
         <Route exact path="/signup">
           <SignUp />
         </Route>
-        <Route exact path="/forgotpassword">
-          <ForgotPassword />
-        </Route>
-        <Route exact path="/google-auth">
-          <AuthPage />
-        </Route>
+          <Route exact path="/forgotpassword">
+            <ForgotPassword />
+          </Route>
+          <Route exact path="/google-auth">
+            <AuthPage />
+          </Route>
+          <Route exact path="/Verify">
+            <Verify />
+          </Route>
+
         <AuthController>
           <Route exact path="/home">
             <TimeLinePage />
           </Route>
           <Route exact path="/changepassword">
             <ChangePassword />
-          </Route>
-          <Route exact path="/Verify">
-            <Verify />
           </Route>
           <Route exact path="/messages">
             <Messages />

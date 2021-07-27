@@ -1,18 +1,26 @@
-import React from 'react';
-import Avatar from '@material-ui/core/Avatar';
+import { React, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import './signup.scss'
+
+// import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
+// import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { styled } from '@material-ui/core/styles';
-import './signup.scss'
+// import Checkbox from '@material-ui/core/Checkbox';
+
+import useAjax from '../../hooks/useAjax';
+import { SIGNUP_URL } from '../../urls';
+import { useHistory } from 'react-router';
+import { tokenName } from '../../helpers';
+
+
 
 const HexagonButton = styled(Button)({
     // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
@@ -31,18 +39,20 @@ const HexagonButton = styled(Button)({
         // color: "#529471",
     }
 });
-// function Copyright() {
-//     return (
-//         <Typography variant="body2" color="textSecondary" align="center">
-//             {'Copyright © '}
-//             <Link color="inherit" href="https://material-ui.com/">
-//                 Your Website
-//             </Link>{' '}
-//             {new Date().getFullYear()}
-//             {'.'}
-//         </Typography>
-//     );
-// }
+
+function Copyright() {
+    return (
+        <Typography variant="body2" color="textSecondary" align="center">
+            {'Copyright © '}
+            <Button>
+                <Link color="inherit" style={{ textDecoration: 'none' }} to="/">
+                    HEXAGON
+                </Link></Button>{' '}
+            {new Date().getFullYear()}
+            {'.'}
+        </Typography>
+    );
+}
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -65,7 +75,51 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignUp = () => {
+    const [ToggleEye, setToggleEye] = useState('https://image.flaticon.com/icons/png/512/4743/4743038.png');
     const classes = useStyles();
+    const [userName, setUserName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [checking, setChecking] = useState(localStorage.getItem(tokenName));
+    const [results, reload, loading, error] = useAjax();
+
+    const history = useHistory();
+
+    const onSignup = () => {
+        reload(SIGNUP_URL, 'post', {
+            user_name: userName,
+            password: password,
+            email: email,
+
+        }, null, null)
+
+    };
+
+    function showPassword(e) {
+
+        let passwordInput = document.getElementById('showPasswordInput');
+
+        let closedEye = 'https://image.flaticon.com/icons/png/512/4743/4743038.png';
+        let openedEye = 'https://image.flaticon.com/icons/png/512/709/709612.png';
+
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            setToggleEye(openedEye);
+        }
+        else {
+            passwordInput.type = "password";
+            setToggleEye(closedEye);
+        }
+    }
+
+    useEffect(() => {
+        if (results) {
+            localStorage.setItem(tokenName, JSON.stringify(results.data));
+            setChecking(false);
+            history.push('/Verify');
+        }
+    }, [results]);
+
 
     return (
         <Container component="main" maxWidth="xs">
@@ -83,6 +137,7 @@ const SignUp = () => {
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
                             <TextField
+                                onChange={(e) => setUserName(e.target.value)}
                                 autoComplete="fname"
                                 name="firstName"
                                 variant="outlined"
@@ -93,19 +148,9 @@ const SignUp = () => {
                                 autoFocus
                             />
                         </Grid>
-                        {/* <Grid item xs={12} sm={6}>
-                            <TextField
-                                variant="outlined"
-                                required
-                                fullWidth
-                                id="lastName"
-                                label="Last Name"
-                                name="lastName"
-                                autoComplete="lname"
-                            />
-                        </Grid> */}
                         <Grid item xs={12}>
                             <TextField
+                                onChange={(e) => setEmail(e.target.value)}
                                 variant="outlined"
                                 required
                                 fullWidth
@@ -117,6 +162,7 @@ const SignUp = () => {
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
+                                onChange={(e) => setPassword(e.target.value)}
                                 variant="outlined"
                                 required
                                 fullWidth
@@ -125,37 +171,37 @@ const SignUp = () => {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                id="showPasswordInput"
                             />
+                            <img id="passowrdImage" src={ToggleEye} alt={'alt'} type="checkbox" onClick={showPassword} />
                         </Grid>
-                        {/* <Grid item xs={12}>
-                            <FormControlLabel
-                                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                label="I want to receive inspiration, marketing promotions and updates via email."
-                            />
-                        </Grid> */}
                     </Grid>
                     <HexagonButton
-                        type="submit"
+                        // type="submit"
+                        onClick={onSignup}
                         fullWidth
                         variant="contained"
                         color="primary"
-                        className={classes.submit}
+                    // className={classes.submit}
                     >
                         Sign Up
                     </HexagonButton>
                 </form>
                 <div id="SigninQuestion">
                     <span className="loginForgot"> Already have an account? </span>
-                    <a className="loginRegisterButton" type="submit">
+                    <Link className="loginRegisterButton" type="submit" to='/'>
                         Sign In
-                    </a>
+                    </Link>
                 </div>
             </div>
-            {/* <Box mt={5}>
+            <Box mt={5}>
                 <Copyright />
-            </Box> */}
+            </Box>
         </Container>
     );
 }
+const mapStateToProps = (state) => ({
+    userDetails: state.userDetails,
+});
 
 export default SignUp;
