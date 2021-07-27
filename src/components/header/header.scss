@@ -1,6 +1,6 @@
 header {
 
-    height: 100px;
+    height: 5em;
 
 }
 #logo {
@@ -8,7 +8,7 @@ header {
     height: 2.5em;
     position: relative;
     left: 2em;
-    top: 1.7em;
+    top: 1.4em;
     border: solid 1px black;
     border-radius: 20em;
 }
@@ -29,8 +29,8 @@ header {
 #search-bar {
     width: 30em;
     position: relative;
-    left: 30em;
-    bottom: 2em;
+    left: 25em;
+    bottom: 1.4em;
 }
 
 #search-bar button {
@@ -46,8 +46,8 @@ header {
 
 #iconsContainer {
     position: relative;
-    bottom: 5em;
-    left: 70em;
+    bottom: 4.3em;
+    left: 65em;
     // left: 50em;
 }
 
@@ -56,4 +56,16 @@ svg {
     height: 1.5em;
     // background-color: white;
     // border-radius: 100px;
+}
+
+#userHeaderImage{
+    width: 3.5em;
+    height: 2.5em;
+    border-radius:50%;
+}
+
+#userHeaderContainer{
+    position: relative;
+    left: 3em;
+    // top:.2em;
 }

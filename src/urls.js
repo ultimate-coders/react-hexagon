@@ -1,5 +1,6 @@
 const BASE_URL = 'https://hexagon-sm.herokuapp.com/';
 
+
 // Auth endpoints
 export const SIGN_IN_GOOGLE_URL = BASE_URL + 'auth/google';
 export const SIGN_IN_URL = BASE_URL + 'auth/signin';
