@@ -60,9 +60,9 @@ const Header = () => {
         }
     }
 
-    // useEffect(() => {
-    //     console.log('user: ', userDetails)
-    // }, []);
+    useEffect(() => {
+        console.log('user: ', userDetails)
+    }, []);
 
 
     return (
