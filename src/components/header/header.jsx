@@ -15,9 +15,9 @@ import { NOTIFICATIONS_URL } from '../../urls';
 
 
 const Header = () => {
-
     const { userDetails } = useSelector(mapStateToProps)
-    const [showNotificationsList, setShowNotificationsList] = useState([]);
+    const [showNotificationsList, setShowNotificationsList] = useState(0);
+    const [notificationsState, setNotificationsState] = useState(false);
 
     const [notifications, setNotifications] = useState(false);
     const [userOptions, setUserOptions] = useState(false);
@@ -33,11 +33,18 @@ const Header = () => {
     const onGetNotifications = () => {
         (async () => {
             const token = await getToken();
-            reload(NOTIFICATIONS_URL, 'get', null, token, null)
+            reload(NOTIFICATIONS_URL, 'get', null, token, null);
         })();
     };
 
-    function showNotifications(e) {
+    const updateSeenNotifications = (notificationID) => {
+        (async () => {
+            const token = await getToken();
+            reload(NOTIFICATIONS_URL, 'put', null, token,notificationID);
+        })();
+    };
+
+     function showNotifications(e) {
 
         let notificationsList = document.getElementById('NotificationsList');
 
@@ -50,6 +57,10 @@ const Header = () => {
         }
         else {
             onGetNotifications();
+            results.data.results.forEach((notification) =>{
+                updateSeenNotifications(notification.id);
+                console.log('not: ', notification.id)
+            })
             notificationsList.style.display = "flex";
             setNotifications(true);
             if (userOptions) {
@@ -78,6 +89,7 @@ const Header = () => {
             }
         }
     }
+
     function redirectToPost(e) {
         let postId = e.target.id;
         console.log('id: ', e.target.id);
@@ -85,13 +97,17 @@ const Header = () => {
     }
 
     useEffect(() => {
-        onGetNotifications();
+            onGetNotifications();
+    }, []);
+
+    useEffect(() => {
         if (results) {
             console.log('results: ', results.data.results);
-            setShowNotificationsList(results.data.results);
-            console.log('showNotificationsList: ', showNotificationsList);
+            setShowNotificationsList(results.data.results.filter(notification => notification.seen === false));
         }
-    }, [results]);
+}, [results]);
+
+console.log('showNotificationsList: ', results?.data.results.filter(notification => notification.seen === false));
 
 
     return (
@@ -119,7 +135,8 @@ const Header = () => {
                     </IconButton>
 
                     <IconButton id="notifications" aria-label="cart" type="submit" onClick={showNotifications}>
-                        <StyledBadge badgeContent={results?results.data.results.length:notificationsCount} color="secondary">
+                        <StyledBadge badgeContent={results? showNotificationsList.length : notificationsCount}
+                        color="secondary">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-bell" viewBox="0 0 16 16">
                                 <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z" />
                             </svg>
@@ -162,6 +179,7 @@ const StyledBadge = withStyles((theme) => ({
         padding: '0 4px',
     },
 }))(Badge);
+
 
 const mapStateToProps = (state) => ({
     userDetails: state.userDetails.user,
