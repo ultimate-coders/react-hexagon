@@ -5,7 +5,6 @@ import Button from '@material-ui/core/Button';
 import { styled } from '@material-ui/core/styles';
 import GoogleButton from 'react-google-button';
 import './welcome.scss';
-import Header from '../header/header'
 
 
 import useAjax from '../../hooks/useAjax';
@@ -98,7 +97,6 @@ const Welcome = (props) => {
 
   return (
     <>
-    <Header/>
       {checking ? (
         <div>Loading ...</div>
       ) : (
@@ -110,11 +108,11 @@ const Welcome = (props) => {
                   <img
                     id="welcomeLogo"
                     src={
-                      "https://logosandtypes.com/wp-content/uploads/2020/07/hammer-series.svg"
+                      "https://i.ibb.co/2Ff9bFV/Hexa-01.png"
                     }
                     alt={"Hexagon"}
                   ></img>
-                  <h3 className="loginLogo">HEXAGON</h3>
+                  {/* <h3 className="loginLogo">HEXAGON</h3> */}
                 </div>
                 <div className="loginDesc">
                   <span>Turn your creativity into reality!</span>

@@ -97,7 +97,7 @@ const Verify = () => {
             verifyCodeReload(VERIFY_USER_ACCOUNT_URL, 'post',{
                 code: code,    
             }, token, null);
-            e.target.reset();
+            // e.target.reset();
 
         })();
     };
