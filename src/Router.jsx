@@ -11,18 +11,13 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Route, Switch } from "react-router-dom";
 import Error from "./pages/404Error";
 import AboutUs from "./pages/aboutus";
-
 import ProfilePage from "./pages/ProfilePage";
-
 import Messages from "./pages/MessagesPage";
-
 import AuthController from "./components/authController";
-
 const RouterComponent = () => {
   return (
     <Router>
       <Switch>
-
           <Route exact path='/signin'>
             <Welcome />
           </Route>
@@ -38,12 +33,10 @@ const RouterComponent = () => {
           <Route exact path="/Verify">
             <Verify />
           </Route>
-
         <AuthController>
-
+        <Switch>
         {/* <Header/> */}
           <Route exact path='/'>
-
             <TimeLinePage />
           </Route>
           <Route exact path='/changepassword'>
@@ -53,11 +46,9 @@ const RouterComponent = () => {
             <AuthPage />
           </Route>
           <Route exact path='/messages'>
-
             <Messages />
           </Route>
           <Route exact path="/profile/:username">
-
             <ProfilePage />
           </Route>
           <Route exact path="/aboutus">
@@ -105,5 +96,4 @@ const RouterComponent = () => {
     // </Router>
   );
 };
-
 export default RouterComponent;
