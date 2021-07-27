@@ -169,7 +169,6 @@ const ProfileInfo = () => {
 };
 
 const mapStateToProps = (state) => ({
-  user: state.userDetails.userDetail.user.email,
+  user: state.userDetails.user.user.email,
 });
 export default ProfileInfo;
-
