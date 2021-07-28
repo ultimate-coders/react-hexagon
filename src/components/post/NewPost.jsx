@@ -26,7 +26,6 @@ const NewPost = ({ onAddNewPosts }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log(text, images, (!text || text === '') && (! images || images?.length === 0))
     if((!text || text === '') && (! images || images?.length === 0)){
       setNewPostError('You have to upload an Image or post a text!');
       setSubmitting(false);
@@ -56,6 +55,7 @@ const NewPost = ({ onAddNewPosts }) => {
       });
       if(newPostResponse){
         onAddNewPosts(newPostResponse.data);
+        setText('');
       }
       setSubmitting(false);
     })();

@@ -47,7 +47,7 @@ const DeleteModal = ({ handleCloseModal, openModal, postId, afterDeletePost }) =
       handleCloseModal();
       afterDeletePost(postId);
     }
-  }, [results])
+  }, [results]);
 
   return (
     <div>
@@ -67,7 +67,10 @@ const DeleteModal = ({ handleCloseModal, openModal, postId, afterDeletePost }) =
         <Fade in={openModal}>
           <div className={classes.paper}>
             <div className={classes.label}>Are you sure to delete the post?</div>
-            <Button onClick={deletePost} variant="contained" color="secondary">Yes</Button>
+            <div style={{width: '100%', display: 'flex', justifyContent: 'space-around'}}>
+              <Button onClick={deletePost} variant="contained" color="secondary">Yes</Button>
+              <Button onClick={handleCloseModal} variant="contained" color="primary">No</Button>
+            </div>
           </div>
         </Fade>
       </Modal>

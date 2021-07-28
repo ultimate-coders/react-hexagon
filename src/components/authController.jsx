@@ -4,6 +4,7 @@ import { logout, tokenName } from '../helpers';
 import { ME_URL, REFRESH_URL } from '../urls';
 import { userDetailAction } from '../store/userDetails';
 import { useDispatch } from 'react-redux';
+import Loader from "react-loader-spinner";
 
 
 export const checkAuth = async (setChecking, dispatch) => {
@@ -68,7 +69,15 @@ const AuthController = (props) => {
         <div className='authController'>
             {
                 
-                checking ? <div className="loader">Loading</div> : props.children
+                checking ? <div className="loader">
+                                <Loader
+                                    type="Bars"
+                                    style={{minHeight: '100vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}
+                                    color="#00BFFF"
+                                />
+                            </div> :
+                    
+                            props.children
             }
         </div>
     );

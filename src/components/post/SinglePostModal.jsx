@@ -118,7 +118,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const SinglePostModal = ({ handleCloseModal, openModal, postDetails }) => {
+const SinglePostModal = ({ handleCloseModal, openModal, postDetails, onChangePostsList, onUpdatePostsList }) => {
   const [post, setPost] = useState(postDetails);
   const [comments, setComments] = useState(null);
   const [results, reload] = useAjax();
@@ -149,6 +149,10 @@ const SinglePostModal = ({ handleCloseModal, openModal, postDetails }) => {
     setComments(results?.data.results);
   }, [results])
 
+  useEffect(() => {
+    setPost(postDetails);
+  }, [postDetails]);
+
   return (
     <div style={{minWidth: '600px'}}>
       <Modal
@@ -165,7 +169,7 @@ const SinglePostModal = ({ handleCloseModal, openModal, postDetails }) => {
       >
         <Fade in={openModal}>
           <div className={classes.paper}>
-            <Post post={post} single />
+            <Post post={post} single onChangePostsList={onChangePostsList} onUpdatePostsList={onUpdatePostsList} />
             { comments && <CommentsList onChangeComments={onChangeComments} comments={comments} />}
             <NewComment onChangeComments={onChangeComments} post={post} />
           </div>

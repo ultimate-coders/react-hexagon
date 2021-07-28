@@ -4,7 +4,8 @@ import PostsList from '../post/PostsList';
 import { CATEGORY_POSTS_URL, TIMELINE_POSTS_URL } from '../../urls';
 import useAjax from '../../hooks/useAjax';
 import { getToken } from '../../helpers';
-import Loader from '../loader/loeader';
+import Loader from 'react-loader-spinner';
+
 
 const Main = (props) => {
   const [posts, setPosts] = useState(null);
@@ -23,6 +24,15 @@ const Main = (props) => {
     setPosts(prev => prev.filter(post => post.id !== postId));
   };
 
+  const onUpdatePostsList = (postData) => {
+    setPosts(prev => prev.map(post => {
+      if(postData.id === post.id){
+        return postData;
+      }
+      return post;
+    }));
+  };
+
   const onAddNewPosts = (post) => {
     setPosts(prev => [post, ...prev]);
   };
@@ -39,15 +49,20 @@ const Main = (props) => {
     setPosts(results?.data.results);
   }, [results])
   
-
   return (
     <div>
       <NewPost onAddNewPosts={onAddNewPosts} />
       {checking ? (
-        <Loader/>
+        <Loader
+            type="Puff"
+            style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '50px'}}
+            color="#00BFFF"
+        />
+
       ) : (
         <PostsList
           onChangePostsList={onChangePostsList}
+          onUpdatePostsList={onUpdatePostsList}
           postsList={posts}
         />
       )}
