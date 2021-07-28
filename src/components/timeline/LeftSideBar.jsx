@@ -12,6 +12,7 @@ import { CATEGORY_URL } from '../../urls';
 import { getToken } from '../../helpers';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import Loader from 'react-loader-spinner';
 
 
 const LeftSideBar = (props) => {
@@ -58,7 +59,11 @@ const LeftSideBar = (props) => {
       <List>
         {
           loading ? (
-            <div>Loading</div>
+            <Loader
+                type="Oval"
+                style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '10px'}}
+                color="#00BFFF"
+            />
           ) : (
             results?.data.map((category, index) => (
               <ListItem onClick={() => props.setCategory(category)} button key={category.id}>

@@ -1,3 +1,4 @@
+import Loader from 'react-loader-spinner';
 import Post from './Post';
 
 
@@ -5,7 +6,11 @@ const PostsList = ({postsList, onChangePostsList}) => {
 
   if(!postsList || postsList.length === 0){
     return (
-      <div>Loading</div>
+      <Loader
+            type="Puff"
+            style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '50px'}}
+            color="#00BFFF"
+        />
     )
   }
 

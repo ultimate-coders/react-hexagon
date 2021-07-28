@@ -4,6 +4,7 @@ import PostsList from '../post/PostsList';
 import { CATEGORY_POSTS_URL, TIMELINE_POSTS_URL } from '../../urls';
 import useAjax from '../../hooks/useAjax';
 import { getToken } from '../../helpers';
+import Loader from 'react-loader-spinner';
 
 const Main = (props) => {
   const [posts, setPosts] = useState(null);
@@ -43,7 +44,11 @@ const Main = (props) => {
     <div>
       <NewPost onAddNewPosts={onAddNewPosts} />
       {checking ? (
-        'loading'
+        <Loader
+            type="Puff"
+            style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '50px'}}
+            color="#00BFFF"
+        />
       ) : (
         <PostsList
           onChangePostsList={onChangePostsList}
