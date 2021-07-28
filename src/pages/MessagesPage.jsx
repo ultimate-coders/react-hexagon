@@ -133,7 +133,7 @@ const Messages = () => {
 
   const handleChange = (event) => {
     let x = event.target.className.split(' ');
-    if(typeof(x[1]) === 'number'){
+    if(typeof(Number(x[1])) === 'number'){
       setIndex(x[1] - 1);
       getMessages(x[1] - 1);
     }
@@ -179,10 +179,10 @@ const Messages = () => {
       reload(PROFILES_WITH_MESSAGES_URL, 'get', null, token);
       if (results && results.data.results.length) setChat(results.data.results.reverse());
     }
-    console.log(
-      '🚀 ~ file: MessagesPage.jsx ~ line 172 ~ useEffect ~ results',
-      results
-    );
+    // console.log(
+    //   '🚀 ~ file: MessagesPage.jsx ~ line 172 ~ useEffect ~ results',
+    //   results
+    // );
     if (chat && results.data.first_name && results.data.id !== user.id && !chat.find(item => item.id === results.data.id )) {
       let list = chat;
       list.unshift(results.data);
@@ -191,10 +191,12 @@ const Messages = () => {
   }, [token, results]);
 
   let getMessages = (x) => {
+    
     (async () => {
       await reloadMsg(`${MESSAGES_URL}/${chat[x].id}`, 'get', null, token);
       dispatch(activeChatUserAction(chat[x]));
     })();
+    console.log("🚀 ~ file: MessagesPage.jsx ~ line 204 ~ Messages ~ chat", chat)
   };
   
   useEffect(() => {
@@ -202,7 +204,7 @@ const Messages = () => {
   }, [chat]);
 
   useEffect(() => {
-    console.log('resultsMsg : ', resultsMsg);
+    // console.log('resultsMsg : ', resultsMsg);
     setMessages(resultsMsg);
   }, [resultsMsg]);
 
@@ -215,10 +217,6 @@ const Messages = () => {
     );
     let list = chat;
     list[index].last_message.seen = true;
-    console.log(
-      '🚀 ~ file: MessagesPage.jsx ~ line 196 ~ handleSeen ~ list',
-      list
-    );
     setChat(list);
   };
 
@@ -233,6 +231,11 @@ const Messages = () => {
       setMessages(prev => [...prev, {...state.activeChat, created_at: new Date()}]);
       dispatch(activeChatAction(null));
     }
+    // if (!chat || (chat && results.data.first_name && results.data.id !== user.id && !chat.find(item => item.id === results.data.id ))) {
+    //   let list = chat;
+    //   list.unshift(results.data);
+    //   setChat(list);
+    // }
   }, [state.activeChat]);
 
   return (
