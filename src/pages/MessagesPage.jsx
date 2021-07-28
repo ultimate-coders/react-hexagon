@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
-import { alpha, makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import './MessagesPage.scss';
-import { If, Then, Else } from 'react-if';
-import { Link } from 'react-router-dom';
-import '@chatscope/chat-ui-kit-styles/dist/default/styles.min.css';
-import { getToken } from '../helpers';
-import { useDispatch } from 'react-redux';
-import { activeChatAction, activeChatUserAction } from '../store/chat/actions';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { alpha, makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import "./MessagesPage.scss";
+import { If, Then, Else } from "react-if";
+import { Link } from "react-router-dom";
+import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
+import { getToken } from "../helpers";
+import { useDispatch } from "react-redux";
+import { activeChatAction, activeChatUserAction } from "../store/chat/actions";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
 
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import SearchIcon from '@material-ui/icons/Search';
+import Typography from "@material-ui/core/Typography";
+import InputBase from "@material-ui/core/InputBase";
+import SearchIcon from "@material-ui/icons/Search";
 import {
   MainContainer,
   ChatContainer,
@@ -28,17 +28,16 @@ import {
   ConversationList,
   Conversation,
   TypingIndicator,
-} from '@chatscope/chat-ui-kit-react';
-import useAjax from '../hooks/useAjax';
+} from "@chatscope/chat-ui-kit-react";
+import useAjax from "../hooks/useAjax";
 import {
   PROFILES_WITH_MESSAGES_URL,
   ME_URL,
   MESSAGES_URL,
   PROFILE_URL,
-} from '../urls';
-import messageHook from '../hooks/messagesHook';
-import moment from 'moment';
-
+} from "../urls";
+import messageHook from "../hooks/messagesHook";
+import moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,9 +45,9 @@ const useStyles = makeStyles((theme) => ({
   },
   paper: {
     padding: theme.spacing(1),
-    textAlign: 'left',
+    textAlign: "left",
     color: theme.palette.text,
-    background: 'white',
+    background: "white",
   },
 }));
 
@@ -70,41 +69,41 @@ const useStyles3 = makeStyles((theme) => ({
   },
 
   search: {
-    position: 'relative',
+    position: "relative",
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.common.white, 0.15),
-    '&:hover': {
+    "&:hover": {
       backgroundColor: alpha(theme.palette.common.white, 0.25),
     },
     marginLeft: 0,
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(1),
-      width: 'auto',
+      width: "auto",
     },
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
-    height: '100%',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
   },
   inputRoot: {
-    color: 'inherit',
+    color: "inherit",
   },
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
     paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-    transition: theme.transitions.create('width'),
-    width: '100%',
-    [theme.breakpoints.up('sm')]: {
-      width: '12ch',
-      '&:focus': {
-        width: '20ch',
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
       },
     },
   },
@@ -123,17 +122,17 @@ const Messages = () => {
   // const [conversations, setConversations] = useState();
   const [user, setUser] = useState({});
   const [chat, setChat] = useState(null);
-  const [messages, setMessages] = useState(null);
+  const [messages, setMessages] = useState([{}]);
   const classes = useStyles();
   const classes2 = useStyles2();
   const classes3 = useStyles3();
 
-  const sent = '🗸';
-  const seen = '🗸🗸';
+  const sent = "🗸";
+  const seen = "🗸🗸";
 
   const handleChange = (event) => {
-    let x = event.target.className.split(' ');
-    if(typeof(Number(x[1])) === 'number'){
+    let x = event.target.className.split(" ");
+    if (Number(x[1]) >= 0) {
       setIndex(x[1] - 1);
       getMessages(x[1] - 1);
     }
@@ -146,15 +145,18 @@ const Messages = () => {
     (async () => {
       await reload(
         MESSAGES_URL,
-        'post',
+        "post",
         { receiver_id: chat[index].id, message: event },
         token
       );
     })();
-    messages.push({ sender_id: user.id, message: event });
-    let list = messages.filter((val, idx) => idx !== index);
-    list.unshift(messages[index]);
-    setMessages(list);
+    if (messages) {
+      // setMessages([...messages,{ sender_id: user.id, message: event }]);
+      messages.push({ sender_id: user.id, message: event });
+      let list = messages.filter((val, idx) => idx !== index);
+      list.unshift(messages[index]);
+      setMessages(list);
+    } else setMessages([{ sender_id: user.id, message: event }]);
 
     let newList = chat;
     let x = newList.splice(index, 1);
@@ -170,20 +172,27 @@ const Messages = () => {
       id: state.user.id,
       name: state.user.first_name,
       picture: state.user.profile_picture.link,
-      last_login: state.user.user.last_login
+      last_login: state.user.user.last_login,
     });
   }, []);
 
   useEffect(() => {
-    if (chat === null ) {
-      reload(PROFILES_WITH_MESSAGES_URL, 'get', null, token);
-      if (results && results.data.results.length) setChat(results.data.results.reverse());
+    if (chat === null) {
+      reload(PROFILES_WITH_MESSAGES_URL, "get", null, token);
+      if (results && results.data.results.length)
+        setChat(results.data.results.reverse());
     }
-    // console.log(
-    //   '🚀 ~ file: MessagesPage.jsx ~ line 172 ~ useEffect ~ results',
-    //   results
-    // );
-    if (chat && results.data.first_name && results.data.id !== user.id && !chat.find(item => item.id === results.data.id )) {
+    console.log(
+      "🚀 ~ file: MessagesPage.jsx ~ line 172 ~ useEffect ~ results",
+      results
+    );
+    if (
+      chat &&
+      results &&
+      results.data.first_name &&
+      results.data.id !== user.id &&
+      !chat.find((item) => item.id === results.data.id)
+    ) {
       let list = chat;
       list.unshift(results.data);
       setChat(list);
@@ -193,43 +202,84 @@ const Messages = () => {
   let getMessages = (x) => {
     
     (async () => {
-      await reloadMsg(`${MESSAGES_URL}/${chat[x].id}`, 'get', null, token);
+      await reloadMsg(`${MESSAGES_URL}/${chat[x].id}`, "get", null, token);
       dispatch(activeChatUserAction(chat[x]));
     })();
     console.log("🚀 ~ file: MessagesPage.jsx ~ line 204 ~ Messages ~ chat", chat)
   };
-  
+
   useEffect(() => {
     if (chat && chat.length > 0) getMessages(index);
   }, [chat]);
 
   useEffect(() => {
-    // console.log('resultsMsg : ', resultsMsg);
+    console.log("resultsMsg : ", resultsMsg);
     setMessages(resultsMsg);
   }, [resultsMsg]);
 
   let handleSeen = () => {
     reload(
       `${MESSAGES_URL}/${chat[index].last_message.id}`,
-      'put',
+      "put",
       null,
       token
     );
     let list = chat;
     list[index].last_message.seen = true;
+    console.log(
+      "🚀 ~ file: MessagesPage.jsx ~ line 196 ~ handleSeen ~ list",
+      list
+    );
     setChat(list);
   };
 
   let searchHandler = (e) => {
-    if (e.target.value !== '') {
-      reload(`${PROFILE_URL}/${e.target.value}`, 'get', null, token);
-    }
+    // console.log("pppppppp", e.id);
+    getToken().then((results) => setToken(results)).then(()=>{
+
+      let list = chat || [];
+      let newChat = {
+        caption: e.caption,
+        first_name: e.first_name,
+        id: e.id,
+        last_message: null,
+        last_name: e.last_name,
+        profile_picture: e.profile_picture,
+        user: e.user,
+      };
+      list.unshift(newChat);
+      setChat(list);
+  
+      (async () => {
+        await reloadMsg(
+          `${MESSAGES_URL}/${list[index].id}`,
+          "post",
+          { receiver_id: e.id, message: "" },
+          token
+        );
+        dispatch(activeChatUserAction(list[index]));})();
+    })
+
+    
+
+    // if (e.target.value !== '') {
+    //   reload(`${PROFILE_URL}/${e.id}`, 'get', null, token);
+    // }
   };
 
   useEffect(() => {
-    if(chat && state.activeChat && state.activeChat.sender_id === chat[index].id){
-      setMessages(prev => [...prev, {...state.activeChat, created_at: new Date()}]);
+    if (
+      chat &&
+      state.activeChat &&
+      state.activeChat.sender_id === chat[index].id
+    ) {
+      setMessages((prev) => [
+        ...prev,
+        { ...state.activeChat, created_at: new Date() },
+      ]);
       dispatch(activeChatAction(null));
+    } else if (state.activeChat && state.activeChat.id) {
+      searchHandler(state.activeChat);
     }
     // if (!chat || (chat && results.data.first_name && results.data.id !== user.id && !chat.find(item => item.id === results.data.id ))) {
     //   let list = chat;
@@ -244,11 +294,21 @@ const Messages = () => {
         <Grid container spacing={1}>
           <Grid item xs={3}>
             <Paper className={classes.paper}>
-              <div id='people'>
-                <Link to={user? `profile/${user.name}`: null}>
-                <Conversation name={user.name}>
-                  <Avatar src={user.picture} status={(Date.now() - new Date(user.last_login).getTime()) / 1000 <= 120 ? 'available' : 'away'} size='lg' />
-                </Conversation>
+              <div id="people">
+                <Link to={user ? `profile/${user.name}` : null}>
+                  <Conversation name={user.name}>
+                    <Avatar
+                      src={user.picture}
+                      status={
+                        (Date.now() - new Date(user.last_login).getTime()) /
+                          1000 <=
+                        120
+                          ? "available"
+                          : "away"
+                      }
+                      size="lg"
+                    />
+                  </Conversation>
                 </Link>
                 {/* <hr />
                 <div className={classes3.root}>
@@ -281,7 +341,7 @@ const Messages = () => {
                 <hr />
                 <div
                   style={{
-                    height: '80%',
+                    height: "80%",
                   }}
                   onClick={(e) => handleChange(e)}
                 >
@@ -294,7 +354,7 @@ const Messages = () => {
                             lastSenderName={
                               val.last_message &&
                               val.last_message.sender_id === user.id
-                                ? 'me'
+                                ? "me"
                                 : val.first_name
                             }
                             info={
@@ -311,8 +371,15 @@ const Messages = () => {
                             <Avatar
                               src={val.profile_picture.link}
                               name={val.first_name}
-                              status={(Date.now() - new Date(val.user.last_login).getTime()) / 1000 <= 120 ? 'available' : 'away'}
-                              size='md'
+                              status={
+                                (Date.now() -
+                                  new Date(val.user.last_login).getTime()) /
+                                  1000 <=
+                                120
+                                  ? "available"
+                                  : "away"
+                              }
+                              size="md"
                             />
                           </Conversation>
                         ))
@@ -328,7 +395,7 @@ const Messages = () => {
                 to={
                   chat && chat.length
                     ? `profile/${chat[index].first_name}`
-                    : '/'
+                    : "/"
                 }
               >
                 <ConversationHeader>
@@ -336,28 +403,36 @@ const Messages = () => {
                     src={
                       chat && chat.length
                         ? chat[index].profile_picture.link
-                        : 'https://g.top4top.io/p_2035ty8v01.png'
+                        : "https://g.top4top.io/p_2035ty8v01.png"
                     }
                     name={null}
-                    status={chat && chat.length && (Date.now() - new Date(chat[index].user.last_login).getTime()) / 1000 <= 120 ? 'available' : 'away'}
+                    status={
+                      chat &&
+                      chat.length &&
+                      (Date.now() -
+                        new Date(chat[index].user.last_login).getTime()) /
+                        1000 <=
+                        120
+                        ? "available"
+                        : "away"
+                    }
                   />
 
                   <ConversationHeader.Content
                     userName={
-                      chat && chat.length ? chat[index].first_name : 'Hexagon'
+                      chat && chat.length ? chat[index].first_name : "Hexagon"
                     }
                   ></ConversationHeader.Content>
                 </ConversationHeader>
-             
               </Link>
             </div>
             <div
-              style={{ position: 'relative', height: '500px' }}
+              style={{ position: "relative", height: "500px" }}
               // onClick={() => handleSeen()}
             >
               <MainContainer>
                 <ChatContainer>
-                  <MessageList>
+                  <MessageList loading={loadingMsg}>
                     {/* {resultsMsg = resultsMsg.data? resultsMsg.data.results.reverse() : null } */}
                     {messages
                       ? messages.map((val) => (
@@ -365,8 +440,8 @@ const Messages = () => {
                             <Then>
                               <Message
                                 model={{
-                                  direction: 'outgoing',
-                                  position: 'normal',
+                                  direction: "outgoing",
+                                  position: "normal",
                                 }}
                               >
                                 <Message.CustomContent>
@@ -374,7 +449,7 @@ const Messages = () => {
                                   <br />
                                   <span
                                     style={{
-                                      float: 'right',
+                                      float: "right",
                                     }}
                                   >
                                     {sent}
@@ -386,8 +461,8 @@ const Messages = () => {
                               <Message
                                 model={{
                                   message: val.message,
-                                  sentTime: 'just now',
-                                  sender: 'Joe',
+                                  sentTime: "just now",
+                                  sender: "Joe",
                                 }}
                               >
                                 <Message.CustomContent>
@@ -395,10 +470,10 @@ const Messages = () => {
                                   <br />
                                   <span
                                     style={{
-                                      float: 'right',
+                                      float: "right",
                                     }}
                                   >
-                                    {moment(val.created_at).format('hh:mm')}
+                                    {moment(val.created_at).format("hh:mm")}
                                   </span>
                                 </Message.CustomContent>
                               </Message>
@@ -418,13 +493,16 @@ const Messages = () => {
                       : null}
 
                     {/* <TypingIndicator />\ */}
-                  </MessageList>
-
+                  </MessageList >
+                  {/* <If condition={chat}>
+                    <Then> */}
                   <MessageInput
-                    placeholder='Type message here'
+                    placeholder="Type message here"
                     attachButton={false}
-                    onSend={(e) => newMessage(e.replace('<br>', ''))}
+                    onSend={(e) => newMessage(e.replace("<br>", ""))}
                   />
+                  {/* </Then>
+                  </If> */}
                 </ChatContainer>
               </MainContainer>
             </div>
@@ -438,7 +516,7 @@ const Messages = () => {
 export default Messages;
 const mapStateToProps = (state) => ({
   user: state.userDetails.user,
-  activeChat: state.chat.activeChat
+  activeChat: state.chat.activeChat,
 });
 
 // export default connect(mapStateToProps)(Messages);
