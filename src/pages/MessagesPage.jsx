@@ -404,7 +404,7 @@ const Messages = () => {
                       chat && chat.length
                         ? chat[index].profile_picture.link
 
-                        : "https://g.top4top.io/p_2035ty8v01.png"
+                        : "https://i.ibb.co/xYKx0mM/Hexa-fin-without-title-01.png"
 
                     }
                     name={null}
@@ -423,7 +423,7 @@ const Messages = () => {
                   <ConversationHeader.Content
                     userName={
 
-                      chat && chat.length ? chat[index].first_name : "Hexagon"
+                      chat && chat.length ? chat[index].first_name : ""
 
                     }
                   ></ConversationHeader.Content>
