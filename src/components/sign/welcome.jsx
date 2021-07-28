@@ -7,6 +7,8 @@ import GoogleButton from 'react-google-button';
 import Loader from '../loader/loeader';
 import './welcome.scss';
 
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
 import useAjax from '../../hooks/useAjax';
 import { SIGN_IN_URL, SIGN_IN_GOOGLE_URL } from '../../urls';
@@ -32,6 +34,29 @@ const HexagonButton = styled(Button)({
     // color: "#529471",
   },
 });
+
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center" id="footerContainer">
+      <div>
+        {'Copyright © '}
+        <Button>
+          <Link color="inherit" style={{ textDecoration: 'none' }} to="/">
+            HEXAGON
+          </Link>
+        </Button>{' '}
+        {new Date().getFullYear()}
+        {'.'}
+      </div>
+      <br />
+      <Button id="aboutUs">
+        <Link color="inherit" style={{ textDecoration: 'none' }} to="/aboutus">
+          ABOUT US
+        </Link>
+      </Button>
+    </Typography>
+  );
+}
 
 const Welcome = (props) => {
 
@@ -181,6 +206,9 @@ const Welcome = (props) => {
               </div>
             </div>
           </div>
+          <Box mt={5}>
+        <Copyright />
+      </Box>
         </div>
       )}
     </>

@@ -1,3 +1,7 @@
+// #root {
+//     height:10em;
+// }
+
 #welcomeLogo {
     position: relative;
     // top: 3em;
@@ -75,7 +79,7 @@
 
 .login {
     width: 100vw;
-    height: 100vh;
+    height: 82vh;
     background-color: #f0f2f5;
     display: flex;
     align-items: center;
@@ -84,7 +88,7 @@
 
 .loginWrapper {
     width: 70em;
-    height: 300em;
+    height: 20em;
     display: flex;
 }
 
@@ -237,4 +241,17 @@
     position:relative;
     left: 30em;
     bottom: 2.3em;
+}
+
+#footerContainer{
+    display:flex;
+    flex-direction: column;
+    justify-content:center;
+}
+
+#aboutUs{
+position: relative;
+left: 1.9em;
+bottom: 1.5em;
+font-size: .7em;
 }

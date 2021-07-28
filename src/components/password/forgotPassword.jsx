@@ -34,14 +34,23 @@ const HexagonButton = styled(Button)({
 
 function Copyright() {
     return (
-        <Typography variant="body2" color="textSecondary" align="center">
+        <Typography variant="body2" color="textSecondary" align="center" id="footerContainer">
+            <div>
             {'Copyright © '}
             <Button>
                 <Link color="inherit" style={{ textDecoration: 'none' }} to="/">
                     HEXAGON
-                </Link></Button>{' '}
+                </Link>
+            </Button>{' '}
             {new Date().getFullYear()}
             {'.'}
+            </div>
+            <br/>
+            <Button id="aboutUs">
+                <Link color="inherit" style={{ textDecoration: 'none' }} to="/aboutus">
+                    ABOUT US
+                </Link>
+            </Button>
         </Typography>
     );
 }
