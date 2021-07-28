@@ -41,7 +41,7 @@ const LeftSideBar = (props) => {
   return (
     <div>
       <List>
-        {['My profile', 'Messenger', 'Notifications'].map(
+        {['My profile', 'Messenger'].map(
           (text, index) => (
             <ListItem onClick={() => onNavigate(index)} button key={text}>
               <ListItemIcon>

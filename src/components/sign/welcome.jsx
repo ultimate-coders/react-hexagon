@@ -13,6 +13,7 @@ import { SIGN_IN_URL, SIGN_IN_GOOGLE_URL } from '../../urls';
 import { tokenName } from '../../helpers';
 import { useHistory } from 'react-router';
 import { checkAuth } from '../authController';
+import Popup from '../popup';
 
 const HexagonButton = styled(Button)({
   // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
@@ -41,7 +42,7 @@ const Welcome = (props) => {
   const [password, setPassword] = useState('');
   const [checking, setChecking] = useState(localStorage.getItem(tokenName));
 
-  const [results, reload, loading, error] = useAjax();
+  const [results, reload, loading, error, setError] = useAjax();
 
   const history = useHistory();
 
@@ -102,6 +103,7 @@ const Welcome = (props) => {
         <div><Loader /></div>
       ) : (
         <div id="welcomeContainer" className="container-fluid">
+          <Popup title='Error' message={error} show={error} setError={setError} />
           <div className="login">
             <div className="loginWrapper">
               <div className="loginLeft">

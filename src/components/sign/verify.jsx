@@ -21,6 +21,7 @@ import { REQUEST_USER_VERIFY_CODE_URL, VERIFY_USER_ACCOUNT_URL } from '../../url
 import { useHistory } from 'react-router';
 import { getToken, logout } from '../../helpers';
 import { checkAuth } from '../authController';
+import Popup from '../popup';
 
 
 const HexagonButton = styled(Button)({
@@ -79,7 +80,7 @@ const Verify = () => {
     const classes = useStyles();
     const [code, setCode] = useState('');
     const [results, reload, loading, error] = useAjax();
-    const [verifyCodeResults, verifyCodeReload, verifyCodeLoading, everifyCodeError] = useAjax();
+    const [verifyCodeResults, verifyCodeReload, verifyCodeLoading, verifyCodeError, setVerifyCodeError] = useAjax();
 
 
 
@@ -115,6 +116,7 @@ const Verify = () => {
 
     return (
         <Container component="main" maxWidth="xs">
+            <Popup title='Error' message={verifyCodeError} show={() => verifyCodeError && verifyCodeError !== 'Invalid Login' && verifyCodeError !== 'Sorry, we could not find what you were looking for'} setError={setVerifyCodeError} />
             <CssBaseline />
             <div className={classes.paper}>
                 <div id="logoContainer">
