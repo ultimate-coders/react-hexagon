@@ -18,7 +18,8 @@ const Popup = (props) => {
     return <Slide direction="up" ref={ref} {...props} />;
   });
   const handleClose = () => {
-    setOpen(false);
+    props.setError(null);
+    // setOpen(false);
   };
 
   return (

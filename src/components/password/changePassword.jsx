@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 // import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -68,6 +70,9 @@ const useStyles = makeStyles((theme) => ({
 const ChangePassword = () => {
     const classes = useStyles();
 
+    const { userDetails } = useSelector(mapStateToProps)
+    const history = useHistory();
+
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
@@ -136,9 +141,11 @@ const ChangePassword = () => {
                 </form>
                 <div id="SigninQuestion">
                     <span className="loginForgot"> Changed your mind? </span>
-                    <a className="loginRegisterButton" type="submit">
-                    Back to profile
-                    </a>
+                    <Link className="loginRegisterButton" to={`profile/${userDetails.user.username}`}>
+                        <HexagonButton>
+                            Back to profile
+                        </HexagonButton>
+                    </Link>
                 </div>
             </div>
             {/* <Box mt={5}>
@@ -147,5 +154,9 @@ const ChangePassword = () => {
         </Container>
     );
 }
+
+const mapStateToProps = (state) => ({
+    userDetails: state.userDetails.user,
+});
 
 export default ChangePassword;
