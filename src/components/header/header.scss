@@ -1,5 +1,4 @@
 header {
-
     height: 5em;
     background-color: #529471;
 }
@@ -9,10 +8,7 @@ header {
     height: 9em;
     position: relative;
     left: 2em;
-
     bottom: 1.8em;
-    // border: solid 1px black;
-    // border-radius: 20em;
 }
 
 #title {
@@ -28,7 +24,6 @@ header {
     width: 30em;
     position: relative;
     left: 25em;
-
     bottom: 8em;
 }
 
@@ -45,20 +40,15 @@ header {
 
 #iconsContainer {
     position: relative;
-
     bottom: 10.8em;
     left: 65em;
-
     width: 13;
 }
 
 svg {
     width: 1.5em;
     height: 1.5em;
-    // background-color: white;
-    // border-radius: 100px;
 }
-
 
 #userHeaderImage {
     width: 3.5em;
@@ -69,32 +59,25 @@ svg {
 #userHeaderContainer {
     position: relative;
     left: 3em;
-    // top:.2em;
 }
 
 #NotificationsList {
     position: relative;
     left: 60em;
     bottom: 10.1em;
-    // overflow: scroll;
-    // width:20em;
-    // height: 10em;
     overflow-y: scroll;
     scrollbar-color: #dfe079 #69a84edb;
     word-wrap: break-word;
     width: 20em;
-    // max-width: 20em;
     max-height: 20em;
     border: solid 2px #529471;
     border-radius: 5px;
     box-shadow: 2px 2px 2px 2px #2e353c;
     z-index: 1;
-
     background-color: black;
     color: white;
     display: none;
-
-    flex-direction:column;
+    flex-direction: column;
     justify-content: center;
 }
 
@@ -105,13 +88,12 @@ svg {
 #NotificationsList span {
     padding: 0.5em;
     color: white;
-    font-size:.9em;
+    font-size: 0.9em;
 }
 
 #userOptionsToggle {
     display: none;
     z-index: 1;
-
     position: relative;
     left: 68em;
     bottom: 10.1em;
@@ -124,26 +106,24 @@ svg {
     border-radius: 5px;
     box-shadow: 2px 2px 2px 2px #2e353c;
     z-index: 1;
-
     background-color: black;
     color: white;
     display: none;
-
-    flex-direction:column;
+    flex-direction: column;
     justify-content: center;
 }
 
 #userOptionsToggle span {
     padding: 0.5em;
     color: white;
-    font-size:.9em;
+    font-size: 0.9em;
 }
 
-#userOptionsToggle a{
-    color:white;
+#userOptionsToggle a {
+    color: white;
     text-decoration: none;
 }
 
 #messagesLink {
-    color:rgba(0, 0, 0, 0.54);
+    color: rgba(0, 0, 0, 0.54);
 }

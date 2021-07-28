@@ -115,7 +115,7 @@ const Header = () => {
             <header className="container-m">
                 <div className="d-flex flex-sm-row">
                     <Link to='/'>
-                    <img id="logo" src={"https://i.ibb.co/2Ff9bFV/Hexa-01.png"} alt={"Hexagon"} ></img>
+                        <img id="logo" src={"https://i.ibb.co/2Ff9bFV/Hexa-01.png"} alt={"Hexagon"} ></img>
                     </Link>
                 </div>
                 <div id="search-bar" className="input-group">

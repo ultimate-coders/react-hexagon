@@ -1,16 +1,9 @@
-// #root {
-//     height:10em;
-// }
-
 #welcomeLogo {
     position: relative;
-    // top: 3em;
-    left:5em;
+    left: 5em;
     width: 25em;
     height: 20em;
     margin-right: 2em;
-    // border: solid 1px black;
-    // border-radius: 20em;
 }
 
 #welcomeTitle {
@@ -22,25 +15,9 @@
     text-shadow: 0.5px 0.5px black;
 }
 
-// #welcomeContainer {
-
-//     margin:auto;
-//     // width: 100em;
-// }
-
-// #openAuth {
-//     text-align: center;
-//     width: 1000px;
-// }
-// #openAuth img {
-//     width: 6em;
-//     height: 3em;
-// }
-
-#oauthSpan{
-    display:flex;
-    justify-content:center;
-    // margin-bottom: .5em;
+#oauthSpan {
+    display: flex;
+    justify-content: center;
 }
 .loginRight {
     margin-top: 5px;
@@ -48,29 +25,26 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-
 }
 
-#loginDiv{
+#loginDiv {
     display: flex;
     justify-content: center;
 }
 
 .loginLeft {
     position: relative;
-    bottom:2em;
-    right:4em;
+    bottom: 2em;
+    right: 4em;
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    // margin-right: 2em;
 }
 
 .loginLogo {
     font-size: 50px;
     font-weight: 800;
-    // color: #1775ee;
     color: #529471;
     font-weight: bold;
     text-shadow: 0.1px 0.1px black;
@@ -92,29 +66,20 @@
     display: flex;
 }
 
-//   .loginLeft,
-//   .loginRight {
-//     flex: 1;
-//     display: flex;
-//     flex-direction: column;
-//     justify-content: center;
-//   }
-
 .loginDesc {
     font-size: 30px;
     position: relative;
-    left:2em;
+    left: 2em;
     bottom: 3em;
 }
-#leftFlex{
+#leftFlex {
     display: flex;
-    flex-direction:row;
+    flex-direction: row;
 }
 
 .loginBox {
     height: 19em;
     padding: 20px;
-    // background-color: white;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -131,17 +96,12 @@
     border: 1px solid gray;
     font-size: 18px;
     padding-left: 20px;
-    margin-bottom: .5em;
-
+    margin-bottom: 0.5em;
 }
 
 .loginInput:focus {
     outline: none;
 }
-
-// #loginInput{
-//     margin-bottom: .3em;
-// }
 
 .loginButton {
     width: 50%;
@@ -161,97 +121,71 @@
     margin-top: 1em;
 }
 
-#forgotPasswordSpan{
+#forgotPasswordSpan {
     position: relative;
-    top: .5em;
+    top: 0.5em;
 }
 .loginRegisterButton {
-    // width: 100%;
-    // text-align: center;
-    // height: 30%;
-    // border-radius: 10px;
-    // border: none;
-    // background-color: #42b72a;
-    // color: #529471;
-    color:white;
+    color: white;
     font-size: 17px;
-    // font-weight: 500;
     cursor: pointer;
     text-decoration: none;
-    padding: 0 .5em;
-    margin-top: .5em;
+    padding: 0 0.5em;
+    margin-top: 0.5em;
 }
-.loginRegisterButton  span{
+.loginRegisterButton span {
     width: 15em;
 }
 
-.anchorContainer{
-    text-align:center;
+.anchorContainer {
+    text-align: center;
     margin-top: 1em;
-    display:flex;
-    flex-direction:column;
-    justify-items:center;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
 }
 
-.loginRegisterButton:hover{
-
-    // color: #eee;
-    // background-color:#529471;
-    // color:#529471;
-    // background-color: #eee;
-    text-decoration:underline;
-    // box-shadow:  3px 3px  gray;
-    // box-shadow:   rgba(0, 0, 0, 0.25) 0px 2px 4px 0px;
+.loginRegisterButton:hover {
+    text-decoration: underline;
 }
 
-// .loginRegisterButton:active{
-
-//     color: #529471;
-//     box-shadow:  3px 3px 3px 2px black;
-
-// }
-
-#forgotPasswordContainer{
-    display:flex;
+#forgotPasswordContainer {
+    display: flex;
     flex-direction: row;
-    justify-content:center;
+    justify-content: center;
     padding: 10px;
-    text-align:center;
+    text-align: center;
 }
 
-#forgotPasswordContainer span , #forgotPasswordContainer a {
-    font-size: .8em;
-    margin: .2em;
+#forgotPasswordContainer span,
+#forgotPasswordContainer a {
+    font-size: 0.8em;
+    margin: 0.2em;
 }
 #forgotPasswordButton {
     height: 2em;
     width: 13em;
     font-size: 1em;
     font-weight: bold;
-   
 }
 
-// .new-account-width{
-//     width: 200px;
-// }
-
-#WelcomepassowrdImage{
-    width:1.5em;
-    height:1em;
-    position:relative;
+#WelcomepassowrdImage {
+    width: 1.5em;
+    height: 1em;
+    position: relative;
     left: 30em;
     bottom: 2.3em;
 }
 
-#footerContainer{
-    display:flex;
+#footerContainer {
+    display: flex;
     flex-direction: column;
-    justify-content:center;
+    justify-content: center;
 }
 
-#aboutUs{
-position: relative;
-left: 1.9em;
-bottom: 1.5em;
-font-size: .7em;
+#aboutUs {
+    position: relative;
+    left: 1.9em;
+    bottom: 1.5em;
+    font-size: 0.7em;
 }
