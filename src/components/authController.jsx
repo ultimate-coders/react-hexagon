@@ -32,7 +32,6 @@ export const checkAuth = async (setChecking, dispatch) => {
 
     if(userProfile){
         dispatch(userDetailAction(userProfile.data));
-        console.log(userProfile.data);
         setChecking(false);
     } else {
         const newAccessToken = await axios({
@@ -67,7 +66,6 @@ const AuthController = (props) => {
     
     return (
         <div className='authController'>
-            {console.log('checking ', checking)}
             {
                 
                 checking ? <div className="loader">Loading</div> : props.children

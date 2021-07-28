@@ -1,93 +1,84 @@
-import React from "react";
-// import { connect } from "react-redux";
-// import Heder from "../header";
 import "./info.scss";
-// import Reaction from './reaction'
-// import { Container, Row, Col, Card, Button, Form } from "react-bootstrap";
-// import Like from "./reaction";
-import NewPost from "./NewPost";
-import PostsList from "./PostsList";
 
-function ProfilePosts(props) {
-  let arr = [
-    {
-      userPict:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHZMTLWh4KIE7ogS6hfTgeKuTVTPxlM1qe6Q&usqp=CAU",
-      userName: "youjin phitsharbet",
-      postCategory: "category",
-      text: "Some quick example text to build on the card title and make up the bulk of the card`s content.",
-      postImg:
-        "https://s34506.pcdn.co/wp-content/uploads/2021/06/fathersdaypinecone.done1b.690.jpg",
-    },
-    {
-      userPict:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHZMTLWh4KIE7ogS6hfTgeKuTVTPxlM1qe6Q&usqp=CAU",
-      userName: "youjin phitsharbet",
-      postCategory: "category",
-      text: "Some quick example text to build on the card title and make up the bulk of the card`s content.",
-      postImg:
-        "https://t1.thpservices.com/previewimage/gallil/b772287f406aa8a7caf466a75c2d6436/esy-009014594.jpg",
-    },
-  ];
+import { PROFILE_POSTS_URL, PROFILE_URL } from "../../urls";
+import NewPost from "../post/NewPost";
+import PostsList from "../post/PostsList";
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import useAjax from "../../hooks/useAjax";
+import { getToken } from "../../helpers";
+
+const ProfilePosts = () => {
+  const [posts, setPosts] = useState([]);
+  const [results, reload] = useAjax();
+  const [checking, setChecking] = useState(true);
+  const [token, setToken] = useState();
+  const [profile, setprofile] = useState();
+  const state = useSelector(mapStateToProps);
+
+  const profile_name = window.location.pathname.split("/")[2];
+  const url = `${PROFILE_URL}/${profile_name}`;
+  getToken().then((results) => setToken(results));
+
+  const getProfile = () => {
+    reload(url, "get", null, token);
+  };
+  useEffect(() => {
+    (async () => {
+      await getProfile();
+    })();
+  }, [token]);
+
+  useEffect(() => {
+    if (results && results.data.id) {
+      setprofile(results.data);
+    }
+    if (results && results.data.results) {
+      setPosts(results.data.results);
+    }
+  }, [results]);
+
+  useEffect(() => {
+    getAllPosts();
+  }, [profile]);
+  
+  const getAllPosts = () => {
+    console.log(profile);
+    if (profile && profile.id) {
+      (async () => {
+        const url = `${PROFILE_POSTS_URL}/${profile.id}`;
+        reload(url, "get", null, token);
+        setChecking(false);
+      })();
+    }
+  };
+
+  const onChangePostsList = (postId) => {
+    setPosts((prev) => prev.filter((post) => post.id !== postId));
+  };
+
+  const onAddNewPosts = (post) => {
+    setPosts((prev) => [post, ...prev]);
+  };
+
   return (
-    <>
-      <NewPost />
-      <PostsList />
-      {/* <Container>
-        {arr.map((arr) => {
-          return (
-            <div key={arr.postImg}>
-              <Row className="justify-content-md-center">
-                <Col md="auto">
-                  <Card style={{ width: "51rem" }}>
-                    <Card.Body>
-                      <Row>
-                        <Col md="1">
-                          <img
-                            className="small-img"
-                            src={arr.userPict}
-                            alt=""
-                          />
-                        </Col>
-                        <Col md="5">
-                          {/* <br /> 
-                          <p style={{ paddingTop: "10px" }}>{arr.userName}</p>
-                        </Col>
-                      </Row>
-                      <br />
-                      <Card.Title>{arr.postCategory}</Card.Title>
-                      <Card.Text>{arr.text}</Card.Text>
-                      <br />
-                      <Card.Img className="post-img" src={arr.postImg} />
-                    </Card.Body>
-                    <Card.Footer>
-                      <Row>
-                        <Col md="9">
-                          <Like />
-                          {/* <Button variant="light">Like 1123 </Button> 
-                        </Col>
-                        <Col>
-                          <Button variant="light">comment 1111</Button>
-                        </Col>
-                      </Row>
-                      <Form>
-                        <br />
-
-                        <Form.Control placeholder="comment..." />
-                      </Form>
-                    </Card.Footer>
-                  </Card>
-                </Col>
-              </Row>
-
-              <br />
-              <br />
-            </div>
-          );
-        })}
-      </Container> */}
-    </>
+    <div>
+      {console.log(profile && profile.id === state.user)}
+      {profile && profile.id === state.user ? (
+        <NewPost onAddNewPosts={onAddNewPosts} />
+      ) : (
+        <div></div>
+      )}
+      {checking ? (
+        "loading"
+      ) : (
+        <PostsList onChangePostsList={onChangePostsList} postsList={posts} />
+      )}
+    </div>
   );
-}
+};
 
+const mapStateToProps = (state) => ({
+  user: state.userDetails.user.id,
+});
 export default ProfilePosts;

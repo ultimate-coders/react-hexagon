@@ -3,7 +3,7 @@ import Form from 'react-bootstrap/Form';
 import Avatar from '@material-ui/core/Avatar';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import Button from 'react-bootstrap/Button';
-// import '../post/NewPost.scss';
+import '../post/NewPost.scss';
 import { useSelector } from 'react-redux';
 import useAjax from '../../hooks/useAjax';
 import { getToken } from '../../helpers';
