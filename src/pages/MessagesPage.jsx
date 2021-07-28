@@ -373,7 +373,8 @@ const Messages = () => {
                                       float: 'right',
                                     }}
                                   >
-                                    {sent}
+                                    {/* {sent} */}
+                                    {moment(val.created_at).format('hh:mm')}
                                   </span>
                                 </Message.CustomContent>
                               </Message>
