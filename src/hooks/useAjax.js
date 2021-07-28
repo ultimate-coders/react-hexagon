@@ -44,7 +44,7 @@ const useAjax = (
           setLoading(false);
         }
       } catch (e) {
-        setError(e.message);
+        typeof(e.response.data) === 'string' ? setError(e.response.data) : setError(e.response.data.message);
         setLoading(false);
       }
     })();
@@ -60,6 +60,6 @@ const useAjax = (
     setError(null);
   };
 
-  return [results, reload, loading, error];
+  return [results, reload, loading, error, setError];
 };
 export default useAjax;

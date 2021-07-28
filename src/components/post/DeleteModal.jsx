@@ -7,6 +7,7 @@ import useAjax from '../../hooks/useAjax';
 import { useEffect } from 'react';
 import { POST_URL } from '../../urls';
 import { getToken } from '../../helpers';
+import Popup from '../popup';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 const DeleteModal = ({ handleCloseModal, openModal, postId, afterDeletePost }) => {
   const classes = useStyles();
-  const [results, reload, loading, error] = useAjax();
+  const [results, reload, loading, error, setError] = useAjax();
 
   const deletePost = () => {
     (async() => {
@@ -50,6 +51,7 @@ const DeleteModal = ({ handleCloseModal, openModal, postId, afterDeletePost }) =
 
   return (
     <div>
+      <Popup title='Error' message={error} show={() => error && error !== 'Invalid Login'} setError={setError} />
       <Modal
         aria-labelledby='transition-modal-title'
         aria-describedby='transition-modal-description'

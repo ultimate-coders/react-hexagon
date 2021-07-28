@@ -37,9 +37,9 @@ function Copyright() {
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
             <Button>
-            <Link color="inherit" style={{textDecoration:'none'}} to="/">
-                HEXAGON
-            </Link></Button>{' '}
+                <Link color="inherit" style={{ textDecoration: 'none' }} to="/">
+                    HEXAGON
+                </Link></Button>{' '}
             {new Date().getFullYear()}
             {'.'}
         </Typography>
@@ -94,59 +94,61 @@ const ForgotPassword = () => {
                                 id="password"
                                 autoComplete="current-password"
                             />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    id="email"
-                                    label="New Password"
-                                    name="email"
-                                    autoComplete="email"
-                                />
-                            </Grid>
-                            <Grid item xs={12}>
-                                <TextField
-                                    variant="outlined"
-                                    required
-                                    fullWidth
-                                    name="password"
-                                    label="Confirm New Password"
-                                    type="password"
-                                    id="password"
-                                    autoComplete="current-password"
-                                />
-                            </Grid>
-                            {/* <Grid item xs={12}>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="email"
+                                label="New Password"
+                                name="email"
+                                autoComplete="email"
+                            />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                name="password"
+                                label="Confirm New Password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
+                            />
+                        </Grid>
+                        {/* <Grid item xs={12}>
                             <FormControlLabel
                                 control={<Checkbox value="allowExtraEmails" color="primary" />}
                                 label="I want to receive inspiration, marketing promotions and updates via email."
                             />
                         </Grid> */}
-                        </Grid>
-                        <HexagonButton
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        >
-                            Reset Password
-                        </HexagonButton>
+                    </Grid>
+                    <HexagonButton
+                        type="submit"
+                        fullWidth
+                        variant="contained"
+                        color="primary"
+                        className={classes.submit}
+                    >
+                        Reset Password
+                    </HexagonButton>
                 </form>
-                    <div id="SigninQuestion">
-                        <span className="loginForgot"> Changed your mind? </span>
-                        <Link className="loginRegisterButton" type="submit" to='/'>
-                            Sign in
-                        </Link>
-                    </div>
+                <div id="SigninQuestion">
+                    <span className="loginForgot"> Changed your mind? </span>
+                    <Link className="loginRegisterButton" type="submit" to='/'>
+                    <HexagonButton className='loginRedirectButton'>
+                            Sign In
+                        </HexagonButton>
+                    </Link>
+                </div>
             </div>
-                <Box mt={5}>
+            <Box mt={5}>
                 <Copyright />
             </Box>
         </Container>
-            );
+    );
 }
 
-            export default ForgotPassword;
+export default ForgotPassword;

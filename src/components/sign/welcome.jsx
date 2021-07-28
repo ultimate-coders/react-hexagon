@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { styled } from '@material-ui/core/styles';
 import GoogleButton from 'react-google-button';
+import Loader from '../loader/loeader';
 import './welcome.scss';
-import Header from '../header/header'
 
 
 import useAjax from '../../hooks/useAjax';
@@ -13,6 +13,7 @@ import { SIGN_IN_URL, SIGN_IN_GOOGLE_URL } from '../../urls';
 import { tokenName } from '../../helpers';
 import { useHistory } from 'react-router';
 import { checkAuth } from '../authController';
+import Popup from '../popup';
 
 const HexagonButton = styled(Button)({
   // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
@@ -41,7 +42,7 @@ const Welcome = (props) => {
   const [password, setPassword] = useState('');
   const [checking, setChecking] = useState(localStorage.getItem(tokenName));
 
-  const [results, reload, loading, error] = useAjax();
+  const [results, reload, loading, error, setError] = useAjax();
 
   const history = useHistory();
 
@@ -67,14 +68,14 @@ const Welcome = (props) => {
     let openedEye = 'https://image.flaticon.com/icons/png/512/709/709612.png';
 
     if (passwordInput.type === "password") {
-        passwordInput.type = "text";
-        setToggleEye(openedEye);
+      passwordInput.type = "text";
+      setToggleEye(openedEye);
     }
     else {
-        passwordInput.type = "password";
-        setToggleEye(closedEye);
+      passwordInput.type = "password";
+      setToggleEye(closedEye);
     }
-}
+  }
 
   useEffect(() => {
     if (checking) {
@@ -98,11 +99,11 @@ const Welcome = (props) => {
 
   return (
     <>
-    
       {checking ? (
-        <div>Loading ...</div>
+        <div><Loader /></div>
       ) : (
         <div id="welcomeContainer" className="container-fluid">
+          <Popup title='Error' message={error} show={error} setError={setError} />
           <div className="login">
             <div className="loginWrapper">
               <div className="loginLeft">
@@ -110,11 +111,11 @@ const Welcome = (props) => {
                   <img
                     id="welcomeLogo"
                     src={
-                      "https://logosandtypes.com/wp-content/uploads/2020/07/hammer-series.svg"
+                      "https://i.ibb.co/2Ff9bFV/Hexa-01.png"
                     }
                     alt={"Hexagon"}
                   ></img>
-                  <h3 className="loginLogo">HEXAGON</h3>
+                  {/* <h3 className="loginLogo">HEXAGON</h3> */}
                 </div>
                 <div className="loginDesc">
                   <span>Turn your creativity into reality!</span>
@@ -138,18 +139,18 @@ const Welcome = (props) => {
                     className="loginInput"
                   />
                   <img id="WelcomepassowrdImage" src={ToggleEye} alt={'alt'} type="checkbox" onClick={showPassword} />
-                  {/* <Button id="openAuth"><img src={"https://www.hebergementwebs.com/image/b5/b5a4bf161a5c2a1316b72199a6887cc8.webp/the-secret-history-of-the-google-logothe-secret-history-of-the-google-logo-0.webp"} alt={"Hexagon"} ></img>
-                            </Button> */}
                   <div id='loginDiv'>
                     <HexagonButton onClick={onSignin} className='loginButton'>
-                      {loading ? 'Loading' : 'Sign in'}
+                      {loading ? <Loader /> : 'Sign in'}
                     </HexagonButton>
                   </div>
 
                   <div id="forgotPasswordContainer">
-                    {/* <span className="loginForgot">Forgot Your Password?</span> */}
+                    <span id="forgotPasswordSpan" className="loginForgot">Forgot Your Password?</span>
                     <Link to="/forgotpassword" className="loginRegisterButton">
-                      Forgot Your Password? Reset password
+                      <HexagonButton id="forgotPasswordButton">
+                        Reset password
+                      </HexagonButton>
                     </Link>
                   </div>
                   <div id="oauthSpan">
@@ -167,14 +168,14 @@ const Welcome = (props) => {
                     </Button>
                   </div>
                 </div>
-                {/* <span className="loginForgot">Your first time here?</span> */}
                 <div className="anchorContainer">
-                  <Link
-
-                    to='/signup'
+                  <span className="loginForgot"> Your first time here?  </span>
+                  <Link to='/signup'
                     className='loginRegisterButton new-account-width'
                   >
-                    Your first time here? Create a New Account
+                    <HexagonButton>
+                      Create a New Account
+                    </HexagonButton>
                   </Link>
                 </div>
               </div>
