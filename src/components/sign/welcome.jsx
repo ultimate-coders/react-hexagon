@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -7,6 +9,8 @@ import GoogleButton from 'react-google-button';
 import Loader from '../loader/loeader';
 import './welcome.scss';
 
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
 import useAjax from '../../hooks/useAjax';
 import { SIGN_IN_URL, SIGN_IN_GOOGLE_URL } from '../../urls';
@@ -16,22 +20,40 @@ import { checkAuth } from '../authController';
 import Popup from '../popup';
 
 const HexagonButton = styled(Button)({
-  // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-  // marginTop: '.5em',
   background: "#529471",
   border: 0,
   borderRadius: 3,
-  // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
   color: "white",
   height: 48,
   padding: "0 30px",
   "&:hover": {
     boxShadow: "rgba(0, 0, 0, 0.25) 2px 4px 6px 3px",
     backgroundColor: "#529471",
-    // backgroundColor: "#eee",
-    // color: "#529471",
   },
 });
+
+function Copyright() {
+  return (
+    <Typography variant="body2" color="textSecondary" align="center" id="footerContainer">
+      <div>
+        {'Copyright © '}
+        <Button>
+          <Link color="inherit" style={{ textDecoration: 'none' }} to="/">
+            HEXAGON
+          </Link>
+        </Button>{' '}
+        {new Date().getFullYear()}
+        {'.'}
+      </div>
+      <br />
+      <Button id="aboutUs">
+        <Link color="inherit" style={{ textDecoration: 'none' }} to="/aboutus">
+          ABOUT US
+        </Link>
+      </Button>
+    </Typography>
+  );
+}
 
 const Welcome = (props) => {
 
@@ -52,6 +74,8 @@ const Welcome = (props) => {
       password: password,
     })
   };
+
+  // Google Oauth handelForm
 
   // const googleOauth = () => {
   //   reload(SIGN_IN_GOOGLE_URL, 'post', null, null, {
@@ -111,11 +135,10 @@ const Welcome = (props) => {
                   <img
                     id="welcomeLogo"
                     src={
-                      "https://i.ibb.co/2Ff9bFV/Hexa-01.png"
+                      "https://i.ibb.co/ySMxV23/Hexa-fin-transparent-01.png"
                     }
                     alt={"Hexagon"}
                   ></img>
-                  {/* <h3 className="loginLogo">HEXAGON</h3> */}
                 </div>
                 <div className="loginDesc">
                   <span>Turn your creativity into reality!</span>
@@ -181,6 +204,9 @@ const Welcome = (props) => {
               </div>
             </div>
           </div>
+          <Box mt={5}>
+        <Copyright />
+      </Box>
         </div>
       )}
     </>
