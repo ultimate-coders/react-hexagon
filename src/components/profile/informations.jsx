@@ -55,7 +55,7 @@ const ProfileInfo = () => {
           type="file"
           onChange={(e) => (setImage( e.target.files))}
         />
-        <PhotoLibraryIcon
+        <PhotoLibraryIcon id="PhotoLibraryIcon"
           className="photo_library_icon"
           color="secondary"
           onClick={(e) => profileImages.current.click()}
