@@ -1,14 +1,13 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { React, useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import Loader from '../loader/loeader';
 
-import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-// import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
@@ -21,40 +20,44 @@ import useAjax from '../../hooks/useAjax';
 import { REQUEST_USER_VERIFY_CODE_URL, VERIFY_USER_ACCOUNT_URL } from '../../urls';
 import { useHistory } from 'react-router';
 import { getToken, logout } from '../../helpers';
-import { checkAuth } from '../authController';
 import Popup from '../popup';
 
 
 const HexagonButton = styled(Button)({
-    // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-    // marginTop: '.5em',
     background: '#529471',
     border: 0,
     borderRadius: 3,
-    // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
     color: 'white',
     height: 48,
     padding: '0 30px',
     "&:hover": {
         boxShadow: 'rgba(0, 0, 0, 0.25) 2px 4px 6px 3px',
         backgroundColor: "#529471",
-        // backgroundColor: "#eee",
-        // color: "#529471",
     }
 });
 
-// function Copyright() {
-//     return (
-//         <Typography variant="body2" color="textSecondary" align="center">
-//             {'Copyright © '}
-//             <Link color="inherit" href="https://material-ui.com/">
-//                 Your Website
-//             </Link>{' '}
-//             {new Date().getFullYear()}
-//             {'.'}
-//         </Typography>
-//     );
-// }
+function Copyright() {
+    return (
+        <Typography variant="body2" color="textSecondary" align="center" id="footerContainer">
+            <div>
+                {'Copyright © '}
+                <Button>
+                    <Link color="inherit" style={{ textDecoration: 'none' }} to="/">
+                        HEXAGON
+                    </Link>
+                </Button>{' '}
+                {new Date().getFullYear()}
+                {'.'}
+            </div>
+            <br />
+            <Button id="aboutUs">
+                <Link color="inherit" style={{ textDecoration: 'none' }} to="/aboutus">
+                    ABOUT US
+                </Link>
+            </Button>
+        </Typography>
+    );
+}
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -120,13 +123,11 @@ const Verify = () => {
             <CssBaseline />
             <div className={classes.paper}>
                 <div id="logoContainer">
-                    <img id="signUplogo" src={"https://logosandtypes.com/wp-content/uploads/2020/07/hammer-series.svg"} alt={"Hexagon"} ></img>
+                    <img id="signUplogo" src={"https://i.ibb.co/xYKx0mM/Hexa-fin-without-title-01.png"} alt={"Hexagon"} ></img>
+                    <Typography component="h1" variant="h5">
+                        VERIFY YOUR ACCOUNT
+                    </Typography>
                 </div>
-                {/* <Avatar className={classes.avatar}>
-                </Avatar> */}
-                <Typography component="h1" variant="h5">
-                    Verify Your Account
-                </Typography>
                 <form onSubmit={onVerifyCheck} id="signupForm" className={classes.form} noValidate>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
@@ -168,9 +169,9 @@ const Verify = () => {
                     </HexagonButton>
                 </div>
             </div>
-            {/* <Box mt={5}>
+            <Box mt={5}>
                 <Copyright />
-            </Box> */}
+            </Box>
         </Container>
     );
 }

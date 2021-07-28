@@ -399,11 +399,13 @@ const Messages = () => {
                 }
               >
                 <ConversationHeader>
-                  <Avatar
+                  <Avatar id="MessagesHexagon"
                     src={
                       chat && chat.length
                         ? chat[index].profile_picture.link
+
                         : "https://g.top4top.io/p_2035ty8v01.png"
+
                     }
                     name={null}
                     status={
@@ -420,7 +422,9 @@ const Messages = () => {
 
                   <ConversationHeader.Content
                     userName={
+
                       chat && chat.length ? chat[index].first_name : "Hexagon"
+
                     }
                   ></ConversationHeader.Content>
                 </ConversationHeader>
@@ -493,7 +497,9 @@ const Messages = () => {
                       : null}
 
                     {/* <TypingIndicator />\ */}
-                  </MessageList >
+
+                  </MessageList>
+
                   {/* <If condition={chat}>
                     <Then> */}
                   <MessageInput

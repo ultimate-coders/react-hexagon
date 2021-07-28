@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -106,14 +108,14 @@ const Header = () => {
         }
     }, [results]);
 
-
     return (
         <>
 
             <header className="container-m">
                 <div className="d-flex flex-sm-row">
-                    <img id="logo" src={"https://i.ibb.co/2Ff9bFV/Hexa-01.png"} alt={"Hexagon"} ></img>
-                    {/* <h1 id="title">HEXAGON</h1> */}
+                    <Link to='/'>
+                        <img id="logo" src={"https://i.ibb.co/QYHKKYS/Hexa-white-01.png"} alt={"Hexagon"} ></img>
+                    </Link>
                 </div>
                 <div id="search-bar" className="input-group">
                     <input type="search" className="form-control rounded" placeholder="Search Hexagon" aria-label="Search"
