@@ -21,15 +21,15 @@ const AboutUs = () => {
         <Container>
           <Row>
             <Col md={4}>
-              <Card style={{ width: "18rem" }}>
+            <Card style={{ width: "18rem" }}>
                 <Card.Img
                   variant="top"
-                  src="https://avatars.githubusercontent.com/u/46314974?v=4"
+                  src="https://f.top4top.io/p_20331e4zz1.jpg"
                 />
                 <Card.Body>
-                  <Card.Title>Amjad Mesmar</Card.Title>
+                  <Card.Title>Emran Aloul</Card.Title>
                   <Card.Text>
-                    <a className="link" href="https://github.com/AmjadMesmar">
+                    <a className="link" href="https://github.com/emranaloul">
                       github
                     </a>
                     <a
@@ -40,19 +40,17 @@ const AboutUs = () => {
                       LinkedIn
                     </a>
                   </Card.Text>
-
-   
                 </Card.Body>
               </Card>
             </Col>
             <Col md={4}>
-              <Card style={{ width: "18rem" }}>
+            <Card style={{ width: "18rem" }}>
                 <Card.Img
                   variant="top"
-                  src="https://l.top4top.io/p_203351uj31.jpg"
+                  src="https://avatars.githubusercontent.com/u/74018772?v=4"
                 />
                 <Card.Body>
-                  <Card.Title>Mohammad Mesmar</Card.Title>
+                  <Card.Title>Anwar Abbas</Card.Title>
                   <Card.Text>
                     <a className="link" href="https://github.com/AmjadMesmar">
                       github
@@ -65,8 +63,6 @@ const AboutUs = () => {
                       LinkedIn
                     </a>
                   </Card.Text>
-
-   
                 </Card.Body>
               </Card>
             </Col>
@@ -101,10 +97,10 @@ const AboutUs = () => {
               <Card style={{ width: "18rem" }}>
                 <Card.Img
                   variant="top"
-                  src="https://avatars.githubusercontent.com/u/74018772?v=4"
+                  src="https://l.top4top.io/p_203351uj31.jpg"
                 />
                 <Card.Body>
-                  <Card.Title>Anwar Abbas</Card.Title>
+                  <Card.Title>Mohammad Mesmar</Card.Title>
                   <Card.Text>
                     <a className="link" href="https://github.com/AmjadMesmar">
                       github
@@ -117,6 +113,8 @@ const AboutUs = () => {
                       LinkedIn
                     </a>
                   </Card.Text>
+
+   
                 </Card.Body>
               </Card>
             </Col>
@@ -125,12 +123,12 @@ const AboutUs = () => {
               <Card style={{ width: "18rem" }}>
                 <Card.Img
                   variant="top"
-                  src="https://f.top4top.io/p_20331e4zz1.jpg"
+                  src="https://avatars.githubusercontent.com/u/46314974?v=4"
                 />
                 <Card.Body>
-                  <Card.Title>Emran Aloul</Card.Title>
+                  <Card.Title>Amjad Mesmar</Card.Title>
                   <Card.Text>
-                    <a className="link" href="https://github.com/emranaloul">
+                    <a className="link" href="https://github.com/AmjadMesmar">
                       github
                     </a>
                     <a
@@ -141,6 +139,8 @@ const AboutUs = () => {
                       LinkedIn
                     </a>
                   </Card.Text>
+
+   
                 </Card.Body>
               </Card>
             </Col>

@@ -33,10 +33,12 @@ const RouterComponent = () => {
           <Route exact path="/Verify">
             <Verify />
           </Route>
+          <Route exact path="/aboutus">
+            <AboutUs />
+          </Route>
         <AuthController>
         <Header/>
         <Switch>
-
           <Route exact path='/'>
             <TimeLinePage />
           </Route>
@@ -51,9 +53,6 @@ const RouterComponent = () => {
           </Route>
           <Route exact path="/profile/:username">
             <ProfilePage />
-          </Route>
-          <Route exact path="/aboutuss">
-            <AboutUs />
           </Route>
           <Route  path="*">
             <Error />
