@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
 
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
@@ -18,20 +20,15 @@ import { checkAuth } from '../authController';
 import Popup from '../popup';
 
 const HexagonButton = styled(Button)({
-  // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-  // marginTop: '.5em',
   background: "#529471",
   border: 0,
   borderRadius: 3,
-  // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
   color: "white",
   height: 48,
   padding: "0 30px",
   "&:hover": {
     boxShadow: "rgba(0, 0, 0, 0.25) 2px 4px 6px 3px",
     backgroundColor: "#529471",
-    // backgroundColor: "#eee",
-    // color: "#529471",
   },
 });
 
@@ -77,6 +74,8 @@ const Welcome = (props) => {
       password: password,
     })
   };
+
+  // Google Oauth handelForm
 
   // const googleOauth = () => {
   //   reload(SIGN_IN_GOOGLE_URL, 'post', null, null, {
@@ -140,7 +139,6 @@ const Welcome = (props) => {
                     }
                     alt={"Hexagon"}
                   ></img>
-                  {/* <h3 className="loginLogo">HEXAGON</h3> */}
                 </div>
                 <div className="loginDesc">
                   <span>Turn your creativity into reality!</span>

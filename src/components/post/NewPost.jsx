@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Avatar from '@material-ui/core/Avatar';

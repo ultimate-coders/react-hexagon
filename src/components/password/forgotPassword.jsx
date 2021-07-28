@@ -1,10 +1,7 @@
 import React from 'react';
-// import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import Checkbox from '@material-ui/core/Checkbox';
 import { Link } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
@@ -15,20 +12,15 @@ import { styled } from '@material-ui/core/styles';
 import '../sign/signup.scss'
 
 const HexagonButton = styled(Button)({
-    // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-    // marginTop: '.5em',
     background: '#529471',
     border: 0,
     borderRadius: 3,
-    // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
     color: 'white',
     height: 48,
     padding: '0 30px',
     "&:hover": {
         boxShadow: 'rgba(0, 0, 0, 0.25) 2px 4px 6px 3px',
         backgroundColor: "#529471",
-        // backgroundColor: "#eee",
-        // color: "#529471",
     }
 });
 
@@ -36,16 +28,16 @@ function Copyright() {
     return (
         <Typography variant="body2" color="textSecondary" align="center" id="footerContainer">
             <div>
-            {'Copyright © '}
-            <Button>
-                <Link color="inherit" style={{ textDecoration: 'none' }} to="/">
-                    HEXAGON
-                </Link>
-            </Button>{' '}
-            {new Date().getFullYear()}
-            {'.'}
+                {'Copyright © '}
+                <Button>
+                    <Link color="inherit" style={{ textDecoration: 'none' }} to="/">
+                        HEXAGON
+                    </Link>
+                </Button>{' '}
+                {new Date().getFullYear()}
+                {'.'}
             </div>
-            <br/>
+            <br />
             <Button id="aboutUs">
                 <Link color="inherit" style={{ textDecoration: 'none' }} to="/aboutus">
                     ABOUT US
@@ -83,13 +75,11 @@ const ForgotPassword = () => {
             <CssBaseline />
             <div className={classes.paper}>
                 <div id="logoContainer">
-                    <img id="signUplogo" src={"https://logosandtypes.com/wp-content/uploads/2020/07/hammer-series.svg"} alt={"Hexagon"} ></img>
+                    <img id="signUplogo" src={"https://i.ibb.co/b58Wbnx/Hexa-cmyg-01.png"} alt={"Hexagon"} ></img>
+                    <Typography component="h1" variant="h5">
+                        RESET PASSOWRD
+                    </Typography>
                 </div>
-                {/* <Avatar className={classes.avatar}>
-                </Avatar> */}
-                <Typography component="h1" variant="h5">
-                    Reset Password
-                </Typography>
                 <form id="signupForm" className={classes.form} noValidate>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
@@ -147,7 +137,7 @@ const ForgotPassword = () => {
                 <div id="SigninQuestion">
                     <span className="loginForgot"> Changed your mind? </span>
                     <Link className="loginRegisterButton" type="submit" to='/'>
-                    <HexagonButton className='loginRedirectButton'>
+                        <HexagonButton className='loginRedirectButton'>
                             Sign In
                         </HexagonButton>
                     </Link>
