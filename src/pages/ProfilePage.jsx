@@ -4,9 +4,7 @@ import Main from "../components/profile/posts";
 const ProfilePage = () => {
   return (
     <>
-      <header style={{ background: "#529471", color: "#eee", height: "60px" }}>
-        hexagon
-      </header>
+
       <br />
       <Container>
         <Row className="justify-content-md-center">

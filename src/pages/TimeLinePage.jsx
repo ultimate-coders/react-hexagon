@@ -13,7 +13,7 @@ const TimeLinePage = () => {
 
     return (
         <>
-        <Header/>
+        
         <Container fluid>
             <Row style={{justifyContent: 'center', backgroundColor: '#eee'}}>
                 <Col className='col-2'>

@@ -4,12 +4,15 @@ import useAjax from "../../hooks/useAjax";
 import { PROFILE_URL, FOLLOW_URL } from "../../urls";
 import { getToken } from "../../helpers";
 import "./info.scss";
-import { useSelector } from "react-redux";
+import { activeChatAction } from '../../store/chat/actions';
+import { useSelector ,useDispatch} from "react-redux";
+import { Link } from "react-router-dom";
 
 const ProfileInfo = () => {
+  const dispach = useDispatch();
   const state = useSelector(mapStateToProps);
   const [showResults, setShowResults] = useState(false);
-  const [results, reload, loading, error] = useAjax();
+  const [results, reload, ] = useAjax();
   const [token, setToken] = useState();
   const [follow, setfollow] = useState();
   const [profile, setProfile] = useState();
@@ -64,6 +67,7 @@ const ProfileInfo = () => {
   useEffect(() => {
     if (results) {
       if (results.data.id) {
+        // console.log(results.data);
         setProfile(results.data);
       }
     }
@@ -77,7 +81,7 @@ const ProfileInfo = () => {
       caption: e.target.caption.value,
       profile_picture: e.target.image.value,
     };
-    console.log(body);
+    // console.log(body);
     (async () => {
       await updateProfile(body);
     })();
@@ -95,6 +99,11 @@ const ProfileInfo = () => {
     let x = !follow;
     setfollow(x);
   };
+
+  const handleMessage= ()=>{
+    console.log(profile);
+    dispach(activeChatAction(profile))
+  }
   //  user", state.user);
   if (!profile) {
     return <div></div>;
@@ -164,9 +173,11 @@ const ProfileInfo = () => {
                           <span>follow</span>
                         )}
                       </Button>
-                      <Button className="btn-size" style={{ color: "#529471",marginLeft:'20px' }} variant="light">
+                      <Link to="/messages">
+                      <Button onClick={handleMessage} className="btn-size" style={{ color: "#529471",marginLeft:'20px' }} variant="light">
                         message
                       </Button>
+                      </Link>
                     </div>
                   )}
                 </li>
