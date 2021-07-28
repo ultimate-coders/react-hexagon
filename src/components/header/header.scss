@@ -4,11 +4,11 @@ header {
 }
 
 #logo {
-    width: 12em;
-    height: 8em;
+    width: 13em;
+    height: 5em;
     position: relative;
     left: 2em;
-    bottom: 1.4em;
+    // bottom: .5em;
 }
 
 #title {
@@ -24,7 +24,7 @@ header {
     width: 30em;
     position: relative;
     left: 25em;
-    bottom: 7em;
+    bottom: 4em;
 }
 
 #search-bar button {
@@ -40,7 +40,7 @@ header {
 
 #iconsContainer {
     position: relative;
-    bottom: 10em;
+    bottom: 7em;
     left: 65em;
     width: 13;
 }
@@ -52,7 +52,7 @@ svg {
 
 #userHeaderImage {
     width: 3.5em;
-    height: 3.5em;
+    height: 3em;
     border-radius: 50%;
 }
 

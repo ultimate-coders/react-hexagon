@@ -135,7 +135,7 @@ const Welcome = (props) => {
                   <img
                     id="welcomeLogo"
                     src={
-                      "https://i.ibb.co/2Ff9bFV/Hexa-01.png"
+                      "https://i.ibb.co/ySMxV23/Hexa-fin-transparent-01.png"
                     }
                     alt={"Hexagon"}
                   ></img>

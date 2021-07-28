@@ -123,11 +123,11 @@ const Verify = () => {
             <CssBaseline />
             <div className={classes.paper}>
                 <div id="logoContainer">
-                    <img id="signUplogo" src={"https://logosandtypes.com/wp-content/uploads/2020/07/hammer-series.svg"} alt={"Hexagon"} ></img>
+                    <img id="signUplogo" src={"https://i.ibb.co/xYKx0mM/Hexa-fin-without-title-01.png"} alt={"Hexagon"} ></img>
+                    <Typography component="h1" variant="h5">
+                        VERIFY YOUR ACCOUNT
+                    </Typography>
                 </div>
-                <Typography component="h1" variant="h5">
-                    Verify Your Account
-                </Typography>
                 <form onSubmit={onVerifyCheck} id="signupForm" className={classes.form} noValidate>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
