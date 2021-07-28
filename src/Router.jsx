@@ -40,7 +40,7 @@ const RouterComponent = () => {
           </Route>
 
         <AuthController>
-
+        <Switch>
         {/* <Header/> */}
           <Route exact path='/'>
 

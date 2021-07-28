@@ -2,8 +2,6 @@ import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import useAjax from "../../hooks/useAjax";
 import { PROFILE_URL, FOLLOW_URL } from "../../urls";
-import { useHistory } from "react-router";
-
 
 import { getToken } from "../../helpers";
 import "./info.scss";
@@ -11,6 +9,7 @@ import { useSelector } from "react-redux";
 
 const ProfileInfo = () => {
   const state = useSelector(mapStateToProps);
+  const [showResults, setShowResults] = useState(false);
   const [results, reload, loading, error] = useAjax();
   const [token, setToken] = useState();
   const [follow, setfollow] = useState();
@@ -19,18 +18,48 @@ const ProfileInfo = () => {
   const url = `${PROFILE_URL}/${profile_name}`;
   getToken().then((results) => setToken(results));
 
-  // console.log(token);
+  const Results = () => (
+    <Form onSubmit={handelForm}>
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Label>First Name</Form.Label>
+        <Form.Control name="first_name" type="text" />
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Label>Last Name</Form.Label>
+        <Form.Control name="last_name" type="text" />
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Label>Caption</Form.Label>
+        <Form.Control name="caption" type="text" />
+      </Form.Group>
+
+      <Form.Group controlId="formFile" className="mb-3">
+        <Form.Label>profile_picture</Form.Label>
+        <Form.Control name="image" type="file" />
+      </Form.Group>
+
+      <Button variant="success" type="submit">
+        Submit
+      </Button>
+    </Form>
+  );
+
+  const onClick = () => setShowResults(!showResults);
 
   const getProfile = () => {
     reload(url, "get", null, token);
-
   };
+
+  const updateProfile = (body) => {
+    reload(PROFILE_URL, "put", body, token);
+  };
+
   useEffect(() => {
-    console.log(url, token);
     (async () => {
       await getProfile();
     })();
-    console.log(results);
   }, [token]);
 
   useEffect(() => {
@@ -38,8 +67,6 @@ const ProfileInfo = () => {
       if (results.data.id) {
         setProfile(results.data);
       }
-      console.log("results.data", results);
-      // setfollow(results.data.am_follow)
     }
   }, [results]);
 
@@ -49,8 +76,12 @@ const ProfileInfo = () => {
       first_name: e.target.first_name.value,
       last_name: e.target.last_name.value,
       caption: e.target.caption.value,
+      profile_picture: e.target.image.value,
     };
     console.log(body);
+    (async () => {
+      await updateProfile(body);
+    })();
   };
 
   useEffect(() => {
@@ -58,18 +89,16 @@ const ProfileInfo = () => {
       (async () => {
         await reload(FOLLOW_URL, "post", { following: profile.id }, token);
       })();
-      console.log("sssss", results);
     }
   }, [follow]);
 
   const handelFollow = (e) => {
-    console.log("dddddddddddddddddddddd", profile.am_follow);
     let x = !follow;
     setfollow(x);
   };
-  // console.log("47 user", state.user);
+  //  user", state.user);
   if (!profile) {
-    return <div>loading...</div>;
+    return <div></div>;
   } else
     return (
       <>
@@ -114,9 +143,12 @@ const ProfileInfo = () => {
               <br />
               <ul id="info">
                 <li>
-                  {console.log(state.user)}
                   {profile.user.email === state.user ? (
-                    <Button style={{ color: "#529471" }} variant="light">
+                    <Button
+                      onClick={onClick}
+                      style={{ color: "#529471" }}
+                      variant="light"
+                    >
                       Edit
                     </Button>
                   ) : (
@@ -125,11 +157,6 @@ const ProfileInfo = () => {
                       style={{ color: "#529471" }}
                       variant="light"
                     >
-                      {console.log(
-                        (follow !== undefined && follow) || profile.am_follow,
-                        profile.am_follow,
-                        follow
-                      )}
                       {(follow !== undefined && follow) || profile.am_follow ? (
                         <span>unfollow</span>
                       ) : (
@@ -143,27 +170,8 @@ const ProfileInfo = () => {
             <br />
           </Row>
         </Container>
+        {showResults ? <Results /> : null}
         <hr />
-        <Form onSubmit={handelForm}>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>First Name</Form.Label>
-            <Form.Control name="first_name" type="text" />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Last Name</Form.Label>
-            <Form.Control name="last_name" type="text" />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Caption</Form.Label>
-            <Form.Control name="caption" type="text" />
-          </Form.Group>
-
-          <Button variant="success" type="submit">
-            Submit
-          </Button>
-        </Form>
       </>
     );
 };

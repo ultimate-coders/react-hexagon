@@ -5,7 +5,7 @@ const PostsList = ({postsList, onChangePostsList}) => {
 
   if(!postsList || postsList.length === 0){
     return (
-      <div>Loading</div>
+      <div></div>
     )
   }
 

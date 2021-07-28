@@ -272,7 +272,7 @@ const Messages = () => {
                 </Link>
 
             </div>
-            <div style={{ position: "relative", height: "500px" }} onClick={()=>handleSeen()}>
+            <div style={{ position: "relative", height: "500px" }}>
               <MainContainer>
                 <ChatContainer>
                   <MessageList>
