@@ -23,6 +23,15 @@ const Main = (props) => {
     setPosts(prev => prev.filter(post => post.id !== postId));
   };
 
+  const onUpdatePostsList = (postData) => {
+    setPosts(prev => prev.map(post => {
+      if(postData.id === post.id){
+        return postData;
+      }
+      return post;
+    }));
+  };
+
   const onAddNewPosts = (post) => {
     setPosts(prev => [post, ...prev]);
   };
@@ -39,7 +48,6 @@ const Main = (props) => {
     setPosts(results?.data.results);
   }, [results])
   
-
   return (
     <div>
       <NewPost onAddNewPosts={onAddNewPosts} />
@@ -52,6 +60,7 @@ const Main = (props) => {
       ) : (
         <PostsList
           onChangePostsList={onChangePostsList}
+          onUpdatePostsList={onUpdatePostsList}
           postsList={posts}
         />
       )}

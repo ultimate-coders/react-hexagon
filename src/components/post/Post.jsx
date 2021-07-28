@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import moment from 'moment';
 import Avatar from '@material-ui/core/Avatar';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
@@ -17,7 +17,7 @@ import { INTERACTION_URL } from '../../urls';
 import { getToken } from '../../helpers';
 
 
-const Post = ({ post, onChangePostsList, single }) => {
+const Post = ({ post, onChangePostsList, onUpdatePostsList, single }) => {
   const { userDetails } = useSelector(mapStateToProps);
   const [anchorEl, setAnchorEl] = useState(null);
   const [openModal, setOpenModal] = useState(false);
@@ -58,6 +58,11 @@ const Post = ({ post, onChangePostsList, single }) => {
     (async() => {
       const token = await getToken();
       reload(INTERACTION_URL, 'post', {post_id: postInfo.id}, token);
+      onUpdatePostsList({
+        ...postInfo,
+        am_like: !postInfo.am_like,
+        likes: postInfo.am_like ? postInfo.likes - 1 : postInfo.likes + 1
+      });
       setPostInfo(prev => ({
         ...prev,
         am_like: !prev.am_like,
@@ -66,6 +71,10 @@ const Post = ({ post, onChangePostsList, single }) => {
     })();
   }
 
+  useEffect(() => {
+    setPostInfo(post);
+  }, [post])
+
   return (
     <div className='post_container'>
       <SinglePostModal
@@ -73,6 +82,8 @@ const Post = ({ post, onChangePostsList, single }) => {
         handleCloseModal={handleCloseModal}
         openModal={openModal}
         postDetails={postInfo}
+        onChangePostsList={onChangePostsList}
+        onUpdatePostsList={onUpdatePostsList}
       />
       <DeleteModal 
         handleOpenModal={handleOpenDeleteModal}
