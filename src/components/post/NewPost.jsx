@@ -99,7 +99,7 @@ const NewPost = ({ onAddNewPosts }) => {
             multiple
             onChange={(e) => setImages(e.target.files)}
           />
-          <PhotoLibraryIcon
+          <PhotoLibraryIcon id="PhotoLibraryIcon"
             className='photo_library_icon'
             color='secondary'
             onClick={(e) => postImages.current.click()}
