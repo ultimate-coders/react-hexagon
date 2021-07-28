@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import openSocket from 'socket.io-client';
 import { useSelector, useDispatch } from 'react-redux';
 import { activeChatAction } from './store/chat';

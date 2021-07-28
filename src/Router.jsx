@@ -35,6 +35,7 @@ const RouterComponent = () => {
           </Route>
         <AuthController>
         <Switch>
+
         {/* <Header/> */}
           <Route exact path='/'>
             <TimeLinePage />
@@ -56,8 +57,8 @@ const RouterComponent = () => {
           </Route>
           <Route  path="*">
             <Error />
-          </Route>
-          </Switch>
+          </Route> */}
+        </Switch>
         </AuthController>
       </Switch>
     </Router>
