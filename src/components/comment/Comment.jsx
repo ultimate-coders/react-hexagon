@@ -6,9 +6,10 @@ import { COMMENT_URL } from '../../urls';
 import { getToken } from '../../helpers';
 import useAjax from '../../hooks/useAjax';
 import { useSelector } from 'react-redux';
+import Popup from '../popup';
 
 const Comment = ({ comment, onChangeComments }) => {
-  const [results, reload, loading, error] = useAjax();
+  const [results, reload, loading, error, setError] = useAjax();
   const { userDetails } = useSelector(mapStateToProps);
 
   const onDeleteComment = () => {
@@ -21,6 +22,7 @@ const Comment = ({ comment, onChangeComments }) => {
 
   return (
     <div className='comment_container'>
+      <Popup title='Error' message={error} show={() => error && error !== 'Invalid Login'} setError={setError} />
       <Avatar
         className='post_header_avatar'
         alt={`${comment.profile.first_name} ${comment.profile.last_name}`}

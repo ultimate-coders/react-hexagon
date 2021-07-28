@@ -9,6 +9,7 @@ import useAjax from '../../hooks/useAjax';
 import { getToken } from '../../helpers';
 import { CATEGORY_URL, POST_URL } from '../../urls';
 import axios from 'axios';
+import Popup from '../popup';
 
 const NewPost = ({ onAddNewPosts }) => {
   const postImages = useRef(null);
@@ -16,11 +17,18 @@ const NewPost = ({ onAddNewPosts }) => {
   const [images, setImages] = useState(null);
   const [text, setText] = useState('');
   const [category, setCategory] = useState();
+  const [newPostError, setNewPostError] = useState(null);
   const [results, reload, loading, error] = useAjax();
   const [submitting, setSubmitting] = useState(false);
 
   const onSubmit = (e) => {
     e.preventDefault();
+    console.log(text, images, (!text || text === '') && (! images || images?.length === 0))
+    if((!text || text === '') && (! images || images?.length === 0)){
+      setNewPostError('You have to upload an Image or post a text!');
+      setSubmitting(false);
+      return;
+    }
 
     (async () => {
       setSubmitting(true);
@@ -40,7 +48,9 @@ const NewPost = ({ onAddNewPosts }) => {
         url: POST_URL,
         data: formData,
         headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` }
-      }).catch((e) => null);
+      }).catch((e) => {
+        typeof(e.response.data) === 'string' ? setNewPostError(e.response.data) : setNewPostError(e.response.data.message);
+      });
       if(newPostResponse){
         onAddNewPosts(newPostResponse.data);
       }
@@ -61,6 +71,7 @@ const NewPost = ({ onAddNewPosts }) => {
 
   return (
     <Form onSubmit={onSubmit} className='new_post_container'>
+      <Popup title='Error' message={newPostError} show={() => newPostError && newPostError !== 'Invalid Login'} setError={setNewPostError} />
       <Form.Group className='new_post_first_row' controlId='formTextInput'>
         <Avatar
           className='new_post_avatar'
@@ -69,7 +80,6 @@ const NewPost = ({ onAddNewPosts }) => {
         />
         <Form.Control
           className='new_post_text_area'
-          required
           as='textarea'
           value={text}
           onChange={(e) => setText(e.target.value)}

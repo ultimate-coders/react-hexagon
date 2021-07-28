@@ -6,10 +6,11 @@ import { COMMENT_URL } from '../../urls';
 import useAjax from '../../hooks/useAjax';
 import { getToken } from '../../helpers';
 import { useEffect } from 'react';
+import Popup from '../popup';
 
 const NewComment = ({ post, onChangeComments }) => {
   const { userDetails } = useSelector(mapStateToProps);
-  const [results, reload, loading, error] = useAjax(
+  const [results, reload, loading, error, setError] = useAjax(
     COMMENT_URL,
     'delete',
     null
@@ -34,6 +35,7 @@ const NewComment = ({ post, onChangeComments }) => {
 
   return (
     <form onSubmit={onSubmit} className='new_comment_container'>
+      <Popup title='Error' message={error} show={() => error && error !== 'Invalid Login'} setError={setError} />
       <Avatar
         alt={userDetails.user.username}
         src={userDetails.profile_picture.link}

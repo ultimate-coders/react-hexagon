@@ -20,6 +20,7 @@ import useAjax from '../../hooks/useAjax';
 import { SIGNUP_URL } from '../../urls';
 import { useHistory } from 'react-router';
 import { tokenName } from '../../helpers';
+import Popup from '../popup';
 
 
 
@@ -82,7 +83,7 @@ const SignUp = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [checking, setChecking] = useState(localStorage.getItem(tokenName));
-    const [results, reload, loading, error] = useAjax();
+    const [results, reload, loading, error, setError] = useAjax();
 
     const history = useHistory();
 
@@ -124,6 +125,7 @@ const SignUp = () => {
 
     return (
         <Container component="main" maxWidth="xs">
+            <Popup title='Error' message={error} show={error} setError={setError} />
             <CssBaseline />
             <div className={classes.paper}>
                 <div id="logoContainer">
