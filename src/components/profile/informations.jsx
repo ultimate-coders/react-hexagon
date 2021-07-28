@@ -2,16 +2,17 @@ import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import useAjax from "../../hooks/useAjax";
 import { PROFILE_URL, FOLLOW_URL } from "../../urls";
-import { useHistory } from "react-router";
-
-
 import { getToken } from "../../helpers";
 import "./info.scss";
-import { useSelector } from "react-redux";
+import { activeChatAction } from '../../store/chat/actions';
+import { useSelector ,useDispatch} from "react-redux";
+import { Link } from "react-router-dom";
 
 const ProfileInfo = () => {
+  const dispach = useDispatch();
   const state = useSelector(mapStateToProps);
-  const [results, reload, loading, error] = useAjax();
+  const [showResults, setShowResults] = useState(false);
+  const [results, reload, ] = useAjax();
   const [token, setToken] = useState();
   const [follow, setfollow] = useState();
   const [profile, setProfile] = useState();
@@ -19,27 +20,56 @@ const ProfileInfo = () => {
   const url = `${PROFILE_URL}/${profile_name}`;
   getToken().then((results) => setToken(results));
 
-  // console.log(token);
+  const Results = () => (
+    <Form onSubmit={handelForm}>
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Label>First Name</Form.Label>
+        <Form.Control name="first_name" type="text" />
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Label>Last Name</Form.Label>
+        <Form.Control name="last_name" type="text" />
+      </Form.Group>
+
+      <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Label>Caption</Form.Label>
+        <Form.Control name="caption" type="text" />
+      </Form.Group>
+
+      <Form.Group controlId="formFile" className="mb-3">
+        <Form.Label>profile_picture</Form.Label>
+        <Form.Control name="image" type="file" />
+      </Form.Group>
+
+      <Button className="btn-size" variant="success" type="submit">
+        Submit
+      </Button>
+    </Form>
+  );
+
+  const onClick = () => setShowResults(!showResults);
 
   const getProfile = () => {
     reload(url, "get", null, token);
-
   };
+
+  const updateProfile = (body) => {
+    reload(PROFILE_URL, "put", body, token);
+  };
+
   useEffect(() => {
-    console.log(url, token);
     (async () => {
       await getProfile();
     })();
-    console.log(results);
   }, [token]);
 
   useEffect(() => {
     if (results) {
       if (results.data.id) {
+        // console.log(results.data);
         setProfile(results.data);
       }
-      console.log("results.data", results);
-      // setfollow(results.data.am_follow)
     }
   }, [results]);
 
@@ -49,8 +79,12 @@ const ProfileInfo = () => {
       first_name: e.target.first_name.value,
       last_name: e.target.last_name.value,
       caption: e.target.caption.value,
+      profile_picture: e.target.image.value,
     };
-    console.log(body);
+    // console.log(body);
+    (async () => {
+      await updateProfile(body);
+    })();
   };
 
   useEffect(() => {
@@ -58,18 +92,21 @@ const ProfileInfo = () => {
       (async () => {
         await reload(FOLLOW_URL, "post", { following: profile.id }, token);
       })();
-      console.log("sssss", results);
     }
   }, [follow]);
 
   const handelFollow = (e) => {
-    console.log("dddddddddddddddddddddd", profile.am_follow);
     let x = !follow;
     setfollow(x);
   };
-  // console.log("47 user", state.user);
+
+  const handleMessage= ()=>{
+    console.log(profile);
+    dispach(activeChatAction(profile))
+  }
+  //  user", state.user);
   if (!profile) {
-    return <div>loading...</div>;
+    return <div></div>;
   } else
     return (
       <>
@@ -99,13 +136,13 @@ const ProfileInfo = () => {
               <ul id="info">
                 <li>
                   {" "}
-                  <Button style={{ color: "#529471" }} variant="light">
+                  <Button className="btn-size" style={{ color: "#529471" }} variant="light">
                     follower : {profile.followers}
                   </Button>
                 </li>
                 <li>
                   {" "}
-                  <Button style={{ color: "#529471" }} variant="light">
+                  <Button className="btn-size" style={{ color: "#529471" }} variant="light">
                     following :{profile.followings}{" "}
                   </Button>
                   <br />
@@ -114,28 +151,34 @@ const ProfileInfo = () => {
               <br />
               <ul id="info">
                 <li>
-                  {console.log(state.user)}
                   {profile.user.email === state.user ? (
-                    <Button style={{ color: "#529471" }} variant="light">
-                      Edit
-                    </Button>
-                  ) : (
-                    <Button
-                      onClick={handelFollow}
+                    <Button className="btn-size"
+                      onClick={onClick}
                       style={{ color: "#529471" }}
                       variant="light"
                     >
-                      {console.log(
-                        (follow !== undefined && follow) || profile.am_follow,
-                        profile.am_follow,
-                        follow
-                      )}
-                      {(follow !== undefined && follow) || profile.am_follow ? (
-                        <span>unfollow</span>
-                      ) : (
-                        <span>follow</span>
-                      )}
+                      Edit
                     </Button>
+                  ) : (
+                    <div>
+                      <Button className="btn-size"
+                        onClick={handelFollow}
+                        style={{ color: "#529471" }}
+                        variant="light"
+                      >
+                        {(follow !== undefined && follow) ||
+                        profile.am_follow ? (
+                          <span>unfollow</span>
+                        ) : (
+                          <span>follow</span>
+                        )}
+                      </Button>
+                      <Link to="/messages">
+                      <Button onClick={handleMessage} className="btn-size" style={{ color: "#529471",marginLeft:'20px' }} variant="light">
+                        message
+                      </Button>
+                      </Link>
+                    </div>
                   )}
                 </li>
               </ul>
@@ -143,27 +186,8 @@ const ProfileInfo = () => {
             <br />
           </Row>
         </Container>
+        {showResults ? <Results /> : null}
         <hr />
-        <Form onSubmit={handelForm}>
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>First Name</Form.Label>
-            <Form.Control name="first_name" type="text" />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Last Name</Form.Label>
-            <Form.Control name="last_name" type="text" />
-          </Form.Group>
-
-          <Form.Group className="mb-3" controlId="formBasicEmail">
-            <Form.Label>Caption</Form.Label>
-            <Form.Control name="caption" type="text" />
-          </Form.Group>
-
-          <Button variant="success" type="submit">
-            Submit
-          </Button>
-        </Form>
       </>
     );
 };
