@@ -29,6 +29,8 @@ const Header = () => {
 
 
     const [results, reload, loading, error] = useAjax();
+    const [results2, reload2, loading2, error2] = useAjax();
+
 
     const onGetNotifications = () => {
         (async () => {
@@ -40,7 +42,7 @@ const Header = () => {
     const updateSeenNotifications = (notificationID) => {
         (async () => {
             const token = await getToken();
-            reload(`${NOTIFICATIONS_URL}/${notificationID}`, 'put', null, token, null);
+            reload2(`${NOTIFICATIONS_URL}/${notificationID}`, 'put', null, token, null);
         })();
     };
 
@@ -58,7 +60,6 @@ const Header = () => {
         else {
             results.data.results.forEach((notification) => {
                 updateSeenNotifications(notification.id);
-                console.log('not: ', notification.id)
             })
             onGetNotifications();
             notificationsList.style.display = "flex";
@@ -92,7 +93,6 @@ const Header = () => {
 
     function redirectToPost(e) {
         let postId = e.target.id;
-        console.log('id: ', e.target.id);
         history.push(`/posts/post/${postId}`)
     }
 
@@ -102,12 +102,9 @@ const Header = () => {
 
     useEffect(() => {
         if (results) {
-            console.log('results: ', results.data.results);
             setShowNotificationsList(results.data.results.filter(notification => notification.seen === false));
         }
     }, [results]);
-
-    // console.log('showNotificationsList: ', results?.data.results.filter(notification => notification.seen === false));
 
 
     return (
