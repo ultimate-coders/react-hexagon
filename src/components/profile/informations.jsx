@@ -2,7 +2,6 @@ import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import useAjax from "../../hooks/useAjax";
 import { PROFILE_URL, FOLLOW_URL } from "../../urls";
-
 import { getToken } from "../../helpers";
 import "./info.scss";
 import { useSelector } from "react-redux";
@@ -40,7 +39,7 @@ const ProfileInfo = () => {
         <Form.Control name="image" type="file" />
       </Form.Group>
 
-      <Button variant="success" type="submit">
+      <Button className="btn-size" variant="success" type="submit">
         Submit
       </Button>
     </Form>
@@ -128,13 +127,13 @@ const ProfileInfo = () => {
               <ul id="info">
                 <li>
                   {" "}
-                  <Button style={{ color: "#529471" }} variant="light">
+                  <Button className="btn-size" style={{ color: "#529471" }} variant="light">
                     follower : {profile.followers}
                   </Button>
                 </li>
                 <li>
                   {" "}
-                  <Button style={{ color: "#529471" }} variant="light">
+                  <Button className="btn-size" style={{ color: "#529471" }} variant="light">
                     following :{profile.followings}{" "}
                   </Button>
                   <br />
@@ -144,7 +143,7 @@ const ProfileInfo = () => {
               <ul id="info">
                 <li>
                   {profile.user.email === state.user ? (
-                    <Button
+                    <Button className="btn-size"
                       onClick={onClick}
                       style={{ color: "#529471" }}
                       variant="light"
@@ -152,17 +151,23 @@ const ProfileInfo = () => {
                       Edit
                     </Button>
                   ) : (
-                    <Button
-                      onClick={handelFollow}
-                      style={{ color: "#529471" }}
-                      variant="light"
-                    >
-                      {(follow !== undefined && follow) || profile.am_follow ? (
-                        <span>unfollow</span>
-                      ) : (
-                        <span>follow</span>
-                      )}
-                    </Button>
+                    <div>
+                      <Button className="btn-size"
+                        onClick={handelFollow}
+                        style={{ color: "#529471" }}
+                        variant="light"
+                      >
+                        {(follow !== undefined && follow) ||
+                        profile.am_follow ? (
+                          <span>unfollow</span>
+                        ) : (
+                          <span>follow</span>
+                        )}
+                      </Button>
+                      <Button className="btn-size" style={{ color: "#529471",marginLeft:'20px' }} variant="light">
+                        message
+                      </Button>
+                    </div>
                   )}
                 </li>
               </ul>

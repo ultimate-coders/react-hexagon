@@ -24,13 +24,9 @@ const ProfilePosts = () => {
     reload(url, "get", null, token);
   };
   useEffect(() => {
-    console.log(profile_name !== state.first_name,state.first_name);
-    if(profile_name !== state.first_name)
-    {(async () => {
+    (async () => {
       await getProfile();
-    })();}
-    console.log(state.profile);
-    setprofile(state.profile );
+    })();
   }, [token]);
 
   useEffect(() => {
@@ -38,17 +34,16 @@ const ProfilePosts = () => {
       setprofile(results.data);
     }
     if (results && results.data.results) {
-      console.log(results.data.results);
       setPosts(results.data.results);
     }
   }, [results]);
 
   useEffect(() => {
-    console.log(888888);
     getAllPosts();
   }, [profile]);
-
+  
   const getAllPosts = () => {
+    console.log(profile);
     if (profile && profile.id) {
       (async () => {
         const url = `${PROFILE_POSTS_URL}/${profile.id}`;
@@ -66,24 +61,24 @@ const ProfilePosts = () => {
     setPosts((prev) => [post, ...prev]);
   };
 
-    return (
-      <div>
-        {profile && profile.id === state.user ? 
+  return (
+    <div>
+      {console.log(profile && profile.id === state.user)}
+      {profile && profile.id === state.user ? (
         <NewPost onAddNewPosts={onAddNewPosts} />
-        :<div></div>
-        }
-        {checking ? (
-          "loading"
-        ) : (
-          <PostsList onChangePostsList={onChangePostsList} postsList={posts} />
-        )}
-      </div>
-    );
+      ) : (
+        <div></div>
+      )}
+      {checking ? (
+        "loading"
+      ) : (
+        <PostsList onChangePostsList={onChangePostsList} postsList={posts} />
+      )}
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => ({
   user: state.userDetails.user.id,
-  first_name: state.userDetails.user.first_name,
-  profile:state.userDetails.user
 });
 export default ProfilePosts;
