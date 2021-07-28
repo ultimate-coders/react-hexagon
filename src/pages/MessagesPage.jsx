@@ -200,10 +200,12 @@ const Messages = () => {
   }, [token, results]);
 
   let getMessages = (x) => {
+    
     (async () => {
       await reloadMsg(`${MESSAGES_URL}/${chat[x].id}`, "get", null, token);
       dispatch(activeChatUserAction(chat[x]));
     })();
+    console.log("🚀 ~ file: MessagesPage.jsx ~ line 204 ~ Messages ~ chat", chat)
   };
 
   useEffect(() => {
@@ -279,6 +281,11 @@ const Messages = () => {
     } else if (state.activeChat && state.activeChat.id) {
       searchHandler(state.activeChat);
     }
+    // if (!chat || (chat && results.data.first_name && results.data.id !== user.id && !chat.find(item => item.id === results.data.id ))) {
+    //   let list = chat;
+    //   list.unshift(results.data);
+    //   setChat(list);
+    // }
   }, [state.activeChat]);
 
   return (
@@ -396,7 +403,9 @@ const Messages = () => {
                     src={
                       chat && chat.length
                         ? chat[index].profile_picture.link
-                        : "https://i.ibb.co/xYKx0mM/Hexa-fin-without-title-01.png"
+
+                        : "https://g.top4top.io/p_2035ty8v01.png"
+
                     }
                     name={null}
                     status={
@@ -413,7 +422,9 @@ const Messages = () => {
 
                   <ConversationHeader.Content
                     userName={
-                      chat && chat.length ? chat[index].first_name : ""
+
+                      chat && chat.length ? chat[index].first_name : "Hexagon"
+
                     }
                   ></ConversationHeader.Content>
                 </ConversationHeader>
@@ -425,7 +436,7 @@ const Messages = () => {
             >
               <MainContainer>
                 <ChatContainer>
-                  <MessageList>
+                  <MessageList loading={loadingMsg}>
                     {/* {resultsMsg = resultsMsg.data? resultsMsg.data.results.reverse() : null } */}
                     {messages
                       ? messages.map((val) => (
@@ -486,7 +497,9 @@ const Messages = () => {
                       : null}
 
                     {/* <TypingIndicator />\ */}
+
                   </MessageList>
+
                   {/* <If condition={chat}>
                     <Then> */}
                   <MessageInput
