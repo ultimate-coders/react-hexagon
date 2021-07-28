@@ -1,15 +1,10 @@
 import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-// import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-// import FormControlLabel from '@material-ui/core/FormControlLabel';
-// import Checkbox from '@material-ui/core/Checkbox';
-// import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
-// import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -17,35 +12,17 @@ import { styled } from '@material-ui/core/styles';
 import '../sign/signup.scss'
 
 const HexagonButton = styled(Button)({
-    // background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
-    // marginTop: '.5em',
     background: '#529471',
     border: 0,
     borderRadius: 3,
-    // boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
     color: 'white',
     height: 48,
     padding: '0 30px',
     "&:hover": {
         boxShadow: 'rgba(0, 0, 0, 0.25) 2px 4px 6px 3px',
         backgroundColor: "#529471",
-        // backgroundColor: "#eee",
-        // color: "#529471",
     }
 });
-
-// function Copyright() {
-//     return (
-//         <Typography variant="body2" color="textSecondary" align="center">
-//             {'Copyright © '}
-//             <Link color="inherit" href="https://material-ui.com/">
-//                 Your Website
-//             </Link>{' '}
-//             {new Date().getFullYear()}
-//             {'.'}
-//         </Typography>
-//     );
-// }
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -71,20 +48,17 @@ const ChangePassword = () => {
     const classes = useStyles();
 
     const { userDetails } = useSelector(mapStateToProps)
-    const history = useHistory();
 
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline />
             <div className={classes.paper}>
                 <div id="logoContainer">
-                    <img id="signUplogo" src={"https://logosandtypes.com/wp-content/uploads/2020/07/hammer-series.svg"} alt={"Hexagon"} ></img>
+                    <img id="signUplogo" src={"https://i.ibb.co/b58Wbnx/Hexa-cmyg-01.png"} alt={"Hexagon"} ></img>
+                    <Typography component="h1" variant="h5">
+                        CHANGE PASSWORD
+                    </Typography>
                 </div>
-                {/* <Avatar className={classes.avatar}>
-                </Avatar> */}
-                <Typography component="h1" variant="h5">
-                    Change Password
-                </Typography>
                 <form id="signupForm" className={classes.form} noValidate>
                     <Grid container spacing={2}>
                         <Grid item xs={12}>
@@ -122,12 +96,6 @@ const ChangePassword = () => {
                                 autoComplete="current-password"
                             />
                         </Grid>
-                        {/* <Grid item xs={12}>
-                            <FormControlLabel
-                                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                                label="I want to receive inspiration, marketing promotions and updates via email."
-                            />
-                        </Grid> */}
                     </Grid>
                     <HexagonButton
                         type="submit"
@@ -148,9 +116,6 @@ const ChangePassword = () => {
                     </Link>
                 </div>
             </div>
-            {/* <Box mt={5}>
-                <Copyright />
-            </Box> */}
         </Container>
     );
 }
