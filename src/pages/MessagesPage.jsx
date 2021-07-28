@@ -167,12 +167,13 @@ const Messages = () => {
   };
 
   useEffect(() => {
-    console.log(state);
+    console.log(state.user);
     setUser({
       id: state.user.id,
       name: state.user.first_name,
       picture: state.user.profile_picture.link,
       last_login: state.user.user.last_login,
+      username: state.user.user.username,
     });
   }, []);
 
@@ -235,32 +236,32 @@ const Messages = () => {
 
   let searchHandler = (e) => {
     // console.log("pppppppp", e.id);
-    getToken().then((results) => setToken(results)).then(()=>{
+    getToken()
+      .then((results) => setToken(results))
+      .then(() => {
+        let list = chat || [];
+        let newChat = {
+          caption: e.caption,
+          first_name: e.first_name,
+          id: e.id,
+          last_message: null,
+          last_name: e.last_name,
+          profile_picture: e.profile_picture,
+          user: e.user,
+        };
+        list.unshift(newChat);
+        setChat(list);
 
-      let list = chat || [];
-      let newChat = {
-        caption: e.caption,
-        first_name: e.first_name,
-        id: e.id,
-        last_message: null,
-        last_name: e.last_name,
-        profile_picture: e.profile_picture,
-        user: e.user,
-      };
-      list.unshift(newChat);
-      setChat(list);
-  
-      (async () => {
-        await reloadMsg(
-          `${MESSAGES_URL}/${list[index].id}`,
-          "post",
-          { receiver_id: e.id, message: "" },
-          token
-        );
-        dispatch(activeChatUserAction(list[index]));})();
-    })
-
-    
+        (async () => {
+          await reloadMsg(
+            `${MESSAGES_URL}/${list[index].id}`,
+            "post",
+            { receiver_id: e.id, message: "" },
+            token
+          );
+          dispatch(activeChatUserAction(list[index]));
+        })();
+      });
 
     // if (e.target.value !== '') {
     //   reload(`${PROFILE_URL}/${e.id}`, 'get', null, token);
@@ -295,7 +296,7 @@ const Messages = () => {
           <Grid item xs={3}>
             <Paper className={classes.paper}>
               <div id="people">
-                <Link to={user ? `profile/${user.name}` : null}>
+                <Link to={user ? `profile/${user.username}` : null}>
                   <Conversation name={user.name}>
                     <Avatar
                       src={user.picture}
@@ -394,7 +395,7 @@ const Messages = () => {
               <Link
                 to={
                   chat && chat.length
-                    ? `profile/${chat[index].first_name}`
+                    ? `profile/${chat[index].user.username}`
                     : "/"
                 }
               >
