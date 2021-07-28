@@ -242,10 +242,11 @@ const Messages = () => {
           <Grid item xs={3}>
             <Paper className={classes.paper}>
               <div id='people'>
+                <Link to={user? `profile/${user.name}`: null}>
                 <Conversation name={user.name}>
-                  {console.log('user ', user)}
                   <Avatar src={user.picture} status={(Date.now() - new Date(user.last_login).getTime()) / 1000 <= 120 ? 'available' : 'away'} size='lg' />
                 </Conversation>
+                </Link>
                 {/* <hr />
                 <div className={classes3.root}>
                   <AppBar
@@ -324,7 +325,7 @@ const Messages = () => {
                 to={
                   chat && chat.length
                     ? `profile/${chat[index].first_name}`
-                    : null
+                    : '/'
                 }
               >
                 <ConversationHeader>
@@ -332,7 +333,7 @@ const Messages = () => {
                     src={
                       chat && chat.length
                         ? chat[index].profile_picture.link
-                        : null
+                        : 'https://g.top4top.io/p_2035ty8v01.png'
                     }
                     name={null}
                     status={chat && chat.length && (Date.now() - new Date(chat[index].user.last_login).getTime()) / 1000 <= 120 ? 'available' : 'away'}
@@ -340,7 +341,7 @@ const Messages = () => {
 
                   <ConversationHeader.Content
                     userName={
-                      chat && chat.length ? chat[index].first_name : null
+                      chat && chat.length ? chat[index].first_name : 'Hexagon'
                     }
                   ></ConversationHeader.Content>
                 </ConversationHeader>
