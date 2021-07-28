@@ -1,15 +1,18 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useRef, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Avatar from '@material-ui/core/Avatar';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import Button from 'react-bootstrap/Button';
-// import '../post/NewPost.scss';
+import '../post/NewPost.scss';
 import { useSelector } from 'react-redux';
 import useAjax from '../../hooks/useAjax';
 import { getToken } from '../../helpers';
 import { CATEGORY_URL, POST_URL } from '../../urls';
 import axios from 'axios';
 import Popup from '../popup';
+import Loader from '../loader/loeader'
 
 const NewPost = ({ onAddNewPosts }) => {
   const postImages = useRef(null);
@@ -117,7 +120,7 @@ const NewPost = ({ onAddNewPosts }) => {
         </select>
         <div>
           <Button type='submit' variant='success'>
-            {submitting ? 'Sending' : 'Share'}
+            {submitting ? <Loader/> : 'Share'}
           </Button>
         </div>
       </Form.Group>

@@ -1,21 +1,11 @@
-// #logoContainer {
-//     background-color: red;
-// }
-
 #signUplogo {
-    width: 5em;
-    height: 2.5em;
-    position: relative;
-    // left: .5em;
-    bottom: 1em;
-    border: solid 1px black;
-    border-radius: 20em;
+    width: 8em;
+    height: 7em;
+    margin-bottom: 0.5em;
 }
 
 #signupForm {
-    // height: 300px;
     padding: 20px;
-    // background-color: white;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -24,33 +14,44 @@
     border-width: 3px;
     box-shadow: 0.5px 0.5px 0.5px;
     background-color: #eee;
+    position: relative;
+    margin-top: -2.7em;
 }
 
 #SigninQuestion {
     text-align: center;
     display: flex;
-    flex-direction:column;
-    // justify-content: center;
+    flex-direction: column;
     align-items: center;
-    margin-top:1em;
+    margin-top: .1em;
 }
 
-#passowrdImage{
-    width:2em;
-    height:2em;
-    position:relative;
+#passowrdImage {
+    width: 2em;
+    height: 2em;
+    position: relative;
     left: 22em;
     bottom: 3em;
 }
 
-#ResendVerification{
+#ResendVerification {
     color: white;
-    text-decoration:none;
+    text-decoration: none;
 }
 
-.loginRedirectButton{
- width:8.5em;
+.loginRedirectButton {
+    width: 8.5em;
 }
-.verifySignoutButton{
-    width:9.4em;
+.verifySignoutButton {
+    width: 9.4em;
+}
+
+#logoContainer {
+    position: relative;
+    bottom: 3em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }

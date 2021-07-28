@@ -11,6 +11,7 @@ const PostsList = ({postsList, onChangePostsList, onUpdatePostsList}) => {
             style={{display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '50px'}}
             color="#00BFFF"
         />
+
     )
   }
 
