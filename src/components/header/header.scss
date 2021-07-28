@@ -10,6 +10,9 @@ header {
     left: 2em;
     // bottom: .5em;
 }
+.MuiIconButton-root{
+    color:white;
+}
 
 #title {
     position: relative;
@@ -48,6 +51,7 @@ header {
 svg {
     width: 1.5em;
     height: 1.5em;
+    color:#eee;
 }
 
 #userHeaderImage {
@@ -127,3 +131,4 @@ svg {
 #messagesLink {
     color: rgba(0, 0, 0, 0.54);
 }
+
