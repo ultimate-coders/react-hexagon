@@ -133,9 +133,10 @@ const Messages = () => {
 
   const handleChange = (event) => {
     let x = event.target.className.split(' ');
-
-    setIndex(x[1] - 1);
-    getMessages(x[1] - 1);
+    if(typeof(x[1]) === 'number'){
+      setIndex(x[1] - 1);
+      getMessages(x[1] - 1);
+    }
   };
 
   const newMessage = (event) => {
@@ -343,6 +344,7 @@ const Messages = () => {
                     }
                   ></ConversationHeader.Content>
                 </ConversationHeader>
+             
               </Link>
             </div>
             <div
